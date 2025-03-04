@@ -16,6 +16,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import modelo.Carrera;
 
 /**
@@ -23,6 +24,18 @@ import modelo.Carrera;
  * @author allae
  */
 public class ControladorPrincipal implements Initializable{
+    
+    @FXML
+    private GridPane gridTodasCarreras;
+
+    @FXML
+    private Label prueba;
+
+    private Stage ventana;  
+
+    public void cambiarVentana(Stage hola) {
+        this.ventana = hola;
+    }
     
     public static ObservableList<Carrera> getCarrerasList() {
         return FXCollections.observableArrayList(
@@ -34,6 +47,17 @@ public class ControladorPrincipal implements Initializable{
                 )
         );
     }
+
+    public GridPane getGridTodasCarreras() {
+        return gridTodasCarreras;
+    }
+
+    public Label getPrueba() {
+        return prueba;
+    }
+    
+    
+    
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,5 +66,7 @@ public class ControladorPrincipal implements Initializable{
         System.out.println(carreras.toString());
  
     }
+    
+    
     
 }

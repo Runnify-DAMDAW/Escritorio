@@ -4,8 +4,13 @@
  */
 package controladores;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  *
@@ -18,13 +23,38 @@ public class ControladorLogin {
 
     @FXML
     private TextField txtUser;
+    
+    private ControladorPrincipal controladorPrincipal;
 
     @FXML
-    void pulsar( ) {
+    void pulsar() throws IOException {
         
         String user = txtUser.getText();
         String password = txtPassword.getText();
         System.out.println("El user es:"+user+" y la contraseña es: "+password);
+        
+        Stage nose = (Stage) txtUser.getScene().getWindow(); //Coge el stage de esta escena
+        
+        cambiarVentana(nose);
+        
+        
+    }
+    
+    void cambiarVentana(Stage nosequeponer) throws IOException{
+        
+        FXMLLoader zigueña = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
+        Parent root = zigueña.load();
+        
+        Stage siu = new Stage();
+        Scene mec = new Scene(root);
+        siu.setTitle("Cerrar Programa");
+        siu.setScene(mec);
+        
+        controladorPrincipal = zigueña.getController();
+        controladorPrincipal.cambiarVentana(nosequeponer);
+        
+        siu.show();
+        
         
     }
 
