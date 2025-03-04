@@ -4,11 +4,23 @@
  */
 package modelo;
 
+import java.util.List;
+
 /**
  *
  * @author allae
  */
 public class CarrerasRunning {
+    
+    private List<Carrera> listaCarreras;
+
+    public List<Carrera> getListaCarreras() {
+        return listaCarreras;
+    }
+
+    public void setListaCarreras(List<Carrera> listaCarreras) {
+        this.listaCarreras = listaCarreras;
+    }
     
     
     
