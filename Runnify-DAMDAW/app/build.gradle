@@ -1,0 +1,41 @@
+plugins {
+  id 'application'
+  id 'org.openjfx.javafxplugin' version '0.1.0' //Plugin que ayuda a construir proyectos JAVAFX
+}
+
+repositories {
+	jcenter()
+	google()
+	mavenCentral()
+}
+
+javafx {
+    version = "23"
+    modules = [ 'javafx.base', 'javafx.swing', 'javafx.graphics', 'javafx.controls', 'javafx.fxml', 'javafx.media', 'javafx.web' ]
+}
+
+dependencies {
+
+implementation 'org.mariadb.jdbc:mariadb-java-client:3.4.1'
+implementation 'org.slf4j:slf4j-simple:2.0.16'
+implementation 'org.controlsfx:controlsfx:11.2.1'
+implementation 'net.sf.jasperreports:jasperreports:7.0.1'
+implementation 'net.sf.jasperreports:jasperreports-pdf:7.0.0'
+implementation 'net.sf.jasperreports:jasperreports-charts:7.0.1' 
+implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    
+}
+
+
+
+mainClassName = 'Runnify.DAMDAW.App'
+
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java","src/main/resources"]
+        includes = ["**/*.fxml","**/*.css","**/*.png","**/*.html","**/*.jpg","**/*.jasper"] //Incluir cualquier fichero de recurso
+    }
+  }
+}
