@@ -18,7 +18,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception{
         
        
-       FXMLLoader hola = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
+       FXMLLoader hola = new FXMLLoader(getClass().getResource("/vista/VistaLogin.fxml"));
        Parent adios = hola.load();
        
 
