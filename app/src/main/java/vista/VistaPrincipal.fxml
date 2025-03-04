@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorPrincipal">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="1186.0" BorderPane.alignment="CENTER">
          <children>
@@ -55,7 +54,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ListView prefHeight="547.0" prefWidth="461.0">
+                  <ListView fx:id="listViewCarreras" prefHeight="547.0" prefWidth="461.0">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -65,44 +64,57 @@
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgCarrera" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </ImageView>
-                        <VBox alignment="CENTER" prefHeight="320.0" prefWidth="422.0">
+                        <VBox alignment="CENTER_LEFT" prefHeight="320.0" prefWidth="422.0">
                            <children>
-                              <Label text="Label">
+                              <Label fx:id="labelDesc" text="Label">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="Label">
+                              <Label fx:id="labelDate" text="Label">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="Label">
+                              <Label fx:id="labelDistanciaKm" text="Label">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="Label">
+                              <Label fx:id="labelCoordenadas" text="Label">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="Label">
+                              <Label fx:id="labelEntryFree" text="Label">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="Label">
+                              <Label fx:id="labelAvaibleSlots" text="Label">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="labelStatus" text="Label">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="labelCategory" text="Label">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
                                  </VBox.margin>
                               </Label>
                            </children>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
                         </VBox>
                      </children>
                   </VBox>
