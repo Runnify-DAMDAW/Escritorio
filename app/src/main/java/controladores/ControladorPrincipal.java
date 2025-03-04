@@ -92,17 +92,23 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     void btnMisCarreras() {
-
+        vBoxRanking.visibleProperty().set(false);
+        hBoxMostrarCarreras.visibleProperty().set(false);
+        hBoxMisCarreras.visibleProperty().set(true);
     }
 
     @FXML
     void btnMostrarCarreras() {
-
+        vBoxRanking.visibleProperty().set(false);
+        hBoxMostrarCarreras.visibleProperty().set(true);
+        hBoxMisCarreras.visibleProperty().set(false);
     }
 
     @FXML
     void btnRankigns() {
-
+        vBoxRanking.visibleProperty().set(true);
+        hBoxMostrarCarreras.visibleProperty().set(false);
+        hBoxMisCarreras.visibleProperty().set(false);
     }
 
     public static ObservableList<Carrera> getCarrerasList() {
@@ -118,24 +124,6 @@ public class ControladorPrincipal implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        btnMostrarCarreras.setOnAction(e->{
-            vBoxRanking.visibleProperty().set(false);
-            hBoxMostrarCarreras.visibleProperty().set(true);
-            hBoxMisCarreras.visibleProperty().set(false);
-        });
-        
-        btnRankings.setOnAction(e->{
-            vBoxRanking.visibleProperty().set(true);
-            hBoxMostrarCarreras.visibleProperty().set(false);
-            hBoxMisCarreras.visibleProperty().set(false);
-        });
-        
-        btnMisCarreras.setOnAction(e-> {
-            vBoxRanking.visibleProperty().set(false);
-            hBoxMostrarCarreras.visibleProperty().set(false);
-            hBoxMisCarreras.visibleProperty().set(true);
-        });
         
         ObservableList<Carrera> carreras = getCarrerasList();
         for (Carrera carrera : carreras) {
