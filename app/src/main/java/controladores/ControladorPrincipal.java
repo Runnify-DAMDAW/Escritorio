@@ -52,6 +52,10 @@ public class ControladorPrincipal implements Initializable{
     
     @FXML
     private HBox hBoxMostrarCarreras;
+    
+    @FXML
+    private HBox hBoxMisCarreras;
+
 
     @FXML
     private Label labelCoordenadas;
@@ -118,13 +122,20 @@ public class ControladorPrincipal implements Initializable{
         btnMostrarCarreras.setOnAction(e->{
             vBoxRanking.visibleProperty().set(false);
             hBoxMostrarCarreras.visibleProperty().set(true);
+            hBoxMisCarreras.visibleProperty().set(false);
         });
         
         btnRankings.setOnAction(e->{
             vBoxRanking.visibleProperty().set(true);
             hBoxMostrarCarreras.visibleProperty().set(false);
+            hBoxMisCarreras.visibleProperty().set(false);
         });
         
+        btnMisCarreras.setOnAction(e-> {
+            vBoxRanking.visibleProperty().set(false);
+            hBoxMostrarCarreras.visibleProperty().set(false);
+            hBoxMisCarreras.visibleProperty().set(true);
+        });
         
         ObservableList<Carrera> carreras = getCarrerasList();
         for (Carrera carrera : carreras) {
