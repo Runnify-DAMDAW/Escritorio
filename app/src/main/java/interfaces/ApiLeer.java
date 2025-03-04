@@ -15,6 +15,6 @@ import retrofit2.http.GET;
 public interface ApiLeer {
     
     @GET("/api/running")
-    Call<CarrerasRunning> obtenerJugadores();
+    Call<CarrerasRunning> obtenerCarreras();
     
 }
