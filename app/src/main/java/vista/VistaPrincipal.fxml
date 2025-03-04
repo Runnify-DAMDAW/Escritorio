@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorPrincipal">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorPrincipal">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="1186.0" BorderPane.alignment="CENTER">
          <children>
@@ -36,17 +36,17 @@
    <left>
       <VBox alignment="CENTER" prefHeight="565.0" prefWidth="244.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#btnMostrarCarreras" prefHeight="68.0" prefWidth="105.0" text="Mostrar Carreras">
+            <Button fx:id="btnMostrarCarreras" mnemonicParsing="false" onAction="#btnMostrarCarreras" prefHeight="68.0" prefWidth="105.0" text="Mostrar Carreras">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#btnMisCarreras" prefHeight="68.0" prefWidth="106.0" text="Mis Carreras">
+            <Button fx:id="btnMisCarreras" mnemonicParsing="false" onAction="#btnMisCarreras" prefHeight="68.0" prefWidth="106.0" text="Mis Carreras">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#btnRankigns" prefHeight="76.0" prefWidth="109.0" text="Rankings">
+            <Button fx:id="btnRankings" mnemonicParsing="false" onAction="#btnRankigns" prefHeight="76.0" prefWidth="109.0" text="Rankings">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
@@ -57,7 +57,7 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="hBoxMostrarCarreras" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="listViewCarreras" prefHeight="547.0" prefWidth="461.0">
                      <HBox.margin>

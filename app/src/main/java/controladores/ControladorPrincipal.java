@@ -13,10 +13,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
@@ -32,12 +34,24 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     private ImageView imgLogo;
+    
+    @FXML
+    private Button btnMisCarreras;
+
+    @FXML
+    private Button btnMostrarCarreras;
+
+    @FXML
+    private Button btnRankings;
 
     @FXML
     private Label labelAvaibleSlots;
 
     @FXML
     private Label labelCategory;
+    
+    @FXML
+    private HBox hBoxMostrarCarreras;
 
     @FXML
     private Label labelCoordenadas;
@@ -100,6 +114,17 @@ public class ControladorPrincipal implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        btnMostrarCarreras.setOnAction(e->{
+            vBoxRanking.visibleProperty().set(false);
+            hBoxMostrarCarreras.visibleProperty().set(true);
+        });
+        
+        btnRankings.setOnAction(e->{
+            vBoxRanking.visibleProperty().set(true);
+            hBoxMostrarCarreras.visibleProperty().set(false);
+        });
+        
         
         ObservableList<Carrera> carreras = getCarrerasList();
         for (Carrera carrera : carreras) {
