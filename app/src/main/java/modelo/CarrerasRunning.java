@@ -18,10 +18,5 @@ public class CarrerasRunning {
         return listaCarreras;
     }
 
-    public void setListaCarreras(List<Carrera> listaCarreras) {
-        this.listaCarreras = listaCarreras;
-    }
-    
-    
     
 }
