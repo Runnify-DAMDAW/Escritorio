@@ -11,8 +11,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-position: sticky;
     -fx-top: 0;
     -fx-pref-width: 100%;
-    -fx-pref-height: 144px; /* 36 * 4 (asumiendo 1rem = 16px) */
-    -fx-padding: 0 64px; /* 16 * 4 (px-16 en Tailwind) */
+    -fx-pref-height: 144px;
+    -fx-padding: 0 64px;
     -fx-display: flex;
     -fx-alignment: center;
     -fx-background-color: linear-gradient(to right, #537a5a, #2c302e);

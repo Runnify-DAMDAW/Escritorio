@@ -4,20 +4,27 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorLogin" style="-fx-background-color: linear-gradient(to bottom right, #3a3f51, #1c1f26);">
-    <VBox alignment="CENTER" spacing="20" maxWidth="350" style="-fx-background-color:white;-fx-padding:40;-fx-effect:dropshadow(gaussian, rgba(0,0,0,0.25),8,0.3,0,4);">
+<StackPane prefHeight="375.0" prefWidth="346.0" style="-fx-background-color: linear-gradient(to bottom right, #3a3f51, #1c1f26);" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorLogin">
+    <VBox alignment="CENTER" maxWidth="350" prefHeight="355.0" prefWidth="346.0" spacing="20" style="-fx-background-color:white;-fx-padding:40;-fx-effect:dropshadow(gaussian, rgba(0,0,0,0.25),8,0.3,0,4);">
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/img/Logo.png" />
+         </image>
+      </ImageView>
         <HBox alignment="CENTER" spacing="10">
-            <Label text="User:" style="-fx-font-size:16px;-fx-text-fill:#333333;-fx-min-width:80;"/>
-            <TextField fx:id="txtUser" promptText="Ingrese su usuario" style="-fx-font-size:14px;-fx-padding:8;-fx-background-color:#f7f7f7;-fx-border-color:#cccccc;-fx-border-radius:4;-fx-background-radius:4;"/>
+            <Label style="-fx-font-size:16px;-fx-text-fill:#333333;-fx-min-width:80;" text="User:" />
+            <TextField fx:id="txtUser" promptText="Ingrese su usuario" style="-fx-font-size:14px;-fx-padding:8;-fx-background-color:#f7f7f7;-fx-border-color:#cccccc;-fx-border-radius:4;-fx-background-radius:4;" />
         </HBox>
         <HBox alignment="CENTER" spacing="10">
-            <Label text="Password:" style="-fx-font-size:16px;-fx-text-fill:#333333;-fx-min-width:80;"/>
-            <PasswordField fx:id="txtPassword" promptText="Ingrese su contraseña" style="-fx-font-size:14px;-fx-padding:8;-fx-background-color:#f7f7f7;-fx-border-color:#cccccc;-fx-border-radius:4;-fx-background-radius:4;"/>
+            <Label style="-fx-font-size:16px;-fx-text-fill:#333333;-fx-min-width:80;" text="Password:" />
+            <PasswordField fx:id="txtPassword" promptText="Ingrese su contraseña" style="-fx-font-size:14px;-fx-padding:8;-fx-background-color:#f7f7f7;-fx-border-color:#cccccc;-fx-border-radius:4;-fx-background-radius:4;" />
         </HBox>
-        <Button text="Login" onAction="#pulsar" style="-fx-background-color:#4a90e2;-fx-text-fill:white;-fx-font-size:16px;-fx-padding:10 20 10 20;-fx-background-radius:4;-fx-cursor:hand;"/>
+        <Button onAction="#pulsar" style="-fx-background-color:#4a90e2;-fx-text-fill:white;-fx-font-size:16px;-fx-padding:10 20 10 20;-fx-background-radius:4;-fx-cursor:hand;" text="Login" />
     </VBox>
 </StackPane>
