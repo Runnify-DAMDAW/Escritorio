@@ -4,6 +4,10 @@
  */
 package controladores;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import interfaces.ApiLeer;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,6 +26,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
+import modelo.CarrerasRunning;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *
@@ -110,6 +119,7 @@ public class ControladorPrincipal implements Initializable{
         hBoxMostrarCarreras.visibleProperty().set(false);
         hBoxMisCarreras.visibleProperty().set(false);
     }
+    
 
     public static ObservableList<Carrera> getCarrerasList() {
         return FXCollections.observableArrayList(
@@ -147,6 +157,31 @@ public class ControladorPrincipal implements Initializable{
             acordeonRanking.getPanes().add(pane);
             
         }
+        
+    }
+    
+    public void consultarApi(String url) throws IOException{
+        
+        String urlEndpoint = url;
+            
+            Gson gson = new GsonBuilder().setLenient().create();
+            
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(urlEndpoint)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            
+            ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
+            
+            
+            Call<CarrerasRunning> call = leerCarreras.obtenerCarreras();
+            Response<CarrerasRunning> hola = call.execute();
+            
+            CarrerasRunning listaCarreras = hola.body();
+            
+            //Poner lo que devuelva listaCarreras para log
+
+        
         
     }
 
