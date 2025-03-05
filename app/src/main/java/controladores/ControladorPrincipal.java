@@ -183,25 +183,26 @@ public class ControladorPrincipal implements Initializable{
     }
 
     public void consultarApi(String url) throws IOException{
+       
         
         String urlEndpoint = url;
-            
-            Gson gson = new GsonBuilder().setLenient().create();
-            
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(urlEndpoint)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            
-            ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
-            
-            
-            Call<CarrerasRunning> call = leerCarreras.obtenerCarreras();
-            Response<CarrerasRunning> hola = call.execute();
-            
-            CarrerasRunning listaCarreras = hola.body();
-            
-            //Poner lo que devuelva listaCarreras para log
+
+        Gson gson = new GsonBuilder().setLenient().create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(urlEndpoint)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
+
+
+        Call<CarrerasRunning> call = leerCarreras.obtenerCarreras();
+        Response<CarrerasRunning> hola = call.execute();
+
+        CarrerasRunning listaCarreras = hola.body();
+
+        //Poner lo que devuelva listaCarreras para log
 
         
         
