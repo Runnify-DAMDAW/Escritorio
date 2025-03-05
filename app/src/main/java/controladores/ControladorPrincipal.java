@@ -133,6 +133,7 @@ public class ControladorPrincipal implements Initializable{
             VBox content = new VBox();
             TitledPane pane = new TitledPane(titulo, content);
             pane.setOnMouseClicked(values -> {
+                content.getChildren().clear();
                 content.getChildren().addAll(
                     new Label("Descripción: " + carrera.getDescription()),
                     new Label("Fecha: " + carrera.getDate()),
@@ -141,7 +142,7 @@ public class ControladorPrincipal implements Initializable{
                     new Label("Estado: " + carrera.getStatus()),
                     new Label("Tipo: " + carrera.getCategory())
                 );
-                
+                System.out.println("Carga datos");
             });
             acordeonRanking.getPanes().add(pane);
             
