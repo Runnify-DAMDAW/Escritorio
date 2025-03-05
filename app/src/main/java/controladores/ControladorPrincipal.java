@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -157,8 +158,19 @@ public class ControladorPrincipal implements Initializable{
             acordeonRanking.getPanes().add(pane);
             
         }
-        
+            btnMostrarCarreras.setGraphic(cargarIcono("carreras.png"));
+            btnMisCarreras.setGraphic(cargarIcono("mis_carreras.png"));
+            btnRankings.setGraphic(cargarIcono("rankings.png"));
     }
+    
+    // Método para cargar imágenes con rutas relativas
+    private ImageView cargarIcono(String nombreArchivo) {
+    Image imagen = new Image(getClass().getResource("/img/" + nombreArchivo).toExternalForm());
+    ImageView imageView = new ImageView(imagen);
+    imageView.setFitWidth(20);  // Ajusta el tamaño del ícono
+    imageView.setFitHeight(20);
+    return imageView;
+}
     
     public void consultarApi(String url) throws IOException{
         
