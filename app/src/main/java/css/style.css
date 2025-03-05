@@ -40,12 +40,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: linear-gradient(to bottom, #388E3C, #2E7D32); 
 }
 
-#btnMostrarCarreras:pressed,
-#btnMisCarreras:pressed,
-#btnRankings:pressed {
-    -fx-background-color: #1B5E20; /* Verde oscuro al presionar */
-}
-
 
 
 
