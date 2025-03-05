@@ -63,7 +63,7 @@ public class ControladorPrincipal implements Initializable{
     private Label labelCategory;
     
     @FXML
-    private HBox hBoxMostrarCarreras;
+    private VBox vBoxMostrarCarreras;
     
     @FXML
     private HBox hBoxMisCarreras;
@@ -105,21 +105,21 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     void btnMisCarreras() {
         vBoxRanking.visibleProperty().set(false);
-        hBoxMostrarCarreras.visibleProperty().set(false);
+        vBoxMostrarCarreras.visibleProperty().set(false);
         hBoxMisCarreras.visibleProperty().set(true);
     }
 
     @FXML
     void btnMostrarCarreras() {
         vBoxRanking.visibleProperty().set(false);
-        hBoxMostrarCarreras.visibleProperty().set(true);
+        vBoxMostrarCarreras.visibleProperty().set(true);
         hBoxMisCarreras.visibleProperty().set(false);
     }
 
     @FXML
     void btnRankigns() {
         vBoxRanking.visibleProperty().set(true);
-        hBoxMostrarCarreras.visibleProperty().set(false);
+        vBoxMostrarCarreras.visibleProperty().set(false);
         hBoxMisCarreras.visibleProperty().set(false);
     }
     
