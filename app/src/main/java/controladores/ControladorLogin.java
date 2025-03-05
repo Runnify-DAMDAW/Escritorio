@@ -47,7 +47,7 @@ public class ControladorLogin {
         
         Stage siu = new Stage();
         Scene mec = new Scene(root);
-        siu.setTitle("Cerrar Programa");
+        siu.setTitle("Programa Principal");
         siu.setScene(mec);
         
         controladorPrincipal = zigueña.getController();
