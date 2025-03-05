@@ -16,8 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
@@ -158,20 +160,28 @@ public class ControladorPrincipal implements Initializable{
             acordeonRanking.getPanes().add(pane);
             
         }
-            btnMostrarCarreras.setGraphic(cargarIcono("carreras.png"));
-            btnMisCarreras.setGraphic(cargarIcono("mis_carreras.png"));
-            btnRankings.setGraphic(cargarIcono("rankings.png"));
+               configurarBoton(btnMostrarCarreras, "carreras.png");
+               configurarBoton(btnMisCarreras, "mis_carreras.png");
+               configurarBoton(btnRankings, "rankings.png");
     }
     
-    // Método para cargar imágenes con rutas relativas
+    private void configurarBoton(Button boton, String nombreIcono) {
+        boton.setGraphic(cargarIcono(nombreIcono));
+        boton.setContentDisplay(ContentDisplay.LEFT);    
+        boton.setGraphicTextGap(10);                    
+        boton.setPrefWidth(200);                        
+        boton.setAlignment(Pos.CENTER_LEFT);             
+    }
+
     private ImageView cargarIcono(String nombreArchivo) {
-    Image imagen = new Image(getClass().getResource("/img/" + nombreArchivo).toExternalForm());
-    ImageView imageView = new ImageView(imagen);
-    imageView.setFitWidth(20);  // Ajusta el tamaño del ícono
-    imageView.setFitHeight(20);
-    return imageView;
-}
-    
+        Image imagen = new Image(getClass().getResource("/img/" + nombreArchivo).toExternalForm());
+        ImageView imageView = new ImageView(imagen);
+        imageView.setFitWidth(24);    
+        imageView.setFitHeight(24);  
+        imageView.setPreserveRatio(true); 
+        return imageView;
+    }
+
     public void consultarApi(String url) throws IOException{
         
         String urlEndpoint = url;
