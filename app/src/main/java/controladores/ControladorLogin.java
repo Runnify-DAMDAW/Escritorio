@@ -42,6 +42,8 @@ public class ControladorLogin {
 
     private boolean operacionExitosa;
     
+    private Stage nose;
+    
     @FXML
     void pulsar() throws IOException {
         String user = txtUser.getText();
@@ -62,8 +64,9 @@ public class ControladorLogin {
         Call<RespuestaLogin> callLogin = apiLogin.login(loginData);
 
         //encolaInsertar(callLogin);
-        Stage nose = (Stage) txtUser.getScene().getWindow();
+        nose = (Stage) txtUser.getScene().getWindow();
         cambiarVentana(nose);
+        
     }
 
     public void encolaInsertar(Call<RespuestaLogin> callLogin) {
@@ -119,6 +122,7 @@ public class ControladorLogin {
         controladorPrincipal.cambiarVentana(nosequeponer);
         
         siu.show();
+        nose.close();
         
         
     }
