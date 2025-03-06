@@ -4,7 +4,8 @@
  */
 package interfaces;
 
-import modelo.CarrerasRunning;
+import java.util.List;
+import modelo.Carrera;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -15,6 +16,6 @@ import retrofit2.http.GET;
 public interface ApiLeer {
     
     @GET("/api/running")
-    Call<CarrerasRunning> obtenerCarreras();
+    Call<List<Carrera>> obtenerCarreras();
     
 }

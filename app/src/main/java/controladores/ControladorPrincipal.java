@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +34,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
-import modelo.CarrerasRunning;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -344,20 +344,10 @@ public class ControladorPrincipal implements Initializable{
             acordeonRanking.getPanes().add(pane);
             
         }
-               configurarBoton(btnMostrarCarreras, "carreras.png");
-               configurarBoton(btnMisCarreras, "mis_carreras.png");
-               configurarBoton(btnRankings, "rankings.png");
                
                
     }
     
-    private void configurarBoton(Button boton, String nombreIcono) {
-        boton.setGraphic(cargarIcono(nombreIcono));
-        boton.setContentDisplay(ContentDisplay.LEFT);    
-        boton.setGraphicTextGap(10);                    
-        boton.setPrefWidth(200);                        
-        boton.setAlignment(Pos.CENTER_LEFT);             
-    }
 
     private ImageView cargarIcono(String nombreArchivo) {
         Image imagen = new Image(getClass().getResource("/img/" + nombreArchivo).toExternalForm());
@@ -368,10 +358,9 @@ public class ControladorPrincipal implements Initializable{
         return imageView;
     }
 
-    public void consultarApi(String url) throws IOException{
-       
+    public void consultarApi() throws IOException {
         
-        String urlEndpoint = url;
+        String urlEndpoint = "http://192.168.70.198:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -382,16 +371,17 @@ public class ControladorPrincipal implements Initializable{
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
 
-
-        Call<CarrerasRunning> call = leerCarreras.obtenerCarreras();
-        Response<CarrerasRunning> hola = call.execute();
-
-        CarrerasRunning listaCarreras = hola.body();
-
-        //Poner lo que devuelva listaCarreras para log
-
+        Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
+        Response<List<Carrera>> response = call.execute();
         
-        
+
+        if (response.isSuccessful() && response.body() != null) {
+            List<Carrera> listaCarreras = response.body();
+            System.out.println(listaCarreras);
+            listViewCarreras.getItems().addAll(listaCarreras);
+        } else {
+            System.err.println("Error al obtener las carreras: " + response.message());
+        }
     }
 
 }
