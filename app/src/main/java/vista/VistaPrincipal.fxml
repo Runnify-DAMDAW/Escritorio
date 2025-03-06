@@ -144,7 +144,7 @@
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelEntryFree" text="Label">
+                                    <Label fx:id="labelEntryFee" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>

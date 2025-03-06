@@ -86,13 +86,13 @@ public class ControladorPrincipal implements Initializable{
     private Label labelDistanciaKm;
 
     @FXML
-    private Label labelEntryFree;
+    private Label labelEntryFee;
 
     @FXML
     private Label labelStatus;
 
     @FXML
-    private ListView<String> listViewCarreras;
+    private ListView<Carrera> listViewCarreras;
     
     @FXML
     private Accordion acordeonRanking;
@@ -189,7 +189,7 @@ public class ControladorPrincipal implements Initializable{
     private void actualizarListaCarreras() {
         listViewCarreras.getItems().clear();
         for (Carrera carrera : carrerasFiltradas) {
-            listViewCarreras.getItems().add(carrera.getName() + " - " + carrera.getLocation());
+            listViewCarreras.getItems().add(carrera);
         }
     }
     
@@ -209,7 +209,21 @@ public class ControladorPrincipal implements Initializable{
                 FXCollections.observableArrayList("Estado", "Abierta", "Cerrada")
         );
 
-        
+        listViewCarreras.setOnMouseClicked(value -> {
+            System.out.println("Carrera" + listViewCarreras.getSelectionModel().getSelectedItem());
+            Carrera carrera = listViewCarreras.getSelectionModel().getSelectedItem();
+            // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
+            //imgCarrera
+            labelDesc.setText("Descripción: "+carrera.getDescription());
+            labelDate.setText("Fecha: "+carrera.getDate().toString());
+            labelDistanciaKm.setText("Distancia en KM: "+String.valueOf(carrera.getDistance_km()));
+            labelCoordenadas.setText("Coordenadas: "+carrera.getCoordinates());
+            labelEntryFee.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
+            labelAvaibleSlots.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
+            labelStatus.setText("Estado: " + carrera.getStatus());
+            labelCategory.setText("Categoría: " + carrera.getCategory());
+            
+        });
         
         carrerasFiltradas.setAll(carreras);
         listViewCarreras.setItems(FXCollections.observableArrayList());

@@ -137,7 +137,7 @@ public class Carrera {
 
     @Override
     public String toString() {
-        return "Carrera{" + "id=" + id + ", name=" + name + ", description=" + description + ", date=" + date + ", distance_km=" + distance_km + ", location=" + location + ", coordinates=" + coordinates + ", entry_fee=" + entry_fee + ", available_slots=" + available_slots + ", status=" + status + ", category=" + category + ", imagen=" + imagen + '}';
+        return name + " - " + location ;
     }
     
     
