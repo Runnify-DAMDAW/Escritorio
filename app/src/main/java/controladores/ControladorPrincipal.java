@@ -221,6 +221,20 @@ public class ControladorPrincipal implements Initializable{
     }
     
     
+    private void mostrarDetallesCarrera(Carrera carrera) {
+        
+        if (carrera != null) {
+            labelDesc.setText("Descripción: " + carrera.getDescription());
+            labelDate.setText("Fecha: " + carrera.getDate().toString());
+            labelDistanciaKm.setText("Distancia en KM: " + carrera.getDistance_km());
+            labelCoordenadas.setText("Coordenadas: " + carrera.getCoordinates());
+            labelEntryFee.setText("Entrada: " + carrera.getEntry_fee() + " €");
+            labelAvaibleSlots.setText("Slots Totales: " + carrera.getAvailable_slots());
+            labelStatus.setText("Estado: " + carrera.getStatus());
+            labelCategory.setText("Categoría: " + carrera.getCategory());
+        }
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
