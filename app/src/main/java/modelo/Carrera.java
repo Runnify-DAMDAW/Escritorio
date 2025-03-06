@@ -23,9 +23,10 @@ public class Carrera {
     private int available_slots;
     private String status;
     private String category;
-    private String imagen;
+    private String image;
+    private RunningParticipant runningParticipants;
 
-    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String imagen) {
+    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, RunningParticipant runningParticipants) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -36,7 +37,8 @@ public class Carrera {
         this.available_slots = available_slots;
         this.status = status;
         this.category = category;
-        this.imagen = imagen;
+        this.image = image;
+        this.runningParticipants = runningParticipants;
     }
 
     public int getId() {
@@ -127,12 +129,20 @@ public class Carrera {
         this.category = category;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImage() {
+        return image;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public RunningParticipant getRunningParticipants() {
+        return runningParticipants;
+    }
+
+    public void setRunningParticipants(RunningParticipant runningParticipants) {
+        this.runningParticipants = runningParticipants;
     }
 
     @Override

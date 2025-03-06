@@ -190,10 +190,7 @@ public class ControladorPrincipal implements Initializable{
         
         return FXCollections.observableArrayList(
                 Arrays.asList(
-                        new Carrera("Maratón de Granada", "Carrera anual en Granada", new Date(2025, 4, 10), 42.195, "Granada, España", "37.1773, -3.5986", 30.00, 5000, "Abierta", "Maratón", ""),
-                        new Carrera("Media Maratón de Sevilla", "Competencia de media maratón", new Date(2025, 4, 10), 21.097, "Sevilla, España", "37.3886, -5.9823", 25.00, 4000, "Abierta", "Media Maratón", ""),
-                        new Carrera("Carrera 10K Madrid", "Carrera urbana de 10K", new Date(2025, 4, 10), 10.0, "Madrid, España", "40.4168, -3.7038", 20.00, 3000, "Cerrada", "10K", ""),
-                        new Carrera("Ultra Trail Pirineos", "Carrera de montaña extrema", new Date(2025, 4, 10), 100.0, "Pirineos, España", "42.6675, 0.5863", 50.00, 1000, "Abierta", "Ultra Trail", "")
+                        
                 )
         );
     }
@@ -201,10 +198,7 @@ public class ControladorPrincipal implements Initializable{
         public static ObservableList<Carrera> getMisCarrerasList() {
         return FXCollections.observableArrayList(
                 Arrays.asList(
-                        new Carrera("Maratón de Granada", "Carrera anual en Granada", new Date(2025, 4, 10), 42.195, "Granada, España", "37.1773, -3.5986", 30.00, 5000, "Abierta", "Maratón", ""),
-                        new Carrera("Media Maratón de Sevilla", "Competencia de media maratón", new Date(2025, 4, 10), 21.097, "Sevilla, España", "37.3886, -5.9823", 25.00, 4000, "Abierta", "Media Maratón", ""),
-                        new Carrera("Carrera 10K Madrid", "Carrera urbana de 10K", new Date(2025, 4, 10), 10.0, "Madrid, España", "40.4168, -3.7038", 20.00, 3000, "Cerrada", "10K", ""),
-                        new Carrera("Ultra Trail Pirineos", "Carrera de montaña extrema", new Date(2025, 4, 10), 100.0, "Pirineos, España", "42.6675, 0.5863", 50.00, 1000, "Abierta", "Ultra Trail", "")
+                        
                 )
         );
     }
