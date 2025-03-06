@@ -274,7 +274,7 @@ public class ControladorPrincipal implements Initializable{
         if (response.isSuccessful() && response.body() != null) {
             List<Carrera> listaCarreras = response.body();
             System.out.println(listaCarreras);
-            listViewCarreras.getItems().addAll(listaCarreras);
+            carreras.setAll(listaCarreras);
         } else {
             System.err.println("Error al obtener las carreras: " + response.message());
         }
