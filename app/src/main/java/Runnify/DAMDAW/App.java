@@ -15,14 +15,14 @@ public class App extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader hola = new FXMLLoader(getClass().getResource("/vista/VistaLogin.fxml"));
-        Parent adios = hola.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaLogin.fxml"));
+        Parent root = loader.load();
         
-        Scene escena = new Scene(adios);
-        primaryStage.setScene(escena);
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.setTitle("Proyecto Runnify");
-        
-       
+
+        // Agregar el icono
         Image logo = new Image(getClass().getResource("/img/LOGO.png").toExternalForm());
         primaryStage.getIcons().add(logo);
         

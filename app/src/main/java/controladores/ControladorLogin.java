@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -47,8 +48,13 @@ public class ControladorLogin {
         
         Stage siu = new Stage();
         Scene mec = new Scene(root);
-        siu.setTitle("Programa Principal");
+        siu.setTitle("Runninfy");
         siu.setScene(mec);
+        
+        // Agregar el icono
+        // Agregar el icono
+        Image logo = new Image(getClass().getResource("/img/LOGO.png").toExternalForm());
+        siu.getIcons().add(logo);
         
         controladorPrincipal = zigueña.getController();
         controladorPrincipal.cambiarVentana(nosequeponer);
