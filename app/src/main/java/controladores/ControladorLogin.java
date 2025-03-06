@@ -61,7 +61,9 @@ public class ControladorLogin {
 
         Call<RespuestaLogin> callLogin = apiLogin.login(loginData);
 
-        encolaInsertar(callLogin);
+        //encolaInsertar(callLogin);
+        Stage nose = (Stage) txtUser.getScene().getWindow();
+        cambiarVentana(nose);
     }
 
     public void encolaInsertar(Call<RespuestaLogin> callLogin) {
