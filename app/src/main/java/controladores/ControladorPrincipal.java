@@ -317,33 +317,6 @@ public class ControladorPrincipal implements Initializable{
         // PANEL MIS CARRERAS
         listViewMisCarreras.setItems(FXCollections.observableArrayList());
         actualizarListaMisCarreras();
-        
-        
-        
-        
-        
-        // PANEL RANKING
-        for (Carrera carrera : carreras) {
-            String titulo = carrera.getName() + " - " + carrera.getLocation();
-
-
-            VBox content = new VBox();
-            TitledPane pane = new TitledPane(titulo, content);
-            pane.setOnMouseClicked(values -> {
-                content.getChildren().clear();
-                content.getChildren().addAll(
-                    new Label("Descripción: " + carrera.getDescription()),
-                    new Label("Fecha: " + carrera.getDate()),
-                    new Label("Distancia: " + carrera.getDistance_km() + " km"),
-                    new Label("Precio: " + carrera.getEntry_fee() + "€"),
-                    new Label("Estado: " + carrera.getStatus()),
-                    new Label("Tipo: " + carrera.getCategory())
-                );
-                System.out.println("Carga datos");
-            });
-            acordeonRanking.getPanes().add(pane);
-            
-        }
                
                
     }
