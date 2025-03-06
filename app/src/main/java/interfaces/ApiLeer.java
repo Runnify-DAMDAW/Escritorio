@@ -18,4 +18,7 @@ public interface ApiLeer {
     @GET("/api/running")
     Call<List<Carrera>> obtenerCarreras();
     
+    @GET("consultarTodos.php")
+    Call<List<Carrera>> obtenerCarrerasLocal();
+    
 }
