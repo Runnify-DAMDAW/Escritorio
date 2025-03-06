@@ -239,7 +239,15 @@ public class ControladorPrincipal implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        configurarFiltros();
+        try{
+            configurarFiltros();
+            consultarApi();
+            listViewCarreras.setOnMouseClicked(e -> mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem()));
+            listViewMisCarreras.setOnMouseClicked(e -> mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem()));
+            actualizarLista(listViewCarreras, carreras);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
                
                
     }
