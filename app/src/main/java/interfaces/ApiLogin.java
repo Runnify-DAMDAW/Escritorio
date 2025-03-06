@@ -4,7 +4,6 @@
  */
 package interfaces;
 
-import modelo.CarrerasRunning;
 import modelo.Login;
 import modelo.RespuestaLogin;
 import retrofit2.Call;

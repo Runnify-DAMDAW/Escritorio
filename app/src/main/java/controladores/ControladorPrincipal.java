@@ -188,25 +188,21 @@ public class ControladorPrincipal implements Initializable{
     }
     
 
-    public static ObservableList<Carrera> getCarrerasList() {
+    private void configurarFiltros() {
         
-        
-        return FXCollections.observableArrayList(
-                Arrays.asList(
-                        
-                )
-        );
-    }
-    
-        public static ObservableList<Carrera> getMisCarrerasList() {
-        return FXCollections.observableArrayList(
-                Arrays.asList(
-                        
-                )
-        );
+        comboBoxFiltroCategoria.setItems(FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K"));
+        comboBoxFiltroCuota.setItems(FXCollections.observableArrayList("Cuota", "20", "25", "30", "50"));
+        comboBoxFiltroEstado.setItems(FXCollections.observableArrayList("Estado", "Abierta", "Cerrada"));
+
+        txtFiltroNombre.textProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        txtFiltroLocalizacion.textProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        txtFiltroFecha.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        comboBoxFiltroCategoria.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        comboBoxFiltroCuota.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        comboBoxFiltroEstado.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        chkFiltroInscrito.selectedProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         
     }
-    
     
     
     private void aplicarFiltros() {
@@ -229,78 +225,7 @@ public class ControladorPrincipal implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // PANEL TODAS LAS CARRERAS
-        comboBoxFiltroCategoria.setItems(
-                FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K")
-        );
-        
-        comboBoxFiltroCuota.setItems(
-                FXCollections.observableArrayList("Cuota", "20", "25", "30", "50")
-        );
-        
-        comboBoxFiltroEstado.setItems(
-                FXCollections.observableArrayList("Estado", "Abierta", "Cerrada")
-        );
-
-        listViewCarreras.setOnMouseClicked(value -> {
-            System.out.println("Carrera" + listViewCarreras.getSelectionModel().getSelectedItem());
-            Carrera carrera = listViewCarreras.getSelectionModel().getSelectedItem();
-            // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
-            //imgCarrera
-            labelDesc.setText("Descripción: "+carrera.getDescription());
-            labelDate.setText("Fecha: "+carrera.getDate().toString());
-            labelDistanciaKm.setText("Distancia en KM: "+String.valueOf(carrera.getDistance_km()));
-            labelCoordenadas.setText("Coordenadas: "+carrera.getCoordinates());
-            labelEntryFee.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
-            labelAvaibleSlots.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
-            labelStatus.setText("Estado: " + carrera.getStatus());
-            labelCategory.setText("Categoría: " + carrera.getCategory());
-            
-        });
-        
-        listViewMisCarreras.setOnMouseClicked( value -> {
-            Carrera carrera = listViewMisCarreras.getSelectionModel().getSelectedItem();
-            // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
-            //imgCarrera
-            labelDescMiCarrera.setText("Descripción: "+carrera.getDescription());
-            labelDateMiCarrera.setText("Fecha: "+carrera.getDate().toString());
-            labelDistanciaKmMiCarrera.setText("Distancia en KM: "+String.valueOf(carrera.getDistance_km()));
-            labelCoordenadasMiCarrera.setText("Coordenadas: "+carrera.getCoordinates());
-            labelEntryFeeMiCarrera.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
-            labelAvaibleSlotsMiCarrera.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
-            labelStatusMiCarrera.setText("Estado: " + carrera.getStatus());
-            labelCategoryMiCarrera.setText("Categoría: " + carrera.getCategory());
-        });
-        
-        carrerasFiltradas.setAll(carreras);
-        listViewCarreras.setItems(FXCollections.observableArrayList());
-        actualizarListaCarreras();
-        
-        txtFiltroNombre.textProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        txtFiltroLocalizacion.textProperty().addListener((obs, old, nuevo) ->
-                aplicarFiltros()
-        );
-        txtFiltroFecha.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        comboBoxFiltroCategoria.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        comboBoxFiltroCuota.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        comboBoxFiltroEstado.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        chkFiltroInscrito.selectedProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-                
-        // PANEL MIS CARRERAS
-        listViewMisCarreras.setItems(FXCollections.observableArrayList());
-        actualizarListaMisCarreras();
+        configurarFiltros();
                
                
     }
