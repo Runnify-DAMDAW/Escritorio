@@ -72,7 +72,6 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private HBox hBoxMisCarreras;
 
-
     @FXML
     private Label labelCoordenadas;
 
@@ -90,9 +89,44 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     private Label labelStatus;
+    
+    //LABELS MIS CARRERAS
+    
+    @FXML
+    private Label labelAvaibleSlotsMiCarrera;
+
+    @FXML
+    private Label labelCategoryMiCarrera;
+    
+    @FXML
+    private VBox vBoxMostrarCarrerasMiCarrera;
+    
+    @FXML
+    private HBox hBoxMisCarrerasMiCarrera;
+
+    @FXML
+    private Label labelCoordenadasMiCarrera;
+
+    @FXML
+    private Label labelDateMiCarrera;
+
+    @FXML
+    private Label labelDescMiCarrera;
+
+    @FXML
+    private Label labelDistanciaKmMiCarrera;
+
+    @FXML
+    private Label labelEntryFeeMiCarrera;
+
+    @FXML
+    private Label labelStatusMiCarrera;
 
     @FXML
     private ListView<Carrera> listViewCarreras;
+    
+    @FXML
+    private ListView<Carrera> listViewMisCarreras;
     
     @FXML
     private Accordion acordeonRanking;
@@ -164,8 +198,20 @@ public class ControladorPrincipal implements Initializable{
         );
     }
     
+        public static ObservableList<Carrera> getMisCarrerasList() {
+        return FXCollections.observableArrayList(
+                Arrays.asList(
+                        new Carrera("Maratón de Granada", "Carrera anual en Granada", new Date(2025, 4, 10), 42.195, "Granada, España", "37.1773, -3.5986", 30.00, 5000, "Abierta", "Maratón", ""),
+                        new Carrera("Media Maratón de Sevilla", "Competencia de media maratón", new Date(2025, 4, 10), 21.097, "Sevilla, España", "37.3886, -5.9823", 25.00, 4000, "Abierta", "Media Maratón", ""),
+                        new Carrera("Carrera 10K Madrid", "Carrera urbana de 10K", new Date(2025, 4, 10), 10.0, "Madrid, España", "40.4168, -3.7038", 20.00, 3000, "Cerrada", "10K", ""),
+                        new Carrera("Ultra Trail Pirineos", "Carrera de montaña extrema", new Date(2025, 4, 10), 100.0, "Pirineos, España", "42.6675, 0.5863", 50.00, 1000, "Abierta", "Ultra Trail", "")
+                )
+        );
+    }
+    
     
     private ObservableList<Carrera> carreras = getCarrerasList();
+    private ObservableList<Carrera> misCarreras = getCarrerasList();
     private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
     
     private void aplicarFiltros() {
@@ -193,10 +239,19 @@ public class ControladorPrincipal implements Initializable{
         }
     }
     
+    private void actualizarListaMisCarreras() {
+        listViewMisCarreras.getItems().clear();
+        for (Carrera carrera: misCarreras){
+            listViewMisCarreras.getItems().add(carrera);
+        }
+        
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // PANEL TODAS LAS CARRERAS
         comboBoxFiltroCategoria.setItems(
                 FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K")
         );
@@ -225,6 +280,20 @@ public class ControladorPrincipal implements Initializable{
             
         });
         
+        listViewMisCarreras.setOnMouseClicked( value -> {
+            Carrera carrera = listViewMisCarreras.getSelectionModel().getSelectedItem();
+            // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
+            //imgCarrera
+            labelDescMiCarrera.setText("Descripción: "+carrera.getDescription());
+            labelDateMiCarrera.setText("Fecha: "+carrera.getDate().toString());
+            labelDistanciaKmMiCarrera.setText("Distancia en KM: "+String.valueOf(carrera.getDistance_km()));
+            labelCoordenadasMiCarrera.setText("Coordenadas: "+carrera.getCoordinates());
+            labelEntryFeeMiCarrera.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
+            labelAvaibleSlotsMiCarrera.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
+            labelStatusMiCarrera.setText("Estado: " + carrera.getStatus());
+            labelCategoryMiCarrera.setText("Categoría: " + carrera.getCategory());
+        });
+        
         carrerasFiltradas.setAll(carreras);
         listViewCarreras.setItems(FXCollections.observableArrayList());
         actualizarListaCarreras();
@@ -251,6 +320,13 @@ public class ControladorPrincipal implements Initializable{
                 aplicarFiltros()
         );
                 
+        // PANEL MIS CARRERAS
+        listViewMisCarreras.setItems(FXCollections.observableArrayList());
+        actualizarListaMisCarreras();
+        
+        
+        
+        
         
         // PANEL RANKING
         for (Carrera carrera : carreras) {
