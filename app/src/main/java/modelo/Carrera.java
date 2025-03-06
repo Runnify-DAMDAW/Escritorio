@@ -14,9 +14,7 @@ public class Carrera {
     
     private int id;
     private String name;
-    private String description;
-    private Date date;
-    private double distance_km;
+    private String date;
     private String location;
     private String coordinates;
     private double entry_fee;
@@ -26,11 +24,9 @@ public class Carrera {
     private String image;
     private RunningParticipant runningParticipants;
 
-    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, RunningParticipant runningParticipants) {
+    public Carrera(String name, String date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, RunningParticipant runningParticipants) {
         this.name = name;
-        this.description = description;
         this.date = date;
-        this.distance_km = distance_km;
         this.location = location;
         this.coordinates = coordinates;
         this.entry_fee = entry_fee;
@@ -57,28 +53,13 @@ public class Carrera {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
-    }
-
-    public double getDistance_km() {
-        return distance_km;
-    }
-
-    public void setDistance_km(double distance_km) {
-        this.distance_km = distance_km;
     }
 
     public String getLocation() {

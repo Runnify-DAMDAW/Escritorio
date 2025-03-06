@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -205,7 +206,7 @@ public class ControladorPrincipal implements Initializable{
     
     
     private ObservableList<Carrera> carreras = getCarrerasList();
-    private ObservableList<Carrera> misCarreras = getCarrerasList();
+    private ObservableList<Carrera> misCarreras = getMisCarrerasList();
     private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
     
     private void aplicarFiltros() {
@@ -245,6 +246,12 @@ public class ControladorPrincipal implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        try{
+            consultarApi();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
         // PANEL TODAS LAS CARRERAS
         comboBoxFiltroCategoria.setItems(
                 FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K")
@@ -263,9 +270,6 @@ public class ControladorPrincipal implements Initializable{
             Carrera carrera = listViewCarreras.getSelectionModel().getSelectedItem();
             // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
             //imgCarrera
-            labelDesc.setText("Descripción: "+carrera.getDescription());
-            labelDate.setText("Fecha: "+carrera.getDate().toString());
-            labelDistanciaKm.setText("Distancia en KM: "+String.valueOf(carrera.getDistance_km()));
             labelCoordenadas.setText("Coordenadas: "+carrera.getCoordinates());
             labelEntryFee.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
             labelAvaibleSlots.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
@@ -278,9 +282,6 @@ public class ControladorPrincipal implements Initializable{
             Carrera carrera = listViewMisCarreras.getSelectionModel().getSelectedItem();
             // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
             //imgCarrera
-            labelDescMiCarrera.setText("Descripción: "+carrera.getDescription());
-            labelDateMiCarrera.setText("Fecha: "+carrera.getDate().toString());
-            labelDistanciaKmMiCarrera.setText("Distancia en KM: "+String.valueOf(carrera.getDistance_km()));
             labelCoordenadasMiCarrera.setText("Coordenadas: "+carrera.getCoordinates());
             labelEntryFeeMiCarrera.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
             labelAvaibleSlotsMiCarrera.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
@@ -332,9 +333,7 @@ public class ControladorPrincipal implements Initializable{
             pane.setOnMouseClicked(values -> {
                 content.getChildren().clear();
                 content.getChildren().addAll(
-                    new Label("Descripción: " + carrera.getDescription()),
                     new Label("Fecha: " + carrera.getDate()),
-                    new Label("Distancia: " + carrera.getDistance_km() + " km"),
                     new Label("Precio: " + carrera.getEntry_fee() + "€"),
                     new Label("Estado: " + carrera.getStatus()),
                     new Label("Tipo: " + carrera.getCategory())
@@ -368,10 +367,9 @@ public class ControladorPrincipal implements Initializable{
         return imageView;
     }
 
-    public void consultarApi(String url) throws IOException{
-       
+    public void consultarApi() throws IOException {
         
-        String urlEndpoint = url;
+        String urlEndpoint = "http://192.168.70.198:8000/api/running/";
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -382,16 +380,16 @@ public class ControladorPrincipal implements Initializable{
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
 
+        Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
+        Response<List<Carrera>> response = call.execute();
 
-        Call<CarrerasRunning> call = leerCarreras.obtenerCarreras();
-        Response<CarrerasRunning> hola = call.execute();
-
-        CarrerasRunning listaCarreras = hola.body();
-
-        //Poner lo que devuelva listaCarreras para log
-
-        
-        
+        if (response.isSuccessful() && response.body() != null) {
+            List<Carrera> listaCarreras = response.body();
+            listViewCarreras.getItems().addAll(listaCarreras);
+        } else {
+            System.err.println("Error al obtener las carreras: " + response.message());
+            
+        }
     }
 
 }
