@@ -185,61 +185,6 @@ public class ControladorPrincipal implements Initializable{
     }
     
 
-    public static ObservableList<Carrera> getCarrerasList() {
-        
-        
-        return FXCollections.observableArrayList(
-                Arrays.asList(
-                        
-                )
-        );
-    }
-    
-        public static ObservableList<Carrera> getMisCarrerasList() {
-        return FXCollections.observableArrayList(
-                Arrays.asList(
-                        
-                )
-        );
-    }
-    
-    
-    private ObservableList<Carrera> carreras = getCarrerasList();
-    private ObservableList<Carrera> misCarreras = getMisCarrerasList();
-    private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
-    
-    private void aplicarFiltros() {
-        carrerasFiltradas.setAll(carreras.filtered(carrera -> {
-            boolean coincideNombre = txtFiltroNombre.getText().isEmpty() || carrera.getName().toLowerCase().contains(txtFiltroNombre.getText().toLowerCase());
-            boolean coincideLocalizacion = txtFiltroLocalizacion.getText().isEmpty() || carrera.getLocation().toLowerCase().contains(txtFiltroLocalizacion.getText().toLowerCase());
-            // VER EN QUE FORMATO DEVUELVE LA FECHA LA API
-            //boolean coincideFecha = txtFiltroFecha.getValue() == null || );
-            boolean coincideCategoria = comboBoxFiltroCategoria.getValue() == null || "Categoría".equals(comboBoxFiltroCategoria.getValue().toString()) || carrera.getCategory().equalsIgnoreCase(comboBoxFiltroCategoria.getValue().toString());
-            boolean coincideCuota = comboBoxFiltroCuota.getValue() == null || "Cuota".equals(comboBoxFiltroCuota.getValue().toString()) || carrera.getEntry_fee() <= Double.parseDouble(comboBoxFiltroCuota.getValue().toString());
-            boolean coincideEstado = comboBoxFiltroEstado.getValue() == null || "Estado".equals(comboBoxFiltroEstado.getValue().toString()) || carrera.getStatus().equalsIgnoreCase(comboBoxFiltroEstado.getValue().toString());
-            
-            //BUSCAR EN LA CARRERA CARRERAPARTICIPANTS Y VERIFICAR SI ESTÁ EL USUARIO
-            //boolean coincideInscripcion = !chkFiltroInscrito.isSelected() || ;
-            
-            return coincideNombre && coincideLocalizacion && /*coincideFecha &&*/ coincideCategoria && coincideCuota && coincideEstado /* &&coincideInscripcion*/;
-        }));
-        actualizarListaCarreras();
-    }
-
-    private void actualizarListaCarreras() {
-        listViewCarreras.getItems().clear();
-        for (Carrera carrera : carrerasFiltradas) {
-            listViewCarreras.getItems().add(carrera);
-        }
-    }
-    
-    private void actualizarListaMisCarreras() {
-        listViewMisCarreras.getItems().clear();
-        for (Carrera carrera: misCarreras){
-            listViewMisCarreras.getItems().add(carrera);
-        }
-        
-    }
     
     
     @Override
@@ -250,125 +195,13 @@ public class ControladorPrincipal implements Initializable{
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-        
-        // PANEL TODAS LAS CARRERAS
-        comboBoxFiltroCategoria.setItems(
-                FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K")
-        );
-        
-        comboBoxFiltroCuota.setItems(
-                FXCollections.observableArrayList("Cuota", "20", "25", "30", "50")
-        );
-        
-        comboBoxFiltroEstado.setItems(
-                FXCollections.observableArrayList("Estado", "Abierta", "Cerrada")
-        );
-
-        listViewCarreras.setOnMouseClicked(value -> {
-            System.out.println("Carrera" + listViewCarreras.getSelectionModel().getSelectedItem());
-            Carrera carrera = listViewCarreras.getSelectionModel().getSelectedItem();
-            // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
-            //imgCarrera
-            labelCoordenadas.setText("Coordenadas: "+carrera.getCoordinates());
-            labelEntryFee.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
-            labelAvaibleSlots.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
-            labelStatus.setText("Estado: " + carrera.getStatus());
-            labelCategory.setText("Categoría: " + carrera.getCategory());
-            
-        });
-        
-        listViewMisCarreras.setOnMouseClicked( value -> {
-            Carrera carrera = listViewMisCarreras.getSelectionModel().getSelectedItem();
-            // MOSTRAR FOTO (SUPONGO QUE SERA UN ENLACE A UNA FOTO DE INTERNET)
-            //imgCarrera
-            labelCoordenadasMiCarrera.setText("Coordenadas: "+carrera.getCoordinates());
-            labelEntryFeeMiCarrera.setText("Entrada: " + String.valueOf(carrera.getEntry_fee()) + " € ");
-            labelAvaibleSlotsMiCarrera.setText("Slots Totales: " + String.valueOf(carrera.getAvailable_slots()));
-            labelStatusMiCarrera.setText("Estado: " + carrera.getStatus());
-            labelCategoryMiCarrera.setText("Categoría: " + carrera.getCategory());
-        });
-        
-        carrerasFiltradas.setAll(carreras);
-        listViewCarreras.setItems(FXCollections.observableArrayList());
-        actualizarListaCarreras();
-        
-        txtFiltroNombre.textProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        txtFiltroLocalizacion.textProperty().addListener((obs, old, nuevo) ->
-                aplicarFiltros()
-        );
-        txtFiltroFecha.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        comboBoxFiltroCategoria.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        comboBoxFiltroCuota.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        comboBoxFiltroEstado.valueProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-        chkFiltroInscrito.selectedProperty().addListener((obs, old, nuevo) -> 
-                aplicarFiltros()
-        );
-                
-        // PANEL MIS CARRERAS
-        listViewMisCarreras.setItems(FXCollections.observableArrayList());
-        actualizarListaMisCarreras();
-        
-        
-        
-        
-        
-        // PANEL RANKING
-        for (Carrera carrera : carreras) {
-            String titulo = carrera.getName() + " - " + carrera.getLocation();
-
-
-            VBox content = new VBox();
-            TitledPane pane = new TitledPane(titulo, content);
-            pane.setOnMouseClicked(values -> {
-                content.getChildren().clear();
-                content.getChildren().addAll(
-                    new Label("Fecha: " + carrera.getDate()),
-                    new Label("Precio: " + carrera.getEntry_fee() + "€"),
-                    new Label("Estado: " + carrera.getStatus()),
-                    new Label("Tipo: " + carrera.getCategory())
-                );
-                System.out.println("Carga datos");
-            });
-            acordeonRanking.getPanes().add(pane);
-            
-        }
-               configurarBoton(btnMostrarCarreras, "carreras.png");
-               configurarBoton(btnMisCarreras, "mis_carreras.png");
-               configurarBoton(btnRankings, "rankings.png");
                
                
     }
     
-    private void configurarBoton(Button boton, String nombreIcono) {
-        boton.setGraphic(cargarIcono(nombreIcono));
-        boton.setContentDisplay(ContentDisplay.LEFT);    
-        boton.setGraphicTextGap(10);                    
-        boton.setPrefWidth(200);                        
-        boton.setAlignment(Pos.CENTER_LEFT);             
-    }
-
-    private ImageView cargarIcono(String nombreArchivo) {
-        Image imagen = new Image(getClass().getResource("/img/" + nombreArchivo).toExternalForm());
-        ImageView imageView = new ImageView(imagen);
-        imageView.setFitWidth(24);    
-        imageView.setFitHeight(24);  
-        imageView.setPreserveRatio(true); 
-        return imageView;
-    }
-
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://192.168.70.198:8000/api/running/";
+        String urlEndpoint = "http://192.168.70.198:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -381,13 +214,14 @@ public class ControladorPrincipal implements Initializable{
 
         Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
         Response<List<Carrera>> response = call.execute();
+        
 
         if (response.isSuccessful() && response.body() != null) {
             List<Carrera> listaCarreras = response.body();
+            System.out.println(listaCarreras);
             listViewCarreras.getItems().addAll(listaCarreras);
         } else {
             System.err.println("Error al obtener las carreras: " + response.message());
-            
         }
     }
 
