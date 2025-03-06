@@ -129,37 +129,37 @@
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelDateMiCarrera" text="Label">
+                                    <Label fx:id="labelDate" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelDistanciaKmMiCarrera" text="Label">
+                                    <Label fx:id="labelDistanciaKm" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelCoordenadasMiCarrera" text="Label">
+                                    <Label fx:id="labelCoordenadas" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelEntryFeeMiCarrera" text="Label">
+                                    <Label fx:id="labelEntryFee" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelAvaibleSlotsMiCarrera" text="Label">
+                                    <Label fx:id="labelAvaibleSlots" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelStatusMiCarrera" text="Label">
+                                    <Label fx:id="labelStatus" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="labelCategoryMiCarrera" text="Label">
+                                    <Label fx:id="labelCategory" text="Label">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
