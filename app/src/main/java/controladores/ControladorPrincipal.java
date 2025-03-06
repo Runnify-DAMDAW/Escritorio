@@ -19,9 +19,13 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -96,6 +100,29 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private VBox vBoxRanking;
     
+    //FILTROS
+    
+    @FXML
+    private CheckBox chkFiltroInscrito;
+
+    @FXML
+    private ComboBox<String> comboBoxFiltroCategoria;
+
+    @FXML
+    private ComboBox<String> comboBoxFiltroCuota;
+
+    @FXML
+    private ComboBox<String> comboBoxFiltroEstado;
+    
+    @FXML
+    private DatePicker txtFiltroFecha;
+
+    @FXML
+    private TextField txtFiltroLocalizacion;
+
+    @FXML
+    private TextField txtFiltroNombre;
+    
     private Stage ventana;
     
     public void cambiarVentana(Stage hola) {
@@ -125,20 +152,93 @@ public class ControladorPrincipal implements Initializable{
     
 
     public static ObservableList<Carrera> getCarrerasList() {
+        
+        
         return FXCollections.observableArrayList(
                 Arrays.asList(
-                        new Carrera("Maratón de Granada", "Carrera anual en Granada", new Date(2025-1900, 4, 10), 42.195, "Granada, España", "37.1773, -3.5986", 30.00, 5000, "Abierta", "Maratón", ""),
-                        new Carrera("Media Maratón de Sevilla", "Competencia de media maratón", new Date(2025-1900, 4, 10), 21.097, "Sevilla, España", "37.3886, -5.9823", 25.00, 4000, "Abierta", "Media Maratón", ""),
-                        new Carrera("Carrera 10K Madrid", "Carrera urbana de 10K", new Date(2025-1900, 4, 10), 10.0, "Madrid, España", "40.4168, -3.7038", 20.00, 3000, "Cerrada", "10K", ""),
-                        new Carrera("Ultra Trail Pirineos", "Carrera de montaña extrema", new Date(2025-1900, 4, 10), 100.0, "Pirineos, España", "42.6675, 0.5863", 50.00, 1000, "Abierta", "Ultra Trail", "")
+                        new Carrera("Maratón de Granada", "Carrera anual en Granada", new Date(2025, 4, 10), 42.195, "Granada, España", "37.1773, -3.5986", 30.00, 5000, "Abierta", "Maratón", ""),
+                        new Carrera("Media Maratón de Sevilla", "Competencia de media maratón", new Date(2025, 4, 10), 21.097, "Sevilla, España", "37.3886, -5.9823", 25.00, 4000, "Abierta", "Media Maratón", ""),
+                        new Carrera("Carrera 10K Madrid", "Carrera urbana de 10K", new Date(2025, 4, 10), 10.0, "Madrid, España", "40.4168, -3.7038", 20.00, 3000, "Cerrada", "10K", ""),
+                        new Carrera("Ultra Trail Pirineos", "Carrera de montaña extrema", new Date(2025, 4, 10), 100.0, "Pirineos, España", "42.6675, 0.5863", 50.00, 1000, "Abierta", "Ultra Trail", "")
                 )
         );
     }
     
+    
+    private ObservableList<Carrera> carreras = getCarrerasList();
+    private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
+    
+    private void aplicarFiltros() {
+        carrerasFiltradas.setAll(carreras.filtered(carrera -> {
+            boolean coincideNombre = txtFiltroNombre.getText().isEmpty() || carrera.getName().toLowerCase().contains(txtFiltroNombre.getText().toLowerCase());
+            boolean coincideLocalizacion = txtFiltroLocalizacion.getText().isEmpty() || carrera.getLocation().toLowerCase().contains(txtFiltroLocalizacion.getText().toLowerCase());
+            // VER EN QUE FORMATO DEVUELVE LA FECHA LA API
+            //boolean coincideFecha = txtFiltroFecha.getValue() == null || );
+            boolean coincideCategoria = comboBoxFiltroCategoria.getValue() == null || "Categoría".equals(comboBoxFiltroCategoria.getValue().toString()) || carrera.getCategory().equalsIgnoreCase(comboBoxFiltroCategoria.getValue().toString());
+            boolean coincideCuota = comboBoxFiltroCuota.getValue() == null || "Cuota".equals(comboBoxFiltroCuota.getValue().toString()) || carrera.getEntry_fee() <= Double.parseDouble(comboBoxFiltroCuota.getValue().toString());
+            boolean coincideEstado = comboBoxFiltroEstado.getValue() == null || "Estado".equals(comboBoxFiltroEstado.getValue().toString()) || carrera.getStatus().equalsIgnoreCase(comboBoxFiltroEstado.getValue().toString());
+            
+            //BUSCAR EN LA CARRERA CARRERAPARTICIPANTS Y VERIFICAR SI ESTÁ EL USUARIO
+            //boolean coincideInscripcion = !chkFiltroInscrito.isSelected() || ;
+            
+            return coincideNombre && coincideLocalizacion && /*coincideFecha &&*/ coincideCategoria && coincideCuota && coincideEstado /* &&coincideInscripcion*/;
+        }));
+        actualizarListaCarreras();
+    }
+
+    private void actualizarListaCarreras() {
+        listViewCarreras.getItems().clear();
+        for (Carrera carrera : carrerasFiltradas) {
+            listViewCarreras.getItems().add(carrera.getName() + " - " + carrera.getLocation());
+        }
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        ObservableList<Carrera> carreras = getCarrerasList();
+        comboBoxFiltroCategoria.setItems(
+                FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K")
+        );
+        
+        comboBoxFiltroCuota.setItems(
+                FXCollections.observableArrayList("Cuota", "20", "25", "30", "50")
+        );
+        
+        comboBoxFiltroEstado.setItems(
+                FXCollections.observableArrayList("Estado", "Abierta", "Cerrada")
+        );
+
+        
+        
+        carrerasFiltradas.setAll(carreras);
+        listViewCarreras.setItems(FXCollections.observableArrayList());
+        actualizarListaCarreras();
+        
+        txtFiltroNombre.textProperty().addListener((obs, old, nuevo) -> 
+                aplicarFiltros()
+        );
+        txtFiltroLocalizacion.textProperty().addListener((obs, old, nuevo) ->
+                aplicarFiltros()
+        );
+        txtFiltroFecha.valueProperty().addListener((obs, old, nuevo) -> 
+                aplicarFiltros()
+        );
+        comboBoxFiltroCategoria.valueProperty().addListener((obs, old, nuevo) -> 
+                aplicarFiltros()
+        );
+        comboBoxFiltroCuota.valueProperty().addListener((obs, old, nuevo) -> 
+                aplicarFiltros()
+        );
+        comboBoxFiltroEstado.valueProperty().addListener((obs, old, nuevo) -> 
+                aplicarFiltros()
+        );
+        chkFiltroInscrito.selectedProperty().addListener((obs, old, nuevo) -> 
+                aplicarFiltros()
+        );
+                
+        
+        // PANEL RANKING
         for (Carrera carrera : carreras) {
             String titulo = carrera.getName() + " - " + carrera.getLocation();
 
@@ -163,6 +263,8 @@ public class ControladorPrincipal implements Initializable{
                configurarBoton(btnMostrarCarreras, "carreras.png");
                configurarBoton(btnMisCarreras, "mis_carreras.png");
                configurarBoton(btnRankings, "rankings.png");
+               
+               
     }
     
     private void configurarBoton(Button boton, String nombreIcono) {
