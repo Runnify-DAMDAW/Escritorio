@@ -157,6 +157,9 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private TextField txtFiltroNombre;
     
+    private ObservableList<Carrera> carreras = FXCollections.observableArrayList();
+    private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
+    
     private Stage ventana;
     
     public void cambiarVentana(Stage hola) {
@@ -205,45 +208,22 @@ public class ControladorPrincipal implements Initializable{
     }
     
     
-    private ObservableList<Carrera> carreras = getCarrerasList();
-    private ObservableList<Carrera> misCarreras = getCarrerasList();
-    private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
     
     private void aplicarFiltros() {
-        
-        carrerasFiltradas.setAll(carreras.filtered(carrera -> {
-            
-            boolean coincideNombre = txtFiltroNombre.getText().isEmpty() || carrera.getName().toLowerCase().contains(txtFiltroNombre.getText().toLowerCase());
-            boolean coincideLocalizacion = txtFiltroLocalizacion.getText().isEmpty() || carrera.getLocation().toLowerCase().contains(txtFiltroLocalizacion.getText().toLowerCase());
-            // VER EN QUE FORMATO DEVUELVE LA FECHA LA API
-            //boolean coincideFecha = txtFiltroFecha.getValue() == null || );
-            boolean coincideCategoria = comboBoxFiltroCategoria.getValue() == null || "Categoría".equals(comboBoxFiltroCategoria.getValue().toString()) || carrera.getCategory().equalsIgnoreCase(comboBoxFiltroCategoria.getValue().toString());
-            boolean coincideCuota = comboBoxFiltroCuota.getValue() == null || "Cuota".equals(comboBoxFiltroCuota.getValue().toString()) || carrera.getEntry_fee() <= Double.parseDouble(comboBoxFiltroCuota.getValue().toString());
-            boolean coincideEstado = comboBoxFiltroEstado.getValue() == null || "Estado".equals(comboBoxFiltroEstado.getValue().toString()) || carrera.getStatus().equalsIgnoreCase(comboBoxFiltroEstado.getValue().toString());
-            
-            //BUSCAR EN LA CARRERA CARRERAPARTICIPANTS Y VERIFICAR SI ESTÁ EL USUARIO
-            //boolean coincideInscripcion = !chkFiltroInscrito.isSelected() || ;
-            
-            return coincideNombre && coincideLocalizacion && /*coincideFecha &&*/ coincideCategoria && coincideCuota && coincideEstado /* &&coincideInscripcion*/;
-        }));
-        
-        actualizarListaCarreras();
+        carrerasFiltradas.setAll(carreras.filtered(carrera ->
+            (txtFiltroNombre.getText().isEmpty() || carrera.getName().toLowerCase().contains(txtFiltroNombre.getText().toLowerCase())) &&
+            (txtFiltroLocalizacion.getText().isEmpty() || carrera.getLocation().toLowerCase().contains(txtFiltroLocalizacion.getText().toLowerCase())) &&
+            (comboBoxFiltroCategoria.getValue() == null || "Categoría".equals(comboBoxFiltroCategoria.getValue()) || carrera.getCategory().equalsIgnoreCase(comboBoxFiltroCategoria.getValue())) &&
+            (comboBoxFiltroCuota.getValue() == null || "Cuota".equals(comboBoxFiltroCuota.getValue()) || carrera.getEntry_fee() <= Double.parseDouble(comboBoxFiltroCuota.getValue())) &&
+            (comboBoxFiltroEstado.getValue() == null || "Estado".equals(comboBoxFiltroEstado.getValue()) || carrera.getStatus().equalsIgnoreCase(comboBoxFiltroEstado.getValue()))
+        ));
+        actualizarLista(listViewCarreras, carrerasFiltradas);
     }
 
-    private void actualizarListaCarreras() {
-        listViewCarreras.getItems().clear();
-        for (Carrera carrera : carrerasFiltradas) {
-            listViewCarreras.getItems().add(carrera);
-        }
+    private void actualizarLista(ListView<Carrera> lista, ObservableList<Carrera> carreras) {
+        lista.getItems().setAll(carreras);
     }
     
-    private void actualizarListaMisCarreras() {
-        listViewMisCarreras.getItems().clear();
-        for (Carrera carrera: misCarreras){
-            listViewMisCarreras.getItems().add(carrera);
-        }
-        
-    }
     
     
     @Override
