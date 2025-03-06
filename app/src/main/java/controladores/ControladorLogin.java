@@ -26,6 +26,8 @@ public class ControladorLogin {
     private TextField txtUser;
     
     private ControladorPrincipal controladorPrincipal;
+    
+    private Stage ventana;
 
     @FXML
     void pulsar() throws IOException {
@@ -58,6 +60,9 @@ public class ControladorLogin {
         
         controladorPrincipal = zigueña.getController();
         controladorPrincipal.cambiarVentana(nosequeponer);
+        
+        ventana = (Stage) txtUser.getScene().getWindow();
+        ventana.close();
         
         siu.show();
         
