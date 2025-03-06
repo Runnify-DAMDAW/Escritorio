@@ -165,23 +165,23 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     void btnMisCarreras() {
-        vBoxRanking.visibleProperty().set(false);
-        vBoxMostrarCarreras.visibleProperty().set(false);
-        hBoxMisCarreras.visibleProperty().set(true);
+        mostrarSeccion(false, false, true); 
     }
 
     @FXML
-    void btnMostrarCarreras() {
-        vBoxRanking.visibleProperty().set(false);
-        vBoxMostrarCarreras.visibleProperty().set(true);
-        hBoxMisCarreras.visibleProperty().set(false);
+    void btnMostrarCarreras() { 
+        mostrarSeccion(false, true, false); 
     }
 
     @FXML
-    void btnRankigns() {
-        vBoxRanking.visibleProperty().set(true);
-        vBoxMostrarCarreras.visibleProperty().set(false);
-        hBoxMisCarreras.visibleProperty().set(false);
+    void btnRankigns() { 
+        mostrarSeccion(true, false, false); 
+    }
+
+    private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras) {
+        vBoxRanking.setVisible(ranking);
+        vBoxMostrarCarreras.setVisible(mostrarCarreras);
+        hBoxMisCarreras.setVisible(misCarreras);
     }
     
 
@@ -201,6 +201,7 @@ public class ControladorPrincipal implements Initializable{
                         
                 )
         );
+        
     }
     
     
@@ -209,7 +210,9 @@ public class ControladorPrincipal implements Initializable{
     private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
     
     private void aplicarFiltros() {
+        
         carrerasFiltradas.setAll(carreras.filtered(carrera -> {
+            
             boolean coincideNombre = txtFiltroNombre.getText().isEmpty() || carrera.getName().toLowerCase().contains(txtFiltroNombre.getText().toLowerCase());
             boolean coincideLocalizacion = txtFiltroLocalizacion.getText().isEmpty() || carrera.getLocation().toLowerCase().contains(txtFiltroLocalizacion.getText().toLowerCase());
             // VER EN QUE FORMATO DEVUELVE LA FECHA LA API
@@ -223,6 +226,7 @@ public class ControladorPrincipal implements Initializable{
             
             return coincideNombre && coincideLocalizacion && /*coincideFecha &&*/ coincideCategoria && coincideCuota && coincideEstado /* &&coincideInscripcion*/;
         }));
+        
         actualizarListaCarreras();
     }
 
