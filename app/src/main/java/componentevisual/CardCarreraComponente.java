@@ -23,6 +23,7 @@ public class CardCarreraComponente extends VBox {
 
     // Componentes visuales
     private final ImageView imgCarrera;
+    private final Label labelNombre;
     private final Label labelDesc;
     private final Label labelDate;
     private final Label labelDistanciaKm;
@@ -39,6 +40,7 @@ public class CardCarreraComponente extends VBox {
         imgCarrera.setFitHeight(200); // Alto de la imagen
         imgCarrera.setPreserveRatio(true);
         
+        labelNombre = new Label();
         labelDesc = new Label();
         labelDate = new Label();
         labelDistanciaKm = new Label();
@@ -48,7 +50,9 @@ public class CardCarreraComponente extends VBox {
         labelStatus = new Label();
         labelCategory = new Label();
 
-        Font font = Font.font("Arial", FontWeight.BOLD, 14);
+        Font font = Font.font("Arial", FontWeight.BOLD, 12);
+        Font fontNombre = Font.font("Arial", FontWeight.BOLD, 14);
+        labelNombre.setFont(fontNombre);
         labelDesc.setFont(font);
         labelDate.setFont(font);
         labelDistanciaKm.setFont(font);
@@ -58,14 +62,15 @@ public class CardCarreraComponente extends VBox {
         labelStatus.setFont(font);
         labelCategory.setFont(font);
 
+        labelNombre.setTextFill(Color.RED);
         labelDesc.setTextFill(Color.DARKBLUE);
-        labelDate.setTextFill(Color.DARKGREEN);
-        labelDistanciaKm.setTextFill(Color.DARKORANGE);
-        labelCoordenadas.setTextFill(Color.DARKMAGENTA);
-        labelEntryFee.setTextFill(Color.DARKRED);
-        labelAvaibleSlots.setTextFill(Color.DARKCYAN);
-        labelStatus.setTextFill(Color.DARKSLATEBLUE);
-        labelCategory.setTextFill(Color.DARKGOLDENROD);
+        labelDate.setTextFill(Color.DARKBLUE);
+        labelDistanciaKm.setTextFill(Color.DARKBLUE);
+        labelCoordenadas.setTextFill(Color.DARKBLUE);
+        labelEntryFee.setTextFill(Color.DARKBLUE);
+        labelAvaibleSlots.setTextFill(Color.DARKBLUE);
+        labelStatus.setTextFill(Color.DARKBLUE);
+        labelCategory.setTextFill(Color.DARKBLUE);
 
         this.setSpacing(10);
         this.setPadding(new Insets(15));
@@ -74,6 +79,7 @@ public class CardCarreraComponente extends VBox {
 
         this.getChildren().addAll(
             imgCarrera,
+            labelNombre,
             labelDesc,
             labelDate,
             labelDistanciaKm,
@@ -88,10 +94,11 @@ public class CardCarreraComponente extends VBox {
             
             if (carrera != null) {
                 imgCarrera.setImage(new Image(carrera.getImage()));
+                labelNombre.setText(carrera.getName());
                 labelDesc.setText("Descripción: " + carrera.getDescription());
                 labelDate.setText("Fecha: " + carrera.getDate().toString());
                 labelDistanciaKm.setText("Distancia en KM: " + carrera.getDistance_km());
-                labelCoordenadas.setText("Coordenadas: " + carrera.getCoordinates());
+                labelCoordenadas.setText("Lugar: " + carrera.getLocation());
                 labelEntryFee.setText("Entrada: " + carrera.getEntry_fee() + " €");
                 labelAvaibleSlots.setText("Slots Totales: " + carrera.getAvailable_slots());
                 labelStatus.setText("Estado: " + carrera.getStatus());
