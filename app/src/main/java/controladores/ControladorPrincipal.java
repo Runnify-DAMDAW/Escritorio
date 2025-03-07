@@ -6,6 +6,7 @@ package controladores;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import componentevisual.CardCarreraComponente;
 import interfaces.ApiLeer;
 import java.io.IOException;
 import java.net.URL;
@@ -165,6 +166,10 @@ public class ControladorPrincipal implements Initializable{
     
     private Stage ventana;
     
+    
+    @FXML
+    private CardCarreraComponente cardCarrera;
+    
     public void cambiarVentana(Stage hola) {
         this.ventana = hola;
     }
@@ -230,20 +235,7 @@ public class ControladorPrincipal implements Initializable{
     }
     
     
-    private void mostrarDetallesCarrera(Carrera carrera) {
-        
-        if (carrera != null) {
-            imgCarrera.setImage(new Image(carrera.getImage()));
-            labelDesc.setText("Descripción: " + carrera.getDescription());
-            labelDate.setText("Fecha: " + carrera.getDate().toString());
-            labelDistanciaKm.setText("Distancia en KM: " + carrera.getDistance_km());
-            labelCoordenadas.setText("Coordenadas: " + carrera.getCoordinates());
-            labelEntryFee.setText("Entrada: " + carrera.getEntry_fee() + " €");
-            labelAvaibleSlots.setText("Slots Totales: " + carrera.getAvailable_slots());
-            labelStatus.setText("Estado: " + carrera.getStatus());
-            labelCategory.setText("Categoría: " + carrera.getCategory());
-        }
-    }
+    
     
     
     @Override
@@ -252,8 +244,8 @@ public class ControladorPrincipal implements Initializable{
         try{
             configurarFiltros();
             consultarApi();
-            listViewCarreras.setOnMouseClicked(e -> mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem()));
-            listViewMisCarreras.setOnMouseClicked(e -> mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem()));
+            listViewCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem()));
+            listViewMisCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem()));
             actualizarLista(listViewCarreras, carreras);
         }catch(Exception e){
             System.out.println(e.getMessage());
