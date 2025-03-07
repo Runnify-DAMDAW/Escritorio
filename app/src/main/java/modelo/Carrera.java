@@ -5,6 +5,7 @@
 package modelo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,9 +25,9 @@ public class Carrera {
     private String status;
     private String category;
     private String imagen;
-    private RunningParticipant runningParticipants;
+    private List<RunningParticipant> runningParticipants;
 
-    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, RunningParticipant runningParticipants) {
+    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, List<RunningParticipant> runningParticipants) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -137,11 +138,11 @@ public class Carrera {
         this.imagen = image;
     }
 
-    public RunningParticipant getRunningParticipants() {
+    public List<RunningParticipant> getRunningParticipants() {
         return runningParticipants;
     }
 
-    public void setRunningParticipants(RunningParticipant runningParticipants) {
+    public void setRunningParticipants(List<RunningParticipant> runningParticipants) {
         this.runningParticipants = runningParticipants;
     }
 
