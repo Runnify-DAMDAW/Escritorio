@@ -10,16 +10,16 @@ import java.util.Date;
  *
  * @author plope
  */
-public class RunningParticipant {
+public class RunningParticipantUser {
     private int id;
-    private User user;
+    private Carrera running;
     private Date time;
     private int dorsal;
     private boolean banned;
 
-    public RunningParticipant(int id, User user, Date time, int dorsal, boolean banned) {
+    public RunningParticipantUser(int id, Carrera running, Date time, int dorsal, boolean banned) {
         this.id = id;
-        this.user = user;
+        this.running = running;
         this.time = time;
         this.dorsal = dorsal;
         this.banned = banned;
@@ -33,12 +33,12 @@ public class RunningParticipant {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Carrera getCarrera() {
+        return running;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCarrera(Carrera running) {
+        this.running = running;
     }
 
     public Date getTime() {
@@ -67,7 +67,7 @@ public class RunningParticipant {
 
     @Override
     public String toString() {
-        return "RunningParticipant{" + "id=" + id + ", user=" + user + ", time=" + time + ", dorsal=" + dorsal + ", banned=" + banned + '}';
+        return "RunningParticipant{" + "id=" + id + ", user=" + running + ", time=" + time + ", dorsal=" + dorsal + ", banned=" + banned + '}';
     }
     
     

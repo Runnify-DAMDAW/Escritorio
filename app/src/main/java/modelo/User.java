@@ -16,13 +16,15 @@ public class User {
     private List<String> roles;
     private String name;
     private boolean banned;
+    private List<RunningParticipantUser> runningParticipants;
 
-    public User(int id, String email, List<String> roles, String name, boolean banned) {
+    public User(int id, String email, List<String> roles, String name, boolean banned, List<RunningParticipantUser> runningParticipants) {
         this.id = id;
         this.email = email;
         this.roles = roles;
         this.name = name;
         this.banned = banned;
+        this.runningParticipants = runningParticipants;
     }
 
     public int getId() {
@@ -64,6 +66,21 @@ public class User {
     public void setBanned(boolean banned) {
         this.banned = banned;
     }
+
+    public List<RunningParticipantUser> getRunningParticipants() {
+        return runningParticipants;
+    }
+
+    public void setRunningParticipants(List<RunningParticipantUser> runningParticipants) {
+        this.runningParticipants = runningParticipants;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", email=" + email + ", roles=" + roles + ", name=" + name + ", banned=" + banned + ", runningParticipants=" + runningParticipants.toString() + '}';
+    }
+
+
     
     
     
