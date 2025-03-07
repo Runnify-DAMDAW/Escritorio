@@ -208,7 +208,7 @@
                   </VBox>
                </children>
             </HBox>
-            <VBox fx:id="vBoxMiPerfil" prefHeight="400.0" prefWidth="1000.0" visible="false" style="-fx-background-color: #f0f8ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-padding: 20;">
+            <VBox fx:id="vBoxMiPerfil" prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: #f0f8ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-padding: 20;" visible="false">
                 <children>
                     <HBox alignment="CENTER" prefHeight="150.0" prefWidth="100" style="-fx-spacing: 40; -fx-padding: 10;">
                         <children>
@@ -218,37 +218,37 @@
                                 </image>
                             </ImageView>
 
-                            <Label fx:id="txtNombreMiPerfilTitulo" text="Pablo" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 30px; -fx-text-fill: #333333;">
+                            <Label fx:id="txtNombreMiPerfilTitulo" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 30px; -fx-text-fill: #333333;" text="Pablo">
                             </Label>
                         </children>
                     </HBox>
 
                     <VBox alignment="CENTER_LEFT" prefHeight="250.0" prefWidth="100" style="-fx-spacing: 20; -fx-padding: 20;">
                         <children>
-                            <HBox spacing="20" alignment="CENTER_LEFT">
-                                <Label fx:id="txtNombreMiPerfil" text="Nombre:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" />
-                                <Label fx:id="txtNombre" text="Pablo" style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label fx:id="txtNombreMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nombre:" />
+                                <Label fx:id="txtNombre" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Pablo" />
                             </HBox>
 
-                            <HBox spacing="20" alignment="CENTER_LEFT">
-                                <Label fx:id="txtEmailMiperfil" text="Email:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" />
-                                <Label fx:id="txtEmail" text="pablo@ejemplo.com" style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label fx:id="txtEmailMiperfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Email:" />
+                                <Label fx:id="txtEmail" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="pablo@ejemplo.com" />
                             </HBox>
 
-                            <HBox spacing="20" alignment="CENTER_LEFT">
-                                <Label fx:id="txtEdadMiPerfil" text="Edad:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" />
-                                <Label fx:id="txtEdad" text="28 años" style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label fx:id="txtEdadMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Edad:" />
+                                <Label fx:id="txtEdad" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="28 años" />
                             </HBox>
 
-                            <HBox spacing="20" alignment="CENTER_LEFT">
-                                <Label fx:id="txtSexoMiPerfil" text="Sexo:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" />
-                                <Label fx:id="txtSexo" text="Masculino" style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
+                            <HBox alignment="CENTER_LEFT" spacing="20">
+                                <Label fx:id="txtSexoMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Sexo:" />
+                                <Label fx:id="txtSexo" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Masculino" />
                             </HBox>
                         </children>
                     </VBox>
 
                     <HBox alignment="CENTER" style="-fx-padding: 20;">
-                        <Button text="Editar Perfil" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;">
+                        <Button style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Editar Perfil">
                         </Button>
                     </HBox>
                 </children>
