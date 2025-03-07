@@ -121,9 +121,13 @@ public class CardCarreraComponente extends VBox {
     }
 
     public void mostrarDetallesCarrera(Carrera carrera) {
-        
-        if (carrera != null) {
 
+        imagenContainer.getChildren().clear();
+        imagenContainer.getChildren().add(imgCarrera);
+        btnMostrarMapa.setText("Ver Mapa");
+        mostrandoMapa = false; 
+
+        if (carrera != null) {
             imgCarrera.setImage(new Image(carrera.getImage())); 
             labelNombre.setText(carrera.getName());
             labelDesc.setText("Descripción: " + carrera.getDescription());
@@ -135,24 +139,23 @@ public class CardCarreraComponente extends VBox {
             labelStatus.setText("Estado: " + carrera.getStatus());
             labelCategory.setText("Categoría: " + carrera.getCategory());
 
-
             btnMostrarMapa.setOnAction(event -> {
                 if (mostrandoMapa) {
 
                     imagenContainer.getChildren().clear();
                     imagenContainer.getChildren().add(imgCarrera);
-                    btnMostrarMapa.setText("Ver Mapa");
-                    mostrandoMapa = false; 
+                    btnMostrarMapa.setText("Ver Mapa"); 
+                    mostrandoMapa = false;
                 } else {
 
                     String coordenadas = carrera.getCoordinates(); 
                     String urlMapa = generarUrlMapa(coordenadas); 
 
-                    imagenContainer.getChildren().clear();
-                    imagenContainer.getChildren().add(webViewMapa);
-                    webViewMapa.getEngine().load(urlMapa);
+                    imagenContainer.getChildren().clear(); 
+                    imagenContainer.getChildren().add(webViewMapa); 
+                    webViewMapa.getEngine().load(urlMapa); 
                     btnMostrarMapa.setText("Ver Imagen");
-                    mostrandoMapa = true;
+                    mostrandoMapa = true; 
                 }
             });
         }
