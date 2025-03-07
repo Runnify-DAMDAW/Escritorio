@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,13 +33,19 @@ public class CardCarreraComponente extends VBox {
     private final Label labelAvaibleSlots;
     private final Label labelStatus;
     private final Label labelCategory;
+    private HBox imagenContainer;
     
     public CardCarreraComponente() {
         super();
+        
         imgCarrera = new ImageView();
         imgCarrera.setFitWidth(300); // Ancho de la imagen
         imgCarrera.setFitHeight(200); // Alto de la imagen
         imgCarrera.setPreserveRatio(true);
+        
+
+        imagenContainer = new HBox(imgCarrera);
+        imagenContainer.setAlignment(Pos.CENTER); 
         
         labelNombre = new Label();
         labelDesc = new Label();
@@ -75,9 +82,11 @@ public class CardCarreraComponente extends VBox {
         this.setSpacing(10);
         this.setPadding(new Insets(15));
         this.setAlignment(Pos.CENTER_LEFT);
+        
         this.setStyle("-fx-background-color: #e6f3ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px;");
 
         this.getChildren().addAll(
+            imagenContainer,
             imgCarrera,
             labelNombre,
             labelDesc,

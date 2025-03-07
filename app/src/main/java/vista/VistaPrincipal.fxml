@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="1186.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorPrincipal">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1300.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorPrincipal">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="1186.0" styleClass="menu" BorderPane.alignment="CENTER">
          <children>
@@ -116,12 +116,12 @@
                   </HBox>
                   <HBox prefHeight="496.0" prefWidth="942.0">
                      <children>
-                        <ListViewComponente fx:id="listViewCarreras" prefHeight="486.0" prefWidth="485.0">
+                        <ListViewComponente fx:id="listViewCarreras" prefHeight="442.0" prefWidth="460.0">
                            <HBox.margin>
                               <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                            </HBox.margin>
                         </ListViewComponente>
-                        <CardCarreraComponente fx:id="cardCarrera" prefHeight="445.0" prefWidth="374.0">
+                        <CardCarreraComponente fx:id="cardCarrera" prefHeight="442.0" prefWidth="469.0">
                            <HBox.margin>
                               <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                            </HBox.margin>
