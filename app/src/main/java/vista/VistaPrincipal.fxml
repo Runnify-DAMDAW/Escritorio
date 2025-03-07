@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import componentevisual.CardCarreraComponente?>
 <?import componentevisual.ListViewComponente?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
@@ -120,65 +121,11 @@
                               <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                            </HBox.margin>
                         </ListViewComponente>
-                        <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="482.0">
+                        <CardCarreraComponente fx:id="cardCarrera" prefHeight="445.0" prefWidth="374.0">
                            <HBox.margin>
                               <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                            </HBox.margin>
-                           <children>
-                              <ImageView fx:id="imgCarrera" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </ImageView>
-                              <VBox alignment="CENTER_LEFT" prefHeight="320.0" prefWidth="422.0">
-                                 <children>
-                                    <Label fx:id="labelDesc" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelDate" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelDistanciaKm" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelCoordenadas" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelEntryFee" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelAvaibleSlots" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelStatus" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="labelCategory" text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets left="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                        </VBox>
+                        </CardCarreraComponente>
                      </children>
                   </HBox>
                </children>
