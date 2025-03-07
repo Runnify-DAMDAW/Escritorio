@@ -29,7 +29,7 @@ public interface ApiInscribirse {
         "Accept: application/json"
     })
     @POST("/api/running_participant/new")
-    Call<Boolean> inscribirse(@Body Inscripcion inscripcion);
+    Call<RespuestaInscripcion> inscribirse(@Body Inscripcion inscripcion);
     
     @DELETE("/api/running_participant/{id}")
     Call<Boolean> borrarInscripcion(@Path("id") int id);

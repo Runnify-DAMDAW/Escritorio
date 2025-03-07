@@ -4,12 +4,18 @@
  */
 package componentevisual;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import interfaces.ApiInscribirse;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,6 +24,15 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import modelo.Carrera;
+import modelo.Inscripcion;
+import modelo.RespuestaInscripcion;
+import modelo.RunningParticipant;
+import modelo.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *
@@ -36,6 +51,8 @@ public class CardCarreraComponente extends VBox {
     private final Label labelCategory;
     private final Label labelNombre;
     private final Button btnMostrarMapa;
+    private final Button btnInscribirse;
+    private final Button btnDesapuntarse;
     private final WebView webViewMapa;
     private final HBox imagenContainer;
     private boolean mostrandoMapa = false;
@@ -57,6 +74,8 @@ public class CardCarreraComponente extends VBox {
         btnMostrarMapa = new Button("Ver Mapa");
         btnMostrarMapa.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
 
+        btnInscribirse = new Button("Inscribirse");
+        btnDesapuntarse = new Button("Desapuntarse");
         
         webViewMapa = new WebView();
         WebEngine webEngine = webViewMapa.getEngine();
@@ -103,7 +122,8 @@ public class CardCarreraComponente extends VBox {
         setAlignment(Pos.CENTER_LEFT); 
         setStyle("-fx-background-color: #e6f3ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px;");
 
-
+        HBox btns = new HBox(btnMostrarMapa, btnInscribirse, btnDesapuntarse);
+        
         getChildren().addAll(
             imagenContainer, 
             labelNombre,
@@ -115,12 +135,103 @@ public class CardCarreraComponente extends VBox {
             labelAvaibleSlots,
             labelStatus,
             labelCategory,
-            btnMostrarMapa,
+            btns,
             webViewMapa
         );
     }
+    
+    public void inscribirse(Carrera carrera, User usuario) {
+        String baseURL = "http://127.0.0.1:8000/";
 
-    public void mostrarDetallesCarrera(Carrera carrera) {
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        ApiInscribirse apiInscribirse = retrofit.create(ApiInscribirse.class); // CORRECCIÓN
+        Inscripcion inscripcionData = new Inscripcion(usuario.getId(), carrera.getId(), 0,false);
+
+        Call<RespuestaInscripcion> callInscripcion = apiInscribirse.inscribirse(inscripcionData);
+        encolaInsertar(callInscripcion);
+    }
+    
+    public void encolaInsertar(Call<RespuestaInscripcion> callInsercion) {
+        callInsercion.enqueue(new Callback<RespuestaInscripcion>() {
+            @Override    
+            public void onResponse(Call<RespuestaInscripcion> call, Response<RespuestaInscripcion> response) {
+                Platform.runLater(() -> {
+                    if (response.isSuccessful() && response.body() != null) {
+                        System.out.println("INSERCION EXITOSA: " + response.body().getDorsal());
+                        
+                    } else {
+                        System.out.println("Error en el insercion: " + response.message());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaInscripcion> call, Throwable t) {
+                Platform.runLater(() -> {
+                    System.out.println("Error de red: " + t.getMessage());
+                });
+            }
+        });
+    }
+    
+    
+    public void desapuntarse(Carrera carrera, User usuario) {
+        String baseURL = "http://127.0.0.1:8000/";
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        ApiInscribirse apiInscribirse = retrofit.create(ApiInscribirse.class);
+
+        int idRunningParticipant = -1;
+        for (RunningParticipant rp : carrera.getRunningParticipants()) {
+            if (rp.getUser().getId() == usuario.getId()) {
+               idRunningParticipant = rp.getId();
+            }
+        }
+        
+        if (idRunningParticipant == -1) {
+            System.out.println("Error: No se encontró la inscripción del usuario en esta carrera.");
+            return;
+        }
+
+        Call<Boolean> callDesapuntar = apiInscribirse.borrarInscripcion(idRunningParticipant);
+        encolaEliminar(callDesapuntar);
+    }
+
+    
+    public void encolaEliminar(Call<Boolean> callEliminar) {
+        callEliminar.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Platform.runLater(() -> {
+                    if (response.isSuccessful()) {
+                        System.out.println("Desinscripción exitosa");
+                    } else {
+                        System.out.println("Error al desapuntarse: " + response.message());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Platform.runLater(() -> {
+                    System.out.println("Error de red: " + t.getMessage());
+                });
+            }
+        });
+    }
+
+
+    public void mostrarDetallesCarrera(Carrera carrera, User usuario) {
 
         imagenContainer.getChildren().clear();
         imagenContainer.getChildren().add(imgCarrera);
@@ -158,6 +269,26 @@ public class CardCarreraComponente extends VBox {
                     mostrandoMapa = true; 
                 }
             });
+            
+            btnInscribirse.setOnAction(e -> {
+                inscribirse(carrera, usuario);
+            });
+            
+            btnDesapuntarse.setOnAction(e -> {
+                desapuntarse(carrera, usuario);
+            });
+            
+            for (int i = 0; i < carrera.getRunningParticipants().size(); i++) {
+                if (carrera.getRunningParticipants().get(i).getUser().getId() == usuario.getId()) {
+                    btnInscribirse.setVisible(false);
+                    btnDesapuntarse.setVisible(true);
+                    return;
+                }
+            }
+
+            btnInscribirse.setVisible(true);
+            btnDesapuntarse.setVisible(false);
+
         }
     }
 
@@ -173,5 +304,6 @@ public class CardCarreraComponente extends VBox {
                 + (lng + 0.01) + "," 
                 + (lat + 0.01) + "&layer=mapnik&marker=" + lat + "," + lng;
     }
+
 
 }
