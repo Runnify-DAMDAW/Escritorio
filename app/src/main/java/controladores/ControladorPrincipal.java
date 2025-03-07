@@ -7,7 +7,9 @@ package controladores;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import componentevisual.CardCarreraComponente;
+import interfaces.ApiInscribirse;
 import interfaces.ApiLeer;
+import interfaces.ApiLogin;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -19,6 +21,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,9 +46,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
+import modelo.Inscripcion;
+import modelo.Login;
+import modelo.RespuestaInscripcion;
+import modelo.RespuestaLogin;
 import modelo.RunningParticipant;
+import modelo.RunningParticipantUser;
 import modelo.User;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -99,38 +110,7 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private Label labelStatus;
     
-    //LABELS MIS CARRERAS
     
-    @FXML
-    private Label labelAvaibleSlotsMiCarrera;
-
-    @FXML
-    private Label labelCategoryMiCarrera;
-    
-    @FXML
-    private VBox vBoxMostrarCarrerasMiCarrera;
-    
-    @FXML
-    private HBox hBoxMisCarrerasMiCarrera;
-
-    @FXML
-    private Label labelCoordenadasMiCarrera;
-
-    @FXML
-    private Label labelDateMiCarrera;
-
-    @FXML
-    private Label labelDescMiCarrera;
-
-    @FXML
-    private Label labelDistanciaKmMiCarrera;
-
-    @FXML
-    private Label labelEntryFeeMiCarrera;
-
-    @FXML
-    private Label labelStatusMiCarrera;
-
     @FXML
     private ListView<Carrera> listViewCarreras;
     
@@ -187,12 +167,17 @@ public class ControladorPrincipal implements Initializable{
     
     private ObservableList<Carrera> carreras = FXCollections.observableArrayList();
     private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
-    
+    private ObservableList<Carrera> misCarreras = FXCollections.observableArrayList();
+
+    private User usuario;
     private Stage ventana;
     
     
     @FXML
     private CardCarreraComponente cardCarrera;
+    
+    @FXML
+    private CardCarreraComponente cardCarreraMiCarrera;
     
     public void cambiarVentana(Stage hola) {
         this.ventana = hola;
@@ -219,10 +204,10 @@ public class ControladorPrincipal implements Initializable{
     }
     
     @FXML
-    void inscribirse() {
-        
+    void recargarDatos() throws IOException {
+        consultarApi();
     }
-
+    
     private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras, boolean miPerfil) {
         vBoxRanking.setVisible(ranking);
         vBoxMostrarCarreras.setVisible(mostrarCarreras);
@@ -331,11 +316,13 @@ public class ControladorPrincipal implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        
+        
         try{
             configurarFiltros();
             consultarApi();
-            listViewCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem()));
-            listViewMisCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem()));
+            listViewCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem(), usuario));
+            listViewMisCarreras.setOnMouseClicked(e -> cardCarreraMiCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem(), usuario));
             actualizarLista(listViewCarreras, carreras);
             mostrarRankings();
         }catch(Exception e){
@@ -357,7 +344,8 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://192.168.70.105:83/academia/"; //
+
+        String urlEndpoint = "http://127.0.0.1:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -368,7 +356,7 @@ public class ControladorPrincipal implements Initializable{
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
 
-        Call<List<Carrera>> call = leerCarreras.obtenerCarrerasLocal();
+        Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
         Response<List<Carrera>> response = call.execute();
         
 
@@ -384,6 +372,18 @@ public class ControladorPrincipal implements Initializable{
     }
     
     public void setDatosMiperfil(User user) {
+        usuario = user;
+        
+        if (user.getRunningParticipants() != null) {
+            for (RunningParticipantUser rp : user.getRunningParticipants()) {
+                misCarreras.add(rp.getCarrera());
+            }
+        }
+
+        System.out.println(misCarreras.toString());
+        //actualizarLista(listViewMisCarreras, misCarreras);
+
+        //listViewMisCarreras.setItems(misCarreras);
         System.out.println(user);
         txtEdadMiPerfil.setText(user.getName());
         txtEmailMiperfil.setText(user.getEmail());

@@ -10,7 +10,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -98,7 +97,7 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="vBoxMostrarCarreras" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="vBoxMostrarCarreras" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="942.0" style="-fx-spacing: 10;">
                      <children>
@@ -109,7 +108,7 @@
                         <ComboBox fx:id="comboBoxFiltroEstado" prefHeight="26.0" prefWidth="100.0" promptText="Estado" />
                         <ComboBox fx:id="comboBoxFiltroCuota" prefHeight="26.0" prefWidth="100.0" promptText="Cuota" />
                         <CheckBox fx:id="chkFiltroInscrito" mnemonicParsing="false" text="Inscrito" />
-                        <Button fx:id="btnInscribirse" mnemonicParsing="false" onAction="#inscribirse" text="INSCRIBIRSE" />
+                        <Button mnemonicParsing="false" onAction="#recargarDatos" text="Recargar" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -141,73 +140,14 @@
                   <Accordion fx:id="acordeonRanking" />
                </children>
             </VBox>
-            <HBox fx:id="hBoxMisCarreras" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" visible="false">
+            <HBox fx:id="hBoxMisCarreras" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 16;">
                <children>
-                  <ListView fx:id="listViewMisCarreras" prefHeight="547.0" prefWidth="461.0">
-                     <HBox.margin>
-                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-                     </HBox.margin>
-                  </ListView>
-                  <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="482.0">
-                     <HBox.margin>
-                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-                     </HBox.margin>
-                     <children>
-                        <ImageView fx:id="imgMiCarrera" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="320.0" prefWidth="422.0">
-                           <children>
-                              <Label fx:id="labelDescMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelDateMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelDistanciaKmMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelCoordenadasMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelEntryFeeMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelAvaibleSlotsMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelStatusMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="labelCategoryMiCarrera" text="Label">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                     </children>
-                  </VBox>
+                  <ListViewComponente fx:id="listViewCarreras1" prefHeight="522.0" prefWidth="460.0" />
+                  <CardCarreraComponente fx:id="cardCarrera1" prefHeight="442.0" prefWidth="469.0" />
                </children>
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
             </HBox>
             <VBox fx:id="vBoxMiPerfil" prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: #f0f8ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-padding: 20;" visible="false">
                 <children>
