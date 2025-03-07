@@ -58,13 +58,13 @@ public class ListViewComponente extends ListView<Carrera> {
 
                     setOnMouseEntered((MouseEvent ) -> {
                         setStyle("-fx-background-color: #99c2ff; -fx-border-color: #66a3ff; -fx-border-width: 1px; -fx-border-radius: 3px; -fx-padding: 10px; -fx-background-radius: 5px;");
-                        setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); 
+                        setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get() + 0.5)); 
                         setEffect(new DropShadow()); 
                     });
 
                     setOnMouseExited((MouseEvent) -> {
                         setStyle("-fx-background-color: #80b3ff; -fx-border-color: #4d94ff; -fx-border-width: 1px; -fx-border-radius: 3px; -fx-padding: 8px; -fx-background-radius: 5px;");
-                        setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); // Restaura el tamaño de la letra
+                        setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); 
                         setEffect(null); 
                     });
                 }

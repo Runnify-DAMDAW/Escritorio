@@ -224,6 +224,7 @@ public class ControladorPrincipal implements Initializable{
     private void mostrarDetallesCarrera(Carrera carrera) {
         
         if (carrera != null) {
+            imgCarrera.setImage(new Image(carrera.getImage()));
             labelDesc.setText("Descripción: " + carrera.getDescription());
             labelDate.setText("Fecha: " + carrera.getDate().toString());
             labelDistanciaKm.setText("Distancia en KM: " + carrera.getDistance_km());
