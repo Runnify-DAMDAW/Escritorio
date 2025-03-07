@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -18,7 +19,7 @@ import javafx.scene.layout.VBox;
  *
  * @author allae
  */
-public class MiPerfilComponente extends VBox {
+public class MiPerfilComponente extends HBox {
 
     private final ImageView imgPerfil;
     private final TextField txtNombre;
@@ -35,13 +36,15 @@ public class MiPerfilComponente extends VBox {
         setAlignment(Pos.CENTER);
         setStyle("-fx-background-color: #f9f9f9; -fx-padding: 20;");
 
+        VBox vBox = new VBox();
+        vBox.setSpacing(15);
+        vBox.setAlignment(Pos.CENTER);
 
         imgPerfil = new ImageView();
         imgPerfil.setFitWidth(120);
         imgPerfil.setFitHeight(120);
         imgPerfil.setPreserveRatio(true);
         imgPerfil.setImage(new Image(""));
-
 
         txtNombre = crearTextField("Nombre");
         txtEmail = crearTextField("Email");
@@ -51,19 +54,16 @@ public class MiPerfilComponente extends VBox {
         txtContraseña.setPromptText("Contraseña");
         txtContraseña.setEditable(false); 
 
-
         btnEditar = new Button("Editar");
         btnEditar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
         btnAceptar = new Button("Aceptar");
         btnAceptar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
         btnAceptar.setDisable(true);
 
-
         btnEditar.setOnAction(event -> editarPerfil());
         btnAceptar.setOnAction(event -> aceptarCambios());
 
-
-        getChildren().addAll(
+        vBox.getChildren().addAll(
             imgPerfil,
             txtNombre,
             txtEmail,
@@ -73,8 +73,9 @@ public class MiPerfilComponente extends VBox {
             btnEditar,
             btnAceptar
         );
-    }
 
+        getChildren().add(vBox);
+    }
 
     private TextField crearTextField(String promptText) {
         TextField textField = new TextField();
@@ -95,20 +96,16 @@ public class MiPerfilComponente extends VBox {
         btnAceptar.setDisable(false);
     }
 
-
     private void aceptarCambios() {
         if (txtContraseña.getText().isEmpty()) {
-
             showAlert("Error", "La contraseña es obligatoria.");
         } else {
-
             showAlert("Éxito", "Perfil actualizado correctamente.");
             btnEditar.setDisable(false); 
             btnAceptar.setDisable(true);
             desactivarCampos();
         }
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -117,7 +114,6 @@ public class MiPerfilComponente extends VBox {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     private void desactivarCampos() {
         txtNombre.setEditable(false);
