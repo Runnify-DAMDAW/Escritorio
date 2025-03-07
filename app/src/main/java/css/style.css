@@ -21,7 +21,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /*css para los botones*/
 #btnMostrarCarreras,
 #btnMisCarreras,
-#btnRankings {
+#btnRankings,
+#btnMiPerfil{
     -fx-background-color: linear-gradient(to bottom, #81C784, #66BB6A);
     -fx-text-fill: white;
     -fx-font-size: 14px;
@@ -36,7 +37,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 #btnMostrarCarreras:hover,
 #btnMisCarreras:hover,
-#btnRankings:hover {
+#btnRankings:hover,
+#btnMiPerfil:hover{
     -fx-background-color: linear-gradient(to bottom, #388E3C, #2E7D32); 
 }
 

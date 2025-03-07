@@ -134,6 +134,9 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private VBox vBoxRanking;
     
+    @FXML
+    private VBox vBoxMiPerfil;
+    
     //FILTROS
     
     @FXML
@@ -168,23 +171,29 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     void btnMisCarreras() {
-        mostrarSeccion(false, false, true); 
+        mostrarSeccion(false, false, true, false); 
     }
 
     @FXML
     void btnMostrarCarreras() { 
-        mostrarSeccion(false, true, false); 
+        mostrarSeccion(false, true, false, false); 
     }
 
     @FXML
     void btnRankigns() { 
-        mostrarSeccion(true, false, false); 
+        mostrarSeccion(true, false, false, false); 
+    }
+    
+    @FXML
+    void btnMiPerfil() {
+        mostrarSeccion(false, false, false, true); 
     }
 
-    private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras) {
+    private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras, boolean miPerfil) {
         vBoxRanking.setVisible(ranking);
         vBoxMostrarCarreras.setVisible(mostrarCarreras);
         hBoxMisCarreras.setVisible(misCarreras);
+        vBoxMiPerfil.setVisible(miPerfil);
     }
     
 

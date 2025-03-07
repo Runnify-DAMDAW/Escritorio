@@ -76,6 +76,18 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="btnMiPerfil" mnemonicParsing="false" onAction="#btnMiPerfil" prefHeight="50.0" prefWidth="187.0" text="Mi perfil">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/img/perfil.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
          <BorderPane.margin>
             <Insets />
@@ -249,6 +261,27 @@
                   </VBox>
                </children>
             </HBox>
+            <VBox fx:id="vBoxMiPerfil" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="153.0" prefWidth="942.0" style="-fx-spacing: 60;">
+                     <children>
+                        <ImageView fitHeight="126.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="txtNombreMiPerfilTitulo" text="Pablo">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER" prefHeight="395.0" prefWidth="942.0" style="-fx-spacing: 16;">
+                     <children>
+                        <Label fx:id="txtNombreMiPerfil" text="Nombre:" />
+                        <Label fx:id="txtEmailMiperfil" text="Email:" />
+                        <Label fx:id="txtEdadMiPerfil" text="Edad:" />
+                        <Label fx:id="txtSexoMiPerfil" text="Sexo:" />
+                     </children>
+                  </VBox>
+               </children></VBox>
          </children>
       </StackPane>
    </center>
