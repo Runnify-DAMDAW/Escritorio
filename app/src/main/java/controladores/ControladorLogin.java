@@ -66,6 +66,7 @@ public class ControladorLogin {
         }
         
         
+
         String baseURL = "http://127.0.0.1:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
@@ -96,7 +97,8 @@ public class ControladorLogin {
                         Stage nose = (Stage) txtUser.getScene().getWindow();
                         try {
                             cambiarVentana(nose);
-                            controladorPrincipal.setDatosMiperfil(response.body().getUser());
+
+                            controladorPrincipal.cargarDatosMiperfil(response.body().getUser());
                             nose.close();
                         } catch (IOException ex) {
                             Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);

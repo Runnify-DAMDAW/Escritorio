@@ -344,7 +344,6 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-
         String urlEndpoint = "http://127.0.0.1:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
@@ -375,7 +374,10 @@ public class ControladorPrincipal implements Initializable{
 
         if (usuario != null && usuario.getRunningParticipants() != null) {
             for (RunningParticipantUser rp : usuario.getRunningParticipants()) {
+
                 misCarreras.add(rp.getCarrera());
+                actualizarLista(listViewMisCarreras, misCarreras);
+                
             }
         } else {
             System.out.println("Usuario o sus carreras son null");
@@ -386,7 +388,7 @@ public class ControladorPrincipal implements Initializable{
         actualizarLista(listViewMisCarreras, misCarreras);
 }
     
-    public void setDatosMiperfil(User user) {
+    public void cargarDatosMiperfil(User user) {
         if (user != null) {
             this.usuario = user;
             System.out.println("Usuario asignado: " + usuario);
@@ -400,6 +402,7 @@ public class ControladorPrincipal implements Initializable{
         }
         
         cargarMisCarreras();
+
     }
 
 

@@ -144,6 +144,7 @@
                <children>
                   <ListViewComponente fx:id="listViewMisCarreras" prefHeight="522.0" prefWidth="460.0" />
                   <CardCarreraComponente fx:id="cardCarreraMiCarrera" prefHeight="442.0" prefWidth="469.0" />
+
                </children>
                <padding>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
