@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import modelo.Login;
 import modelo.RespuestaLogin;
+import modelo.ValidadoresLogin;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +50,22 @@ public class ControladorLogin {
         String user = txtUser.getText();
         String password = txtPassword.getText();
         System.out.println("El usuario es: " + user + " y la contraseña es: " + password);
+        
+        
+        // Validación: el campo del email no debe estar vacío
+        if (!ValidadoresLogin.noEstaVacio(user)) {
+            mostrarAlerta("Error de Validación", "El campo User no puede estar vacío.");
+            return;
+        }
 
+
+        // Validación: el campo de contraseña no debe estar vacío
+        if (!ValidadoresLogin.noEstaVacio(password)) {
+            mostrarAlerta("Error de Validación", "El campo contraseña no puede estar vacío.");
+            return;
+        }
+        
+        
         String baseURL = "http://192.168.70.198:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
@@ -127,6 +143,19 @@ public class ControladorLogin {
         nose.close();
         
         
+    }
+    
+    private void mostrarAlerta(String titulo, String mensaje) {
+        javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        
+        // Obtén la ventana de la alerta y añade el icono
+        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/LOGO.png")));
+    
+        alerta.showAndWait();
     }
 
 }
