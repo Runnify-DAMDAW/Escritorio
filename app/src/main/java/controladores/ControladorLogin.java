@@ -80,6 +80,8 @@ public class ControladorLogin {
                         Stage nose = (Stage) txtUser.getScene().getWindow();
                         try {
                             cambiarVentana(nose);
+                            controladorPrincipal.setDatosMiperfil(response.body().getUser());
+                            //nose.close();
                         } catch (IOException ex) {
                             Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
                         }

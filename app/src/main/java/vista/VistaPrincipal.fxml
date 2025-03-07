@@ -109,6 +109,7 @@
                         <ComboBox fx:id="comboBoxFiltroEstado" prefHeight="26.0" prefWidth="100.0" promptText="Estado" />
                         <ComboBox fx:id="comboBoxFiltroCuota" prefHeight="26.0" prefWidth="100.0" promptText="Cuota" />
                         <CheckBox fx:id="chkFiltroInscrito" mnemonicParsing="false" text="Inscrito" />
+                        <Button fx:id="btnInscribirse" mnemonicParsing="false" onAction="#inscribirse" text="INSCRIBIRSE" />
                      </children>
                      <opaqueInsets>
                         <Insets />
