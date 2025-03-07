@@ -10,7 +10,12 @@ import componentevisual.CardCarreraComponente;
 import interfaces.ApiLeer;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -35,6 +41,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
+import modelo.RunningParticipant;
 import modelo.User;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -251,7 +258,68 @@ public class ControladorPrincipal implements Initializable{
         lista.getItems().setAll(carreras);
     }
     
-    
+
+    private void mostrarRankings() {
+        acordeonRanking.getPanes().clear();
+
+        for (Carrera carrera : carreras) {
+            String titulo = carrera.getName() + " - " + carrera.getLocation();
+            VBox content = new VBox(10);
+            content.setPadding(new Insets(10));
+
+            TitledPane pane = new TitledPane(titulo, content);
+
+            pane.setOnMouseClicked(event -> {
+                if (content.getChildren().isEmpty()) {
+                    content.getChildren().addAll(
+                        new Label("Descripción: " + carrera.getDescription()),
+                        new Label("Fecha: " + carrera.getDate()),
+                        new Label("Distancia: " + carrera.getDistance_km() + " km"),
+                        new Label("Precio: " + carrera.getEntry_fee() + "€"),
+                        new Label("Participantes:")
+                    );
+
+                    List<RunningParticipant> participantesOrdenados = carrera.getRunningParticipants()
+                        .stream()
+                        .sorted(Comparator.comparing(RunningParticipant::getTime))
+                        .toList();
+
+                    int posicion = 1;
+                    Date fechaCarrera = carrera.getDate();
+
+                    for (RunningParticipant participante : participantesOrdenados) {
+                        Duration duracion = calcularDiferencia(fechaCarrera, participante.getTime());
+                        String tiempoTardado = formatDuration(duracion);
+
+                        Label participanteLabel = new Label(
+                            "#" + posicion++ + " " + participante.getUser().getName() + 
+                            " | Tiempo: " + tiempoTardado + 
+                            " | Dorsal: " + participante.getDorsal()
+                        );
+                        content.getChildren().add(participanteLabel);
+                    }
+                }
+            });
+
+            acordeonRanking.getPanes().add(pane);
+        }
+    }
+
+    //MÉTODO PARA CALCULAR DIFERENCIA ENTRE DOS FECHAS
+    private Duration calcularDiferencia(Date inicio, Date fin) {
+        Instant inicioInstant = inicio.toInstant();
+        Instant finInstant = fin.toInstant();
+        return Duration.between(inicioInstant, finInstant);
+    }
+
+    //MÉTODO PARA FORMATEAR LA DURACIÓN EN HORAS, MINUTOS Y SEGUNDOS
+    private String formatDuration(Duration duration) {
+        long horas = duration.toHours();
+        long minutos = duration.toMinutesPart();
+        long segundos = duration.toSecondsPart();
+        return String.format("%02d:%02d:%02d", horas, minutos, segundos);
+    }
+
     
     
     
@@ -264,6 +332,7 @@ public class ControladorPrincipal implements Initializable{
             listViewCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem()));
             listViewMisCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem()));
             actualizarLista(listViewCarreras, carreras);
+            mostrarRankings();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
