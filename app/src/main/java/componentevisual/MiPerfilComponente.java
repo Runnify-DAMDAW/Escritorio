@@ -4,6 +4,7 @@
  */
 package componentevisual;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -29,7 +30,11 @@ public class MiPerfilComponente extends HBox {
     private final PasswordField txtContraseña; 
     private final Button btnEditar;
     private final Button btnAceptar;
+    private final SimpleStringProperty btnEditarName = new SimpleStringProperty("Editar");
+    private final SimpleStringProperty btnAceptarName = new SimpleStringProperty("Aceptar");
 
+    
+    
     public MiPerfilComponente() {
         super();
         setSpacing(15);
@@ -54,9 +59,9 @@ public class MiPerfilComponente extends HBox {
         txtContraseña.setPromptText("Contraseña");
         txtContraseña.setEditable(false); 
 
-        btnEditar = new Button("Editar");
+        btnEditar = new Button(btnEditarName.get());
         btnEditar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
-        btnAceptar = new Button("Aceptar");
+        btnAceptar = new Button(btnAceptarName.get());
         btnAceptar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
         btnAceptar.setDisable(true);
 

@@ -37,7 +37,7 @@ public class CardCarreraComponente extends VBox {
     private final Label labelNombre;
     private final Button btnMostrarMapa;
     private final WebView webViewMapa;
-    private HBox imagenContainer;
+    private final HBox imagenContainer;
     private boolean mostrandoMapa = false;
 
     public CardCarreraComponente() {
@@ -76,7 +76,7 @@ public class CardCarreraComponente extends VBox {
 
 
         Font font = Font.font("Arial", FontWeight.BOLD, 12);
-        Font fontNombre = Font.font("Arial", FontWeight.BOLD, 12);
+        Font fontNombre = Font.font("Arial", FontWeight.BOLD, 14);
         labelNombre.setFont(fontNombre);
         labelDesc.setFont(font);
         labelDate.setFont(font);
