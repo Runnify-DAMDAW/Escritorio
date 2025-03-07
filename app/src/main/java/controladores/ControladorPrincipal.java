@@ -217,6 +217,11 @@ public class ControladorPrincipal implements Initializable{
     void btnMiPerfil() {
         mostrarSeccion(false, false, false, true); 
     }
+    
+    @FXML
+    void inscribirse() {
+        
+    }
 
     private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras, boolean miPerfil) {
         vBoxRanking.setVisible(ranking);
