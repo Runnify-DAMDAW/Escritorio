@@ -357,7 +357,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://192.168.70.105:83/academia/"; //
+        String urlEndpoint = "http://localhost:83/academia/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
