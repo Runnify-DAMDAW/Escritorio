@@ -344,7 +344,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://127.0.0.1:8000/"; //
+        String urlEndpoint = "http://192.168.70.82:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 

@@ -141,7 +141,7 @@ public class CardCarreraComponente extends VBox {
     }
     
     public void inscribirse(Carrera carrera, User usuario) {
-        String baseURL = "http://127.0.0.1:8000/";
+        String baseURL = "http://192.168.70.82:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -181,7 +181,7 @@ public class CardCarreraComponente extends VBox {
     
     
     public void desapuntarse(Carrera carrera, User usuario) {
-        String baseURL = "http://127.0.0.1:8000/";
+        String baseURL = "http://192.168.70.82:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -239,7 +239,11 @@ public class CardCarreraComponente extends VBox {
         mostrandoMapa = false; 
 
         if (carrera != null) {
-            imgCarrera.setImage(new Image(carrera.getImage())); 
+            
+            
+            imgCarrera.setImage(new Image(getClass().getResource("/img/LOGO.png").toString()));
+
+         
             labelNombre.setText(carrera.getName());
             labelDesc.setText("Descripción: " + carrera.getDescription());
             labelDate.setText("Fecha: " + carrera.getDate().toString());
