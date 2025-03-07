@@ -344,12 +344,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-<<<<<<< HEAD
-        String urlEndpoint = "http://localhost:83/academia/"; //
-=======
-
-        String urlEndpoint = "http://127.0.0.1:8000/"; //
->>>>>>> e3ab1878744fc93947eb180e742fc43860e7aff5
+        String urlEndpoint = "http://192.168.70.82:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -375,12 +370,15 @@ public class ControladorPrincipal implements Initializable{
         }
     }
     
-    public void setDatosMiperfil(User user) {
+    public void cargarDatosMiperfil(User user) {
         usuario = user;
         
         if (user.getRunningParticipants() != null) {
             for (RunningParticipantUser rp : user.getRunningParticipants()) {
+                
                 misCarreras.add(rp.getCarrera());
+                actualizarLista(listViewMisCarreras, misCarreras);
+                
             }
         }
 
@@ -394,6 +392,7 @@ public class ControladorPrincipal implements Initializable{
         txtNombreMiPerfil.setText(user.getName());
         txtNombreMiPerfilTitulo.setText(user.getName());
         txtSexoMiPerfil.setText("M");
+        
     }
 
 }

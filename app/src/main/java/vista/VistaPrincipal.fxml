@@ -142,7 +142,7 @@
             </VBox>
             <HBox fx:id="hBoxMisCarreras" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 16;">
                <children>
-                  <ListViewComponente fx:id="listViewCarreras1" prefHeight="522.0" prefWidth="460.0" />
+                  <ListViewComponente fx:id="listViewCarreras" prefHeight="522.0" prefWidth="460.0" />
                   <CardCarreraComponente fx:id="cardCarrera1" prefHeight="442.0" prefWidth="469.0" />
                </children>
                <padding>
