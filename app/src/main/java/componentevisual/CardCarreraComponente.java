@@ -6,6 +6,7 @@ package componentevisual;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import modelo.Carrera;
 
 /**
@@ -22,9 +25,7 @@ import modelo.Carrera;
  */
 public class CardCarreraComponente extends VBox {
 
-    // Componentes visuales
     private final ImageView imgCarrera;
-    private final Label labelNombre;
     private final Label labelDesc;
     private final Label labelDate;
     private final Label labelDistanciaKm;
@@ -33,20 +34,35 @@ public class CardCarreraComponente extends VBox {
     private final Label labelAvaibleSlots;
     private final Label labelStatus;
     private final Label labelCategory;
-    private HBox imagenContainer;
-    
+    private final Label labelNombre;
+    private final Button btnMostrarMapa;
+    private final WebView webViewMapa;
+    private HBox imagenContainer ;
+
     public CardCarreraComponente() {
         super();
-        
+
+
+        setPrefWidth(350);
+        setPrefHeight(450);
+
+
         imgCarrera = new ImageView();
-        imgCarrera.setFitWidth(300); // Ancho de la imagen
-        imgCarrera.setFitHeight(200); // Alto de la imagen
+        imgCarrera.setFitWidth(300);
+        imgCarrera.setFitHeight(200);
         imgCarrera.setPreserveRatio(true);
+
+
+        btnMostrarMapa = new Button("Ver Mapa");
+        btnMostrarMapa.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+
         
+        webViewMapa = new WebView();
+        WebEngine webEngine = webViewMapa.getEngine();
+        webViewMapa.setPrefSize(300, 200); 
 
         imagenContainer = new HBox(imgCarrera);
         imagenContainer.setAlignment(Pos.CENTER); 
-        
         labelNombre = new Label();
         labelDesc = new Label();
         labelDate = new Label();
@@ -57,8 +73,9 @@ public class CardCarreraComponente extends VBox {
         labelStatus = new Label();
         labelCategory = new Label();
 
+
         Font font = Font.font("Arial", FontWeight.BOLD, 12);
-        Font fontNombre = Font.font("Arial", FontWeight.BOLD, 14);
+        Font fontNombre = Font.font("Arial", FontWeight.BOLD, 12);
         labelNombre.setFont(fontNombre);
         labelDesc.setFont(font);
         labelDate.setFont(font);
@@ -79,15 +96,15 @@ public class CardCarreraComponente extends VBox {
         labelStatus.setTextFill(Color.DARKBLUE);
         labelCategory.setTextFill(Color.DARKBLUE);
 
-        this.setSpacing(10);
-        this.setPadding(new Insets(15));
-        this.setAlignment(Pos.CENTER_LEFT);
-        
-        this.setStyle("-fx-background-color: #e6f3ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px;");
 
-        this.getChildren().addAll(
-            imagenContainer,
-            imgCarrera,
+        setSpacing(10);
+        setPadding(new Insets(15));
+        setAlignment(Pos.CENTER_LEFT); 
+        setStyle("-fx-background-color: #e6f3ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px;");
+
+
+        getChildren().addAll(
+            imagenContainer, 
             labelNombre,
             labelDesc,
             labelDate,
@@ -96,23 +113,51 @@ public class CardCarreraComponente extends VBox {
             labelEntryFee,
             labelAvaibleSlots,
             labelStatus,
-            labelCategory
+            labelCategory,
+            btnMostrarMapa,
+            webViewMapa
         );
-    }    
-        public void mostrarDetallesCarrera(Carrera carrera) {
-            
-            if (carrera != null) {
-                imgCarrera.setImage(new Image(carrera.getImage()));
-                labelNombre.setText(carrera.getName());
-                labelDesc.setText("Descripción: " + carrera.getDescription());
-                labelDate.setText("Fecha: " + carrera.getDate().toString());
-                labelDistanciaKm.setText("Distancia en KM: " + carrera.getDistance_km());
-                labelCoordenadas.setText("Lugar: " + carrera.getLocation());
-                labelEntryFee.setText("Entrada: " + carrera.getEntry_fee() + " €");
-                labelAvaibleSlots.setText("Slots Totales: " + carrera.getAvailable_slots());
-                labelStatus.setText("Estado: " + carrera.getStatus());
-                labelCategory.setText("Categoría: " + carrera.getCategory());
+    }
+
+    public void mostrarDetallesCarrera(Carrera carrera) {
+        
+        if (carrera != null) {
+
+            imgCarrera.setImage(new Image(carrera.getImage())); 
+            labelNombre.setText(carrera.getName());
+            labelDesc.setText("Descripción: " + carrera.getDescription());
+            labelDate.setText("Fecha: " + carrera.getDate().toString());
+            labelDistanciaKm.setText("Distancia en KM: " + carrera.getDistance_km());
+            labelCoordenadas.setText("Lugar: " + carrera.getLocation());
+            labelEntryFee.setText("Entrada: " + carrera.getEntry_fee() + " €");
+            labelAvaibleSlots.setText("Slots Totales: " + carrera.getAvailable_slots());
+            labelStatus.setText("Estado: " + carrera.getStatus());
+            labelCategory.setText("Categoría: " + carrera.getCategory());
+
+
+            btnMostrarMapa.setOnAction(event -> {
+                String coordenadas = carrera.getCoordinates(); 
+                String urlMapa = generarUrlMapa(coordenadas); 
+                
+                imagenContainer.getChildren().clear();
+                imagenContainer.getChildren().add(webViewMapa); 
+                
+                webViewMapa.getEngine().load(urlMapa);
+            });
         }
     }
+
+
+    private String generarUrlMapa(String coordenadas) {
         
+        String[] coords = coordenadas.split(",");
+        double lat = Double.parseDouble(coords[0].trim());
+        double lng = Double.parseDouble(coords[1].trim());
+        return "https://www.openstreetmap.org/export/embed.html?bbox=" 
+                + (lng - 0.01) + "," 
+                + (lat - 0.01) + "," 
+                + (lng + 0.01) + "," 
+                + (lat + 0.01) + "&layer=mapnik&marker=" + lat + "," + lng;
+    }
+
 }
