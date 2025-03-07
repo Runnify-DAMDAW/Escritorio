@@ -283,7 +283,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://127.0.0.1:8000/"; //
+        String urlEndpoint = "http://localhost:83/academia/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -294,7 +294,7 @@ public class ControladorPrincipal implements Initializable{
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
 
-        Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
+        Call<List<Carrera>> call = leerCarreras.obtenerCarrerasLocal();
         Response<List<Carrera>> response = call.execute();
         
 
