@@ -278,16 +278,21 @@ public class CardCarreraComponente extends VBox {
                 desapuntarse(carrera, usuario);
             });
             
-            for (int i = 0; i < carrera.getRunningParticipants().size(); i++) {
-                if (carrera.getRunningParticipants().get(i).getUser().getId() == usuario.getId()) {
-                    btnInscribirse.setVisible(false);
-                    btnDesapuntarse.setVisible(true);
-                    return;
+            if (carrera.getRunningParticipants() != null) {
+                for (RunningParticipant rp : carrera.getRunningParticipants()) {
+                    if (rp.getUser().getId() == usuario.getId()) {
+                        btnInscribirse.setVisible(false);
+                        btnDesapuntarse.setVisible(true);
+                        return;
+                    }
                 }
+            } else {
+                System.out.println("Advertencia: La lista de participantes es null");
             }
 
             btnInscribirse.setVisible(true);
             btnDesapuntarse.setVisible(false);
+
 
         }
     }

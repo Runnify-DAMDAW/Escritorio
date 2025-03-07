@@ -371,26 +371,37 @@ public class ControladorPrincipal implements Initializable{
         }
     }
     
-    public void setDatosMiperfil(User user) {
-        usuario = user;
-        
-        if (user.getRunningParticipants() != null) {
-            for (RunningParticipantUser rp : user.getRunningParticipants()) {
+    public void cargarMisCarreras() {
+
+        if (usuario != null && usuario.getRunningParticipants() != null) {
+            for (RunningParticipantUser rp : usuario.getRunningParticipants()) {
                 misCarreras.add(rp.getCarrera());
             }
+        } else {
+            System.out.println("Usuario o sus carreras son null");
         }
 
-        System.out.println(misCarreras.toString());
-        //actualizarLista(listViewMisCarreras, misCarreras);
 
-        //listViewMisCarreras.setItems(misCarreras);
-        System.out.println(user);
-        txtEdadMiPerfil.setText(user.getName());
-        txtEmailMiperfil.setText(user.getEmail());
-        txtNombreMiPerfil.setText(user.getName());
-        txtNombreMiPerfilTitulo.setText(user.getName());
-        txtSexoMiPerfil.setText("M");
+        System.out.println(misCarreras.toString());
+        actualizarLista(listViewMisCarreras, misCarreras);
+}
+    
+    public void setDatosMiperfil(User user) {
+        if (user != null) {
+            this.usuario = user;
+            System.out.println("Usuario asignado: " + usuario);
+            txtEdadMiPerfil.setText(user.getName());
+            txtEmailMiperfil.setText(user.getEmail());
+            txtNombreMiPerfil.setText(user.getName());
+            txtNombreMiPerfilTitulo.setText(user.getName());
+            txtSexoMiPerfil.setText("M");
+        } else {
+            System.err.println("Error: usuario recibido es null");
+        }
+        
+        cargarMisCarreras();
     }
+
 
 }
 

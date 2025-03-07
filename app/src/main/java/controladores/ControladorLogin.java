@@ -66,7 +66,7 @@ public class ControladorLogin {
         }
         
         
-        String baseURL = "http://192.168.70.198:8000/";
+        String baseURL = "http://127.0.0.1:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -79,9 +79,9 @@ public class ControladorLogin {
 
         Call<RespuestaLogin> callLogin = apiLogin.login(loginData);
 
-        //encolaInsertar(callLogin);
-        nose = (Stage) txtUser.getScene().getWindow();
-        cambiarVentana(nose);
+        encolaInsertar(callLogin);
+        //nose = (Stage) txtUser.getScene().getWindow();
+        //cambiarVentana(nose);
         
     }
 
@@ -97,7 +97,7 @@ public class ControladorLogin {
                         try {
                             cambiarVentana(nose);
                             controladorPrincipal.setDatosMiperfil(response.body().getUser());
-                            //nose.close();
+                            nose.close();
                         } catch (IOException ex) {
                             Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -140,7 +140,7 @@ public class ControladorLogin {
         controladorPrincipal.cambiarVentana(nosequeponer);
         
         siu.show();
-        nose.close();
+        //nose.close();
         
         
     }
