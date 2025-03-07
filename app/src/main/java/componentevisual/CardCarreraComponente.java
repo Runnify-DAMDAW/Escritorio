@@ -37,7 +37,8 @@ public class CardCarreraComponente extends VBox {
     private final Label labelNombre;
     private final Button btnMostrarMapa;
     private final WebView webViewMapa;
-    private HBox imagenContainer ;
+    private HBox imagenContainer;
+    private boolean mostrandoMapa = false;
 
     public CardCarreraComponente() {
         super();
@@ -136,13 +137,23 @@ public class CardCarreraComponente extends VBox {
 
 
             btnMostrarMapa.setOnAction(event -> {
-                String coordenadas = carrera.getCoordinates(); 
-                String urlMapa = generarUrlMapa(coordenadas); 
-                
-                imagenContainer.getChildren().clear();
-                imagenContainer.getChildren().add(webViewMapa); 
-                
-                webViewMapa.getEngine().load(urlMapa);
+                if (mostrandoMapa) {
+
+                    imagenContainer.getChildren().clear();
+                    imagenContainer.getChildren().add(imgCarrera);
+                    btnMostrarMapa.setText("Ver Mapa");
+                    mostrandoMapa = false; 
+                } else {
+
+                    String coordenadas = carrera.getCoordinates(); 
+                    String urlMapa = generarUrlMapa(coordenadas); 
+
+                    imagenContainer.getChildren().clear();
+                    imagenContainer.getChildren().add(webViewMapa);
+                    webViewMapa.getEngine().load(urlMapa);
+                    btnMostrarMapa.setText("Ver Imagen");
+                    mostrandoMapa = true;
+                }
             });
         }
     }
