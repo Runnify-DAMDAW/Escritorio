@@ -40,7 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class CardCarreraComponente extends VBox {
 
-    private final ImageView imgCarrera;
+    //private final ImageView imgCarrera;
     private final Label labelDesc;
     private final Label labelDate;
     private final Label labelDistanciaKm;
@@ -65,10 +65,10 @@ public class CardCarreraComponente extends VBox {
         setPrefHeight(450);
 
 
-        imgCarrera = new ImageView();
+        /*imgCarrera = new ImageView();
         imgCarrera.setFitWidth(300);
         imgCarrera.setFitHeight(200);
-        imgCarrera.setPreserveRatio(true);
+        imgCarrera.setPreserveRatio(true);*/
 
 
         btnMostrarMapa = new Button("Ver Mapa");
@@ -81,7 +81,7 @@ public class CardCarreraComponente extends VBox {
         WebEngine webEngine = webViewMapa.getEngine();
         webViewMapa.setPrefSize(300, 200); 
 
-        imagenContainer = new HBox(imgCarrera);
+        imagenContainer = new HBox();
         imagenContainer.setAlignment(Pos.CENTER); 
         labelNombre = new Label();
         labelDesc = new Label();
@@ -234,14 +234,14 @@ public class CardCarreraComponente extends VBox {
     public void mostrarDetallesCarrera(Carrera carrera, User usuario) {
 
         imagenContainer.getChildren().clear();
-        imagenContainer.getChildren().add(imgCarrera);
+        //imagenContainer.getChildren().add(imgCarrera);
         btnMostrarMapa.setText("Ver Mapa");
         mostrandoMapa = false; 
 
         if (carrera != null) {
             
             
-            imgCarrera.setImage(new Image(getClass().getResource("/img/LOGO.png").toString()));
+            //imgCarrera.setImage(new Image(getClass().getResource("/img/LOGO.png").toString()));
 
          
             labelNombre.setText(carrera.getName());
@@ -258,7 +258,7 @@ public class CardCarreraComponente extends VBox {
                 if (mostrandoMapa) {
 
                     imagenContainer.getChildren().clear();
-                    imagenContainer.getChildren().add(imgCarrera);
+                    //imagenContainer.getChildren().add(imgCarrera);
                     btnMostrarMapa.setText("Ver Mapa"); 
                     mostrandoMapa = false;
                 } else {
