@@ -11,48 +11,62 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
+import modelo.Carrera;
 
 /**
  *
  * @author allae
  */
-public class ListViewComponente extends ListView<String> {
+public class ListViewComponente extends ListView<Carrera> {
 
-    private final ObservableList<String> carreras = FXCollections.observableArrayList();
-    private final IntegerProperty tamañoLetras = new SimpleIntegerProperty(14);
+    private final ObservableList<Carrera> carreras = FXCollections.observableArrayList();
+    private final IntegerProperty tamañoLetras = new SimpleIntegerProperty(12); // Tamaño de letra inicial más pequeño
 
     public ListViewComponente() {
         super();
         this.setItems(carreras);
         this.setCellFactory(createCustomCellFactory());
-        this.setStyle("-fx-background-color: #e8f5e9; -fx-border-color: #c8e6c9; -fx-border-width: 2px; -fx-border-radius: 5px;");
+        this.setStyle("-fx-background-color: #e6f3ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 5px;");
 
         tamañoLetras.addListener((obs, oldVal, newVal) -> refresh());
     }
 
-    public void actualizarCarreras(List<String> nuevasCarreras) {
+    public void actualizarCarreras(List<Carrera> nuevasCarreras) {
         carreras.clear();
         carreras.addAll(nuevasCarreras);
     }
 
-    private Callback<ListView<String>, ListCell<String>> createCustomCellFactory() {
+    private Callback<ListView<Carrera>, ListCell<Carrera>> createCustomCellFactory() {
         return param -> new ListCell<>() {
             @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
+            public void updateItem(Carrera carrera, boolean empty) {
+                super.updateItem(carrera, empty);
+                if (empty || carrera == null) {
                     setText(null);
                     setGraphic(null);
                     setStyle("-fx-background-color: transparent;");
                 } else {
-                    setText(item);
-                    setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); // Fuente en negrita
-                    setTextFill(Color.WHITE); // Texto en blanco para contrastar con el fondo
-                    setStyle("-fx-background-color: #4caf50; -fx-border-color: #388e3c; -fx-border-width: 1px; -fx-border-radius: 3px; -fx-padding: 10px; -fx-background-radius: 5px;");
+                    setText(carrera.getName() + " - " + carrera.getDate());
+                    setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); 
+                    setTextFill(Color.WHITE);
+                    setStyle("-fx-background-color: #80b3ff; -fx-border-color: #4d94ff; -fx-border-width: 1px; -fx-border-radius: 3px; -fx-padding: 8px; -fx-background-radius: 5px;");
+
+                    setOnMouseEntered((MouseEvent ) -> {
+                        setStyle("-fx-background-color: #99c2ff; -fx-border-color: #66a3ff; -fx-border-width: 1px; -fx-border-radius: 3px; -fx-padding: 10px; -fx-background-radius: 5px;");
+                        setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); 
+                        setEffect(new DropShadow()); 
+                    });
+
+                    setOnMouseExited((MouseEvent) -> {
+                        setStyle("-fx-background-color: #80b3ff; -fx-border-color: #4d94ff; -fx-border-width: 1px; -fx-border-radius: 3px; -fx-padding: 8px; -fx-background-radius: 5px;");
+                        setFont(Font.font("Arial", FontWeight.BOLD, tamañoLetras.get())); // Restaura el tamaño de la letra
+                        setEffect(null); 
+                    });
                 }
             }
         };
