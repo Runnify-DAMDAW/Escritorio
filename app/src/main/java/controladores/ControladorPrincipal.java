@@ -35,6 +35,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
+import modelo.User;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -161,6 +162,22 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private TextField txtFiltroNombre;
     
+    @FXML
+    private Label txtEdadMiPerfil;
+
+    @FXML
+    private Label txtEmailMiperfil;
+    
+     @FXML
+    private Label txtNombreMiPerfil;
+
+    @FXML
+    private Label txtNombreMiPerfilTitulo;
+
+    @FXML
+    private Label txtSexoMiPerfil;
+
+    
     private ObservableList<Carrera> carreras = FXCollections.observableArrayList();
     private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
     
@@ -266,7 +283,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://localhost:83/academia/"; //
+        String urlEndpoint = "http://127.0.0.1:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -277,7 +294,7 @@ public class ControladorPrincipal implements Initializable{
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
 
-        Call<List<Carrera>> call = leerCarreras.obtenerCarrerasLocal();
+        Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
         Response<List<Carrera>> response = call.execute();
         
 
@@ -290,6 +307,15 @@ public class ControladorPrincipal implements Initializable{
         } else {
             System.err.println("Error al obtener las carreras: " + response.message());
         }
+    }
+    
+    public void setDatosMiperfil(User user) {
+        System.out.println(user);
+        txtEdadMiPerfil.setText(user.getName());
+        txtEmailMiperfil.setText(user.getEmail());
+        txtNombreMiPerfil.setText(user.getName());
+        txtNombreMiPerfilTitulo.setText(user.getName());
+        txtSexoMiPerfil.setText("M");
     }
 
 }

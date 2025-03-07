@@ -24,7 +24,7 @@ public class Carrera {
     private int available_slots;
     private String status;
     private String category;
-    private String imagen;
+    private String image;
     private List<RunningParticipant> runningParticipants;
 
     public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, List<RunningParticipant> runningParticipants) {
@@ -38,7 +38,7 @@ public class Carrera {
         this.available_slots = available_slots;
         this.status = status;
         this.category = category;
-        this.imagen = image;
+        this.image = image;
         this.runningParticipants = runningParticipants;
     }
 
@@ -131,11 +131,11 @@ public class Carrera {
     }
 
     public String getImage() {
-        return imagen;
+        return image;
     }
 
     public void setImage(String image) {
-        this.imagen = image;
+        this.image = image;
     }
 
     public List<RunningParticipant> getRunningParticipants() {
