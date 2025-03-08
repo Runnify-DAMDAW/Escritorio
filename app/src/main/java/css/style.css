@@ -8,41 +8,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 */
 
 .menu {
-    -fx-position: sticky;
-    -fx-top: 0;
     -fx-pref-width: 100%;
     -fx-pref-height: 144px;
     -fx-padding: 0 64px;
-    -fx-display: flex;
+    -fx-background-color: linear-gradient(to right, #587AD7, #2C3030);
     -fx-alignment: center;
-    -fx-background-color: linear-gradient(to right, #537a5a, #2c302e);
 }
 
-/*css para los botones*/
+/* Estilos para los botones */
 #btnMostrarCarreras,
 #btnMisCarreras,
 #btnRankings,
-#btnMiPerfil{
-    -fx-background-color: linear-gradient(to bottom, #81C784, #66BB6A);
+#btnMiPerfil {
+    -fx-background-color: linear-gradient(to bottom, #587AD7, #2C3030);
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-padding: 10px 20px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-border-color: #1B5E20;
+    -fx-border-color: #2C3030;
     -fx-border-width: 1.5px;
     -fx-cursor: hand;
 }
 
+/* Efecto hover para los botones */
 #btnMostrarCarreras:hover,
 #btnMisCarreras:hover,
 #btnRankings:hover,
-#btnMiPerfil:hover{
-    -fx-background-color: linear-gradient(to bottom, #388E3C, #2E7D32); 
+#btnMiPerfil:hover {
+    -fx-background-color: linear-gradient(to bottom, #2C3030, #587AD7);
+    -fx-border-color: #587AD7;
 }
-
-
-
-
-

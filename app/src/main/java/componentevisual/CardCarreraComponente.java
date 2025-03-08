@@ -294,7 +294,7 @@ public class CardCarreraComponente extends VBox {
             btnDesapuntarse.setOnAction(e -> {
                 desapuntarse(carrera, usuario);
             });
-            
+            System.out.println(carrera.toString());
             if (carrera.getRunningParticipants() != null) {
                 for (RunningParticipant rp : carrera.getRunningParticipants()) {
                     if (rp.getUser().getId() == usuario.getId()) {

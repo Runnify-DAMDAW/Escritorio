@@ -132,24 +132,41 @@
             </VBox>
             <VBox fx:id="vBoxRanking" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
-                  <Label alignment="CENTER" prefHeight="38.0" prefWidth="950.0" text="Ranking">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="38.0" prefWidth="950.0" text="Ranking">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                   <Accordion fx:id="acordeonRanking" />
                </children>
             </VBox>
-            <HBox fx:id="hBoxMisCarreras" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 16;" visible="false">
+            <VBox fx:id="hBoxMisCarreras" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
-                  <ListViewComponente fx:id="listViewMisCarreras" prefHeight="522.0" prefWidth="460.0" />
-                  <CardCarreraComponente fx:id="cardCarreraMiCarrera" prefHeight="442.0" prefWidth="469.0" />
-
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1056.0">
+                     <children>
+                        <Label text="Mis Carreras">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="568.0" prefWidth="1056.0" style="-fx-spacing: 16;">
+                     <children>
+                        <ListViewComponente fx:id="listViewMisCarreras" prefHeight="522.0" prefWidth="460.0" />
+                        <CardCarreraComponente fx:id="cardCarreraMiCarrera" prefHeight="442.0" prefWidth="469.0" />
+      
+                     </children>
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                  </HBox>
                </children>
-               <padding>
-                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-               </padding>
-            </HBox>
+            </VBox>
             <VBox fx:id="vBoxMiPerfil" prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: #f0f8ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-padding: 20;" visible="false">
                 <children>
                     <HBox alignment="CENTER" prefHeight="150.0" prefWidth="100" style="-fx-spacing: 40; -fx-padding: 10;">

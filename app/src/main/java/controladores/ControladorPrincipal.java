@@ -90,7 +90,7 @@ public class ControladorPrincipal implements Initializable{
     private VBox vBoxMostrarCarreras;
     
     @FXML
-    private HBox hBoxMisCarreras;
+    private VBox hBoxMisCarreras;
 
     @FXML
     private Label labelCoordenadas;
@@ -356,7 +356,7 @@ public class ControladorPrincipal implements Initializable{
 
         if (response.isSuccessful() && response.body() != null) {
             List<Carrera> listaCarreras = response.body();
-            System.out.println(listaCarreras);
+            //System.out.println(listaCarreras);
             listViewCarreras.getItems().clear();
             carreras.setAll(listaCarreras);
             actualizarLista(listViewCarreras, carreras);
@@ -369,17 +369,20 @@ public class ControladorPrincipal implements Initializable{
 
         if (usuario != null && usuario.getRunningParticipants() != null) {
             for (RunningParticipantUser rp : usuario.getRunningParticipants()) {
-
-                misCarreras.add(rp.getRunning());
-                actualizarLista(listViewMisCarreras, misCarreras);
-                
+                int idCarrera = rp.getRunning().getId();
+                for(Carrera carrera : carreras) {
+                    if(idCarrera == carrera.getId()){
+                        misCarreras.add(carrera);
+                    }
+                }
+                actualizarLista(listViewMisCarreras, misCarreras);  
             }
         } else {
             System.out.println("Usuario o sus carreras son null");
         }
 
 
-        System.out.println(misCarreras.toString());
+        System.out.println("MISCARRERAS: " + misCarreras);
         actualizarLista(listViewMisCarreras, misCarreras);
 }
     
