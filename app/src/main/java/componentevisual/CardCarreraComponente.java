@@ -141,7 +141,7 @@ public class CardCarreraComponente extends VBox {
     }
     
     public void inscribirse(Carrera carrera, User usuario) {
-        String baseURL = "http://192.168.70.82:8000/";
+        String baseURL = "http://192.168.1.41:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -150,7 +150,7 @@ public class CardCarreraComponente extends VBox {
                 .build();
 
         ApiInscribirse apiInscribirse = retrofit.create(ApiInscribirse.class); // CORRECCIÓN
-        Inscripcion inscripcionData = new Inscripcion(usuario.getId(), carrera.getId(), 0,false);
+        Inscripcion inscripcionData = new Inscripcion(usuario.getId(), carrera.getId(), Long.valueOf(0));
 
         Call<RespuestaInscripcion> callInscripcion = apiInscribirse.inscribirse(inscripcionData);
         encolaInsertar(callInscripcion);
@@ -181,7 +181,7 @@ public class CardCarreraComponente extends VBox {
     
     
     public void desapuntarse(Carrera carrera, User usuario) {
-        String baseURL = "http://192.168.70.82:8000/";
+        String baseURL = "http://192.168.1.41:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()

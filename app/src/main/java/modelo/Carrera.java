@@ -25,9 +25,10 @@ public class Carrera {
     private String status;
     private String category;
     private String image;
+    private String gender;
     private List<RunningParticipant> runningParticipants;
 
-    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, List<RunningParticipant> runningParticipants) {
+    public Carrera(String name, String description, Date date, double distance_km, String location, String coordinates, double entry_fee, int available_slots, String status, String category, String image, String gender, List<RunningParticipant> runningParticipants) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -39,6 +40,7 @@ public class Carrera {
         this.status = status;
         this.category = category;
         this.image = image;
+        this.gender = gender;
         this.runningParticipants = runningParticipants;
     }
 
@@ -145,6 +147,16 @@ public class Carrera {
     public void setRunningParticipants(List<RunningParticipant> runningParticipants) {
         this.runningParticipants = runningParticipants;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    
+    
 
     @Override
     public String toString() {

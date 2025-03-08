@@ -67,7 +67,7 @@ public class ControladorLogin {
         
         
 
-        String baseURL = "http://192.168.70.82:8000/";
+        String baseURL = "http://192.168.1.41:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()

@@ -154,7 +154,7 @@
                 <children>
                     <HBox alignment="CENTER" prefHeight="150.0" prefWidth="100" style="-fx-spacing: 40; -fx-padding: 10;">
                         <children>
-                            <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 60px; -fx-border-radius: 60px; -fx-border-color: #4CAF50; -fx-border-width: 2px;">
+                            <ImageView fx:id="imgMiPerfil" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 60px; -fx-border-radius: 60px; -fx-border-color: #4CAF50; -fx-border-width: 2px;">
                                 <image>
                                     <Image url="https://via.placeholder.com/120" /> <!-- Puedes poner la URL de la imagen aquí -->
                                 </image>
@@ -168,23 +168,23 @@
                     <VBox alignment="CENTER_LEFT" prefHeight="250.0" prefWidth="100" style="-fx-spacing: 20; -fx-padding: 20;">
                         <children>
                             <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label fx:id="txtNombreMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nombre:" />
-                                <Label fx:id="txtNombre" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Pablo" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nombre:" />
+                                <Label fx:id="txtNombreMiPerfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Pablo" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label fx:id="txtEmailMiperfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Email:" />
-                                <Label fx:id="txtEmail" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="pablo@ejemplo.com" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Email:" />
+                                <Label fx:id="txtEmailMiperfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="pablo@ejemplo.com" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
                                 <Label fx:id="txtEdadMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Edad:" />
-                                <Label fx:id="txtEdad" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="28 años" />
+                                <Label fx:id="txtEdadMiPerfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="28 años" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label fx:id="txtSexoMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Sexo:" />
-                                <Label fx:id="txtSexo" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Masculino" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Sexo:" />
+                                <Label fx:id="txtSexoMiPerfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Masculino" />
                             </HBox>
                         </children>
                     </VBox>

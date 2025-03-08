@@ -163,6 +163,9 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     private Label txtSexoMiPerfil;
+    
+    @FXML
+    private ImageView imgMiPerfil;
 
     
     private ObservableList<Carrera> carreras = FXCollections.observableArrayList();
@@ -275,11 +278,10 @@ public class ControladorPrincipal implements Initializable{
                         .toList();
 
                     int posicion = 1;
-                    Date fechaCarrera = carrera.getDate();
+                    
 
                     for (RunningParticipant participante : participantesOrdenados) {
-                        Duration duracion = calcularDiferencia(fechaCarrera, participante.getTime());
-                        String tiempoTardado = formatDuration(duracion);
+                        String tiempoTardado = formatDuration(Duration.ofMillis(participante.getTime()));
 
                         Label participanteLabel = new Label(
                             "#" + posicion++ + " " + participante.getUser().getName() + 
@@ -293,13 +295,6 @@ public class ControladorPrincipal implements Initializable{
 
             acordeonRanking.getPanes().add(pane);
         }
-    }
-
-    //MÉTODO PARA CALCULAR DIFERENCIA ENTRE DOS FECHAS
-    private Duration calcularDiferencia(Date inicio, Date fin) {
-        Instant inicioInstant = inicio.toInstant();
-        Instant finInstant = fin.toInstant();
-        return Duration.between(inicioInstant, finInstant);
     }
 
     //MÉTODO PARA FORMATEAR LA DURACIÓN EN HORAS, MINUTOS Y SEGUNDOS
@@ -344,7 +339,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://192.168.70.82:8000/"; //
+        String urlEndpoint = "http://192.168.1.41:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -375,7 +370,7 @@ public class ControladorPrincipal implements Initializable{
         if (usuario != null && usuario.getRunningParticipants() != null) {
             for (RunningParticipantUser rp : usuario.getRunningParticipants()) {
 
-                misCarreras.add(rp.getCarrera());
+                misCarreras.add(rp.getRunning());
                 actualizarLista(listViewMisCarreras, misCarreras);
                 
             }
@@ -396,7 +391,9 @@ public class ControladorPrincipal implements Initializable{
             txtEmailMiperfil.setText(user.getEmail());
             txtNombreMiPerfil.setText(user.getName());
             txtNombreMiPerfilTitulo.setText(user.getName());
-            txtSexoMiPerfil.setText("M");
+            txtSexoMiPerfil.setText(user.getGender());
+            Image image = new Image(user.getImage());
+            imgMiPerfil.setImage(image);
         } else {
             System.err.println("Error: usuario recibido es null");
         }

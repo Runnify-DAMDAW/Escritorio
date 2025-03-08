@@ -13,18 +13,13 @@ import java.util.Date;
 public class Inscripcion {
     private int user;
     private int running;
-    private Date time;
-    private int dorsal;
-    private boolean banned;
+    private Long time;
 
-    public Inscripcion(int user, int running, int dorsal, boolean banned) {
+    public Inscripcion(int user, int running, Long time) {
         this.user = user;
         this.running = running;
-        this.time = (time != null) ? time : new Date();
-        this.dorsal = dorsal;
-        this.banned = banned;
+        this.time = time;
     }
-
 
     public int getUser() {
         return user;
@@ -42,34 +37,12 @@ public class Inscripcion {
         this.running = running;
     }
 
-    public Date getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Long time) {
         this.time = time;
     }
-
-    public int getDorsal() {
-        return dorsal;
-    }
-
-    public void setDorsal(int dorsal) {
-        this.dorsal = dorsal;
-    }
-
-    public boolean isBanned() {
-        return banned;
-    }
-
-    public void setBanned(boolean banned) {
-        this.banned = banned;
-    }
-
-    @Override
-    public String toString() {
-        return "Inscripcion{" + "user=" + user + ", running=" + running + ", time=" + time + ", dorsal=" + dorsal + ", banned=" + banned + '}';
-    }
-    
     
 }

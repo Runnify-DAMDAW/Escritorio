@@ -13,11 +13,11 @@ import java.util.Date;
 public class RunningParticipant {
     private int id;
     private User user;
-    private Date time;
+    private Long time;
     private int dorsal;
     private boolean banned;
 
-    public RunningParticipant(int id, User user, Date time, int dorsal, boolean banned) {
+    public RunningParticipant(int id, User user, Long time, int dorsal, boolean banned) {
         this.id = id;
         this.user = user;
         this.time = time;
@@ -41,11 +41,11 @@ public class RunningParticipant {
         this.user = user;
     }
 
-    public Date getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
@@ -69,6 +69,8 @@ public class RunningParticipant {
     public String toString() {
         return "RunningParticipant{" + "id=" + id + ", user=" + user + ", time=" + time + ", dorsal=" + dorsal + ", banned=" + banned + '}';
     }
+
+    
     
     
 }
