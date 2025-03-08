@@ -6,7 +6,6 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -107,7 +106,6 @@
                         <ComboBox fx:id="comboBoxFiltroCategoria" prefHeight="26.0" prefWidth="100.0" promptText="Categoría" />
                         <ComboBox fx:id="comboBoxFiltroEstado" prefHeight="26.0" prefWidth="100.0" promptText="Estado" />
                         <ComboBox fx:id="comboBoxFiltroCuota" prefHeight="26.0" prefWidth="100.0" promptText="Cuota" />
-                        <CheckBox fx:id="chkFiltroInscrito" mnemonicParsing="false" text="Inscrito" />
                         <Button mnemonicParsing="false" onAction="#recargarDatos" text="Recargar" />
                      </children>
                      <opaqueInsets>

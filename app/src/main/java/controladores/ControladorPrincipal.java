@@ -14,8 +14,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
@@ -25,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -127,9 +132,6 @@ public class ControladorPrincipal implements Initializable{
     private VBox vBoxMiPerfil;
     
     //FILTROS
-    
-    @FXML
-    private CheckBox chkFiltroInscrito;
 
     @FXML
     private ComboBox<String> comboBoxFiltroCategoria;
@@ -209,6 +211,7 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     void recargarDatos() throws IOException {
         consultarApi();
+        cargarMisCarreras();
     }
     
     private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras, boolean miPerfil) {
@@ -221,9 +224,9 @@ public class ControladorPrincipal implements Initializable{
 
     private void configurarFiltros() {
         
-        comboBoxFiltroCategoria.setItems(FXCollections.observableArrayList("Categoría", "Maratón", "Media Maratón", "10K"));
+        comboBoxFiltroCategoria.setItems(FXCollections.observableArrayList("Categoría", "Maratón", "Media maratón", "5K", "10K", "Obstáculos", "Relevos", "Sprint"));
         comboBoxFiltroCuota.setItems(FXCollections.observableArrayList("Cuota", "20", "25", "30", "50"));
-        comboBoxFiltroEstado.setItems(FXCollections.observableArrayList("Estado", "Abierta", "Cerrada"));
+        comboBoxFiltroEstado.setItems(FXCollections.observableArrayList("Estado", "Open", "Closed", "Completed"));
 
         txtFiltroNombre.textProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         txtFiltroLocalizacion.textProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
@@ -231,7 +234,6 @@ public class ControladorPrincipal implements Initializable{
         comboBoxFiltroCategoria.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         comboBoxFiltroCuota.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         comboBoxFiltroEstado.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
-        chkFiltroInscrito.selectedProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         
     }
     
@@ -311,7 +313,22 @@ public class ControladorPrincipal implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        misCarreras.addListener((ListChangeListener<? super Carrera>) (change -> {
+           while (change.next()) {
+               if (change.wasAdded() || change.wasRemoved()) {
+                   actualizarLista(listViewMisCarreras, misCarreras);
+               }
+           }
+        }));
         
+        carreras.addListener((ListChangeListener<? super Carrera>) (change -> {
+           while (change.next()) {
+               if (change.wasAdded() || change.wasRemoved()) {
+                   actualizarLista(listViewCarreras, carreras);
+               }
+           }
+       }));
+
         
         try{
             configurarFiltros();
@@ -365,8 +382,8 @@ public class ControladorPrincipal implements Initializable{
         }
     }
     
-    public void cargarMisCarreras() {
-
+    public void cargarMisCarreras() throws IOException {
+        consultarMiUsuario();
         if (usuario != null && usuario.getRunningParticipants() != null) {
             for (RunningParticipantUser rp : usuario.getRunningParticipants()) {
                 int idCarrera = rp.getRunning().getId();
@@ -381,16 +398,44 @@ public class ControladorPrincipal implements Initializable{
             System.out.println("Usuario o sus carreras son null");
         }
 
-
         System.out.println("MISCARRERAS: " + misCarreras);
         actualizarLista(listViewMisCarreras, misCarreras);
-}
+    }
     
-    public void cargarDatosMiperfil(User user) {
+    
+    public void consultarMiUsuario() throws IOException {
+        
+        String urlEndpoint = "http://192.168.1.41:8000/"; //
+
+        Gson gson = new GsonBuilder().setLenient().create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(urlEndpoint)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
+
+        Call<User> call = leerCarreras.obtenerMiUsuario(usuario.getId());
+        Response<User> response = call.execute();
+        
+
+        if (response.isSuccessful() && response.body() != null) {
+            usuario = response.body();
+            System.out.println("consulta" + usuario);
+        } else {
+            System.err.println("Error al obtener tu usuario: " + response.message());
+        }
+    }
+    
+    public void cargarDatosMiperfil(User user) throws IOException {
         if (user != null) {
             this.usuario = user;
             System.out.println("Usuario asignado: " + usuario);
-            txtEdadMiPerfil.setText(user.getName());
+            //Instant instant = user.getAge().toInstant();
+            //LocalDate fechaNacimiento = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+            //long edad = ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now());
+            //txtEdadMiPerfil.setText(String.valueOf(edad));
             txtEmailMiperfil.setText(user.getEmail());
             txtNombreMiPerfil.setText(user.getName());
             txtNombreMiPerfilTitulo.setText(user.getName());

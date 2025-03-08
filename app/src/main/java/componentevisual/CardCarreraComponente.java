@@ -160,17 +160,17 @@ public class CardCarreraComponente extends VBox {
         ApiInscribirse apiInscribirse = retrofit.create(ApiInscribirse.class); // CORRECCIÓN
         Inscripcion inscripcionData = new Inscripcion(usuario.getId(), carrera.getId(), Long.valueOf(0));
 
-        Call<RespuestaInscripcion> callInscripcion = apiInscribirse.inscribirse(inscripcionData);
+        Call<Boolean> callInscripcion = apiInscribirse.inscribirse(inscripcionData);
         encolaInsertar(callInscripcion);
     }
     
-    public void encolaInsertar(Call<RespuestaInscripcion> callInsercion) {
-        callInsercion.enqueue(new Callback<RespuestaInscripcion>() {
+    public void encolaInsertar(Call<Boolean> callInsercion) {
+        callInsercion.enqueue(new Callback<Boolean>() {
             @Override    
-            public void onResponse(Call<RespuestaInscripcion> call, Response<RespuestaInscripcion> response) {
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 Platform.runLater(() -> {
                     if (response.isSuccessful() && response.body() != null) {
-                        System.out.println("INSCRIPCION EXITOSA: " + response.body().getDorsal());
+                        System.out.println("INSCRIPCION EXITOSA: ");
                         btnInscribirse.setDisable(true);
                         btnDesapuntarse.setDisable(false);
                         
@@ -181,7 +181,7 @@ public class CardCarreraComponente extends VBox {
             }
 
             @Override
-            public void onFailure(Call<RespuestaInscripcion> call, Throwable t) {
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Platform.runLater(() -> {
                     System.out.println("Error de red: " + t.getMessage());
                 });

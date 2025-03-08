@@ -6,8 +6,10 @@ package interfaces;
 
 import java.util.List;
 import modelo.Carrera;
+import modelo.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  *
@@ -17,6 +19,10 @@ public interface ApiLeer {
     
     @GET("/api/running")
     Call<List<Carrera>> obtenerCarreras();
+    
+    @GET("/api/user/{id}")
+    Call<User> obtenerMiUsuario(@Path("id") int id);
+
     
     @GET("consultarTodos.php")
     Call<List<Carrera>> obtenerCarrerasLocal();
