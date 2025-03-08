@@ -6,7 +6,11 @@ package componentevisual;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controladores.ControladorPrincipal;
 import interfaces.ApiInscribirse;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -56,7 +60,7 @@ public class CardCarreraComponente extends VBox {
     private final WebView webViewMapa;
     private final HBox imagenContainer;
     private boolean mostrandoMapa = false;
-
+    
     public CardCarreraComponente() {
         super();
 
@@ -76,6 +80,8 @@ public class CardCarreraComponente extends VBox {
 
         btnInscribirse = new Button("Inscribirse");
         btnDesapuntarse = new Button("Desapuntarse");
+        btnInscribirse.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+        btnDesapuntarse.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
         
         webViewMapa = new WebView();
         WebEngine webEngine = webViewMapa.getEngine();
@@ -123,6 +129,8 @@ public class CardCarreraComponente extends VBox {
         setStyle("-fx-background-color: #e6f3ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px;");
 
         HBox btns = new HBox(btnMostrarMapa, btnInscribirse, btnDesapuntarse);
+        btns.alignmentProperty().setValue(Pos.CENTER);
+        btns.spacingProperty().setValue(10);
         
         getChildren().addAll(
             imagenContainer, 
@@ -162,7 +170,9 @@ public class CardCarreraComponente extends VBox {
             public void onResponse(Call<RespuestaInscripcion> call, Response<RespuestaInscripcion> response) {
                 Platform.runLater(() -> {
                     if (response.isSuccessful() && response.body() != null) {
-                        System.out.println("INSERCION EXITOSA: " + response.body().getDorsal());
+                        System.out.println("INSCRIPCION EXITOSA: " + response.body().getDorsal());
+                        btnInscribirse.setDisable(true);
+                        btnDesapuntarse.setDisable(false);
                         
                     } else {
                         System.out.println("Error en el insercion: " + response.message());
@@ -215,6 +225,9 @@ public class CardCarreraComponente extends VBox {
                 Platform.runLater(() -> {
                     if (response.isSuccessful()) {
                         System.out.println("Desinscripción exitosa");
+                        
+                        btnInscribirse.setDisable(false);
+                        btnDesapuntarse.setDisable(true);
                     } else {
                         System.out.println("Error al desapuntarse: " + response.message());
                     }
@@ -285,8 +298,8 @@ public class CardCarreraComponente extends VBox {
             if (carrera.getRunningParticipants() != null) {
                 for (RunningParticipant rp : carrera.getRunningParticipants()) {
                     if (rp.getUser().getId() == usuario.getId()) {
-                        btnInscribirse.setVisible(false);
-                        btnDesapuntarse.setVisible(true);
+                        btnInscribirse.setDisable(true);
+                        btnDesapuntarse.setDisable(false);
                         return;
                     }
                 }
@@ -294,8 +307,8 @@ public class CardCarreraComponente extends VBox {
                 System.out.println("Advertencia: La lista de participantes es null");
             }
 
-            btnInscribirse.setVisible(true);
-            btnDesapuntarse.setVisible(false);
+            btnInscribirse.setDisable(false);
+            btnDesapuntarse.setDisable(true);
 
 
         }
