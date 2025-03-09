@@ -7,6 +7,7 @@ package controladores;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import componentevisual.CardCarreraComponente;
+import componentevisual.LoadingSpinner;
 import interfaces.ApiInscribirse;
 import interfaces.ApiLeer;
 import interfaces.ApiLogin;
@@ -28,6 +29,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -47,6 +50,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -70,6 +74,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ControladorPrincipal implements Initializable{
 
+    @FXML
+    private BorderPane borderPanePrincipal;
+    
     @FXML
     private ImageView imgCarrera;
 
@@ -183,6 +190,9 @@ public class ControladorPrincipal implements Initializable{
     
     @FXML
     private CardCarreraComponente cardCarreraMiCarrera;
+    
+    private final BooleanProperty cargando = new SimpleBooleanProperty(false);
+    private final LoadingSpinner spinner = new LoadingSpinner();
     
     public void cambiarVentana(Stage hola) {
         this.ventana = hola;
@@ -312,6 +322,16 @@ public class ControladorPrincipal implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        spinner.isLoadingProperty.bind(cargando);
+        
+        cargando.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                borderPanePrincipal.getChildren().add(spinner);
+            } else {
+                borderPanePrincipal.getChildren().remove(spinner);
+            }
+        });
+        
         misCarreras.addListener((ListChangeListener<? super Carrera>) (change -> {
            while (change.next()) {
                if (change.wasAdded() || change.wasRemoved()) {
@@ -395,7 +415,7 @@ public class ControladorPrincipal implements Initializable{
                 .build();
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
-
+        cargando.set(true);
         Call<List<Carrera>> call = leerCarreras.obtenerCarreras();
         Response<List<Carrera>> response = call.execute();
         
@@ -406,8 +426,10 @@ public class ControladorPrincipal implements Initializable{
             listViewCarreras.getItems().clear();
             carreras.setAll(listaCarreras);
             actualizarLista(listViewCarreras, carreras);
+            cargando.set(false);
         } else {
             System.err.println("Error al obtener las carreras: " + response.message());
+            cargando.set(false);
         }
     }
     
@@ -444,7 +466,7 @@ public class ControladorPrincipal implements Initializable{
                 .build();
 
         ApiLeer leerCarreras = retrofit.create(ApiLeer.class);
-
+        cargando.set(true);
         Call<User> call = leerCarreras.obtenerMiUsuario(usuario.getId());
         Response<User> response = call.execute();
         
@@ -452,8 +474,10 @@ public class ControladorPrincipal implements Initializable{
         if (response.isSuccessful() && response.body() != null) {
             usuario = response.body();
             System.out.println("consulta" + usuario);
+            cargando.set(false);
         } else {
             System.err.println("Error al obtener tu usuario: " + response.message());
+            cargando.set(false);
         }
     }
     

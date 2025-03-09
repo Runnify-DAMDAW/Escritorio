@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefHeight="375.0" prefWidth="346.0" style="-fx-background-color: linear-gradient(to bottom right, #3a3f51, #1c1f26);" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorLogin">
+<StackPane fx:id="stackPanePrincipal" prefHeight="375.0" prefWidth="346.0" style="-fx-background-color: linear-gradient(to bottom right, #3a3f51, #1c1f26);" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorLogin">
     <VBox alignment="CENTER" maxWidth="350" prefHeight="355.0" prefWidth="346.0" spacing="20" style="-fx-background-color:white;-fx-padding:40;-fx-effect:dropshadow(gaussian, rgba(0,0,0,0.25),8,0.3,0,4);">
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>

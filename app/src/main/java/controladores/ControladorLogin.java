@@ -6,18 +6,25 @@ package controladores;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import componentevisual.LoadingSpinner;
 import interfaces.ApiLogin;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import modelo.Login;
 import modelo.RespuestaLogin;
@@ -32,7 +39,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * @author adria
  */
-public class ControladorLogin {
+public class ControladorLogin implements Initializable {
+    
+    @FXML
+    private StackPane stackPanePrincipal;
 
     @FXML
     private TextField txtPassword;
@@ -48,6 +58,9 @@ public class ControladorLogin {
     private boolean operacionExitosa;
     
     private Stage nose;
+    
+    private final BooleanProperty cargando = new SimpleBooleanProperty(false);
+    private final LoadingSpinner spinner = new LoadingSpinner();
     
     @FXML
     void pulsar() throws IOException {
@@ -83,7 +96,7 @@ public class ControladorLogin {
         Login loginData = new Login(user, password);
 
         Call<RespuestaLogin> callLogin = apiLogin.login(loginData);
-
+        cargando.set(true);
         encolaInsertar(callLogin);
         //nose = (Stage) txtUser.getScene().getWindow();
         //cambiarVentana(nose);
@@ -116,6 +129,7 @@ public class ControladorLogin {
                         txtError.setText(response.message());
                         System.out.println("Error en el login: " + response.message());
                     }
+                    cargando.set(false);
                 });
             }
 
@@ -123,6 +137,7 @@ public class ControladorLogin {
             public void onFailure(Call<RespuestaLogin> call, Throwable t) {
                 Platform.runLater(() -> {
                     System.out.println("Error de red: " + t.getMessage());
+                    cargando.set(false);
                 });
             }
         });
@@ -168,6 +183,20 @@ public class ControladorLogin {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/LOGO.png")));
     
         alerta.showAndWait();
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        spinner.isLoadingProperty.bind(cargando);
+        cargando.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                stackPanePrincipal.getChildren().add(spinner);
+                stackPanePrincipal.setOpacity(0.4);
+            } else {
+                stackPanePrincipal.getChildren().remove(spinner);
+                stackPanePrincipal.setOpacity(1);
+            }
+        });
     }
 
 }

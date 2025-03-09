@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -62,7 +63,9 @@ public class CardCarreraComponente extends VBox {
     private final HBox imagenContainer;
     private boolean mostrandoMapa = false;
 
-    private SimpleBooleanProperty cargandoProperty = new SimpleBooleanProperty(true);
+    private final BooleanProperty cargando = new SimpleBooleanProperty(false);
+    private final LoadingSpinner spinner = new LoadingSpinner();
+    
     private Runnable inscribirseHandler;
     private Runnable desapuntarseHandler;
     
@@ -163,6 +166,18 @@ public class CardCarreraComponente extends VBox {
             }
         });
         
+        spinner.isLoadingProperty.bind(cargando);
+        
+        cargando.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                getChildren().add(spinner);
+                setOpacity(0.4);
+            } else {
+                getChildren().remove(spinner);
+                setOpacity(1);
+            }
+        });
+        
     }
     
     public void setInscribirseHandler(Runnable inscribirseHandler) {
@@ -186,6 +201,7 @@ public class CardCarreraComponente extends VBox {
         Inscripcion inscripcionData = new Inscripcion(usuario.getId(), carrera.getId(), Long.valueOf(0));
 
         Call<Boolean> callInscripcion = apiInscribirse.inscribirse(inscripcionData);
+        cargando.set(true);
         encolaInsertar(callInscripcion);
     }
     
@@ -201,7 +217,9 @@ public class CardCarreraComponente extends VBox {
                         
                     } else {
                         System.out.println("Error en el insercion: " + response.message());
+                        
                     }
+                    cargando.set(false);
                 });
             }
 
@@ -209,6 +227,7 @@ public class CardCarreraComponente extends VBox {
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Platform.runLater(() -> {
                     System.out.println("Error de red: " + t.getMessage());
+                    cargando.set(false);
                 });
             }
         });
@@ -239,6 +258,7 @@ public class CardCarreraComponente extends VBox {
         }
 
         Call<Boolean> callDesapuntar = apiInscribirse.borrarInscripcion(idRunningParticipant);
+        cargando.set(true);
         encolaEliminar(callDesapuntar);
     }
 
@@ -256,6 +276,7 @@ public class CardCarreraComponente extends VBox {
                     } else {
                         System.out.println("Error al desapuntarse: " + response.message());
                     }
+                    cargando.set(false);
                 });
             }
 
@@ -263,6 +284,7 @@ public class CardCarreraComponente extends VBox {
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Platform.runLater(() -> {
                     System.out.println("Error de red: " + t.getMessage());
+                    cargando.set(false);
                 });
             }
         });
@@ -274,9 +296,9 @@ public class CardCarreraComponente extends VBox {
         imagenContainer.getChildren().add(imgCarrera);
         btnMostrarMapa.setText("Ver Mapa");
         mostrandoMapa = false; 
+        labelStatus.setTextFill(Color.DARKBLUE);
 
         if (carrera != null) {
-            
             
             //imgCarrera.setImage(new Image(getClass().getResource("/img/LOGO.png").toString()));
             imgCarrera.setImage(new Image(carrera.getImage()));
@@ -335,6 +357,13 @@ public class CardCarreraComponente extends VBox {
 
             btnInscribirse.setDisable(false);
             btnDesapuntarse.setDisable(true);
+            
+            if(carrera.getStatus().equals("Closed") || carrera.getStatus().equals("Completed")){
+                btnInscribirse.setDisable(true);
+                btnDesapuntarse.setDisable(true);
+                labelStatus.setStyle("-fx-text-fill: red;");
+
+            }
 
 
         }
