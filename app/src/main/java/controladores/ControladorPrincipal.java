@@ -210,8 +210,10 @@ public class ControladorPrincipal implements Initializable{
     
     @FXML
     void recargarDatos() throws IOException {
+        consultarMiUsuario();
         consultarApi();
         cargarMisCarreras();
+        mostrarRankings();
     }
     
     private void mostrarSeccion(boolean ranking, boolean mostrarCarreras, boolean misCarreras, boolean miPerfil) {
@@ -250,6 +252,7 @@ public class ControladorPrincipal implements Initializable{
     }
 
     private void actualizarLista(ListView<Carrera> lista, ObservableList<Carrera> carreras) {
+        lista.getItems().clear();
         lista.getItems().setAll(carreras);
     }
     
@@ -267,10 +270,6 @@ public class ControladorPrincipal implements Initializable{
             pane.setOnMouseClicked(event -> {
                 if (content.getChildren().isEmpty()) {
                     content.getChildren().addAll(
-                        new Label("Descripción: " + carrera.getDescription()),
-                        new Label("Fecha: " + carrera.getDate()),
-                        new Label("Distancia: " + carrera.getDistance_km() + " km"),
-                        new Label("Precio: " + carrera.getEntry_fee() + "€"),
                         new Label("Participantes:")
                     );
 
@@ -333,8 +332,38 @@ public class ControladorPrincipal implements Initializable{
         try{
             configurarFiltros();
             consultarApi();
-            listViewCarreras.setOnMouseClicked(e -> cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem(), usuario));
-            listViewMisCarreras.setOnMouseClicked(e -> cardCarreraMiCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem(), usuario));
+            listViewCarreras.setOnMouseClicked(e ->{
+                cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem(), usuario);
+                cardCarrera.setDesapuntarseHandler(() -> {
+                    try {
+                        recargarDatos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+                cardCarrera.setInscribirseHandler(()-> {try {
+                    recargarDatos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+            });
+            listViewMisCarreras.setOnMouseClicked(e -> {
+                cardCarreraMiCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem(), usuario);
+                cardCarreraMiCarrera.setDesapuntarseHandler(() -> {
+                    try {
+                        recargarDatos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+                cardCarreraMiCarrera.setInscribirseHandler(()-> {try {
+                    recargarDatos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ControladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+            });
             actualizarLista(listViewCarreras, carreras);
             mostrarRankings();
         }catch(Exception e){
@@ -382,9 +411,9 @@ public class ControladorPrincipal implements Initializable{
         }
     }
     
-    public void cargarMisCarreras() throws IOException {
-        consultarMiUsuario();
+    public void cargarMisCarreras() {
         if (usuario != null && usuario.getRunningParticipants() != null) {
+            misCarreras.clear();
             for (RunningParticipantUser rp : usuario.getRunningParticipants()) {
                 int idCarrera = rp.getRunning().getId();
                 for(Carrera carrera : carreras) {
@@ -392,7 +421,7 @@ public class ControladorPrincipal implements Initializable{
                         misCarreras.add(carrera);
                     }
                 }
-                actualizarLista(listViewMisCarreras, misCarreras);  
+
             }
         } else {
             System.out.println("Usuario o sus carreras son null");

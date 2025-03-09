@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class CardCarreraComponente extends VBox {
 
-    //private final ImageView imgCarrera;
+    private final ImageView imgCarrera;
     private final Label labelDesc;
     private final Label labelDate;
     private final Label labelDistanciaKm;
@@ -60,19 +61,23 @@ public class CardCarreraComponente extends VBox {
     private final WebView webViewMapa;
     private final HBox imagenContainer;
     private boolean mostrandoMapa = false;
+
+    private SimpleBooleanProperty cargandoProperty = new SimpleBooleanProperty(true);
+    private Runnable inscribirseHandler;
+    private Runnable desapuntarseHandler;
     
     public CardCarreraComponente() {
         super();
 
-
+        
         setPrefWidth(350);
         setPrefHeight(450);
 
 
-        /*imgCarrera = new ImageView();
+        imgCarrera = new ImageView();
         imgCarrera.setFitWidth(300);
         imgCarrera.setFitHeight(200);
-        imgCarrera.setPreserveRatio(true);*/
+        imgCarrera.setPreserveRatio(true);
 
 
         btnMostrarMapa = new Button("Ver Mapa");
@@ -146,7 +151,27 @@ public class CardCarreraComponente extends VBox {
             btns,
             webViewMapa
         );
+        
+        btnInscribirse.setOnMouseClicked(event -> {
+            if (inscribirseHandler != null) {
+                inscribirseHandler.run();
+            }
+        });
+        btnDesapuntarse.setOnMouseClicked(event -> {
+            if (desapuntarseHandler != null) {
+                desapuntarseHandler.run();
+            }
+        });
+        
     }
+    
+    public void setInscribirseHandler(Runnable inscribirseHandler) {
+        this.inscribirseHandler = inscribirseHandler;
+    }
+    
+    public void setDesapuntarseHandler(Runnable desapuntarseHandler){
+        this.desapuntarseHandler = desapuntarseHandler;
+    }    
     
     public void inscribirse(Carrera carrera, User usuario) {
         String baseURL = "http://192.168.1.41:8000/";
@@ -245,9 +270,8 @@ public class CardCarreraComponente extends VBox {
 
 
     public void mostrarDetallesCarrera(Carrera carrera, User usuario) {
-
         imagenContainer.getChildren().clear();
-        //imagenContainer.getChildren().add(imgCarrera);
+        imagenContainer.getChildren().add(imgCarrera);
         btnMostrarMapa.setText("Ver Mapa");
         mostrandoMapa = false; 
 
@@ -255,7 +279,7 @@ public class CardCarreraComponente extends VBox {
             
             
             //imgCarrera.setImage(new Image(getClass().getResource("/img/LOGO.png").toString()));
-
+            imgCarrera.setImage(new Image(carrera.getImage()));
          
             labelNombre.setText(carrera.getName());
             labelDesc.setText("Descripción: " + carrera.getDescription());
@@ -271,9 +295,10 @@ public class CardCarreraComponente extends VBox {
                 if (mostrandoMapa) {
 
                     imagenContainer.getChildren().clear();
-                    //imagenContainer.getChildren().add(imgCarrera);
+                    imagenContainer.getChildren().add(imgCarrera);
                     btnMostrarMapa.setText("Ver Mapa"); 
                     mostrandoMapa = false;
+                    
                 } else {
 
                     String coordenadas = carrera.getCoordinates(); 
@@ -294,6 +319,7 @@ public class CardCarreraComponente extends VBox {
             btnDesapuntarse.setOnAction(e -> {
                 desapuntarse(carrera, usuario);
             });
+            
             System.out.println(carrera.toString());
             if (carrera.getRunningParticipants() != null) {
                 for (RunningParticipant rp : carrera.getRunningParticipants()) {
