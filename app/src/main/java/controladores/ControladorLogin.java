@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -39,8 +40,11 @@ public class ControladorLogin {
     @FXML
     private TextField txtUser;
     
+    @FXML
+    private Label txtError;
+    
     private ControladorPrincipal controladorPrincipal;
-
+    
     private boolean operacionExitosa;
     
     private Stage nose;
@@ -96,6 +100,11 @@ public class ControladorLogin {
                         operacionExitosa = true;
                         Stage nose = (Stage) txtUser.getScene().getWindow();
                         try {
+                            if(response.body().getUser().isBanned()){
+                                txtError.setText("EL USUARIO ESTÁ BAN");
+                                System.out.println("EL USUARIO ESTÁ BAN");
+                                return;
+                            }
                             cambiarVentana(nose);
 
                             controladorPrincipal.cargarDatosMiperfil(response.body().getUser());
@@ -104,6 +113,7 @@ public class ControladorLogin {
                             Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else {
+                        txtError.setText(response.message());
                         System.out.println("Error en el login: " + response.message());
                     }
                 });
