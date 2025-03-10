@@ -184,19 +184,50 @@
 
                     <VBox alignment="CENTER_LEFT" prefHeight="250.0" prefWidth="100" style="-fx-spacing: 20; -fx-padding: 20;">
                         <children>
-                            <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nombre:" />
-                           <TextField fx:id="txtNombreMiPerfil" />
+                        <Label fx:id="labelRespuesta" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                                  <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="413.0" spacing="20">
+                                      <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nombre:" />
+                                 <TextField fx:id="txtNombreMiPerfil" prefHeight="26.0" prefWidth="190.0" />
+                                  </HBox>
+                              <HBox alignment="CENTER" prefHeight="74.0" prefWidth="568.0">
+                                 <children>
+                                    <Label fx:id="labelNuevaContraseña" prefHeight="26.0" prefWidth="158.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nueva contraseña:   " visible="false" />
+                                    <TextField fx:id="txtNuevaContraseña" prefHeight="26.0" prefWidth="170.0" visible="false" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+
+                            <HBox prefHeight="26.0" prefWidth="894.0" spacing="20">
+                           <HBox prefHeight="26.0" prefWidth="444.0">
+                              <children>
+                                      <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Email: " />
+                                 <TextField fx:id="txtEmailMiperfil" prefHeight="26.0" prefWidth="174.0" />
+                              </children>
+                           </HBox>
+                           <HBox alignment="CENTER" prefHeight="26.0" prefWidth="454.0">
+                              <children>
+                                 <Label fx:id="labelRepetirContraseña" prefHeight="26.0" prefWidth="160.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Repetir contraseña: " visible="false" />
+                                 <TextField fx:id="txtRepetirNuevaContraseña" prefHeight="26.0" prefWidth="170.0" visible="false" />
+                              </children>
+                           </HBox>
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Email:" />
-                           <TextField fx:id="txtEmailMiperfil" />
-                            </HBox>
-
-                            <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Edad:" />
-                           <TextField fx:id="txtEdadMiPerfil" />
+                           <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="446.0">
+                              <children>
+                                      <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Edad: " />
+                                 <TextField fx:id="txtEdadMiPerfil" />
+                              </children>
+                           </HBox>
+                           <HBox alignment="CENTER" prefHeight="26.0" prefWidth="450.0">
+                              <children>
+                                 <Label fx:id="labelContraseña" prefHeight="26.0" prefWidth="163.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Contraseña:  " visible="false" />
+                                 <TextField fx:id="txtContraseña" prefHeight="26.0" prefWidth="170.0" visible="false" />
+                              </children>
+                           </HBox>
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
@@ -210,6 +241,8 @@
                         <Button fx:id="btnEditarPerfil" onAction="#editarPerfil" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Editar Perfil">
                         </Button>
                      <Button fx:id="btnGuardarPerfil" disable="true" onAction="#guardarPerfil" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Guardar" />
+                     <Button fx:id="btnCambiarContraseña" onAction="#cambiarContraseña" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Cambiar Contraseña" />
+                     <Button fx:id="btnGuardarContraseña" disable="true" onAction="#guardarContraseña" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Guardar" visible="false" />
                     </HBox>
                 </children>
             </VBox>

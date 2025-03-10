@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import modelo.CambiarContraseña;
 import modelo.EditarPerfil;
 import modelo.Inscripcion;
 import modelo.RespuestaInscripcion;
@@ -25,4 +26,7 @@ public interface ApiEditarPerfil {
     })
     @PUT("/api/user/{id}/edit")
     Call<Boolean> editarPerfil(@Path("id") int id, @Body EditarPerfil editarPerfil);
+    
+    @PUT("/api/user/{id}/edit")
+    Call<Boolean> editarContraseña(@Path("id") int id, @Body CambiarContraseña cambiarContraseña);
 }

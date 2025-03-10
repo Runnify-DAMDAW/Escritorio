@@ -55,6 +55,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modelo.CambiarContraseña;
 import modelo.Carrera;
 import modelo.EditarPerfil;
 import modelo.Inscripcion;
@@ -200,6 +201,33 @@ public class ControladorPrincipal implements Initializable{
     
     private final BooleanProperty cargando = new SimpleBooleanProperty(false);
     private final LoadingSpinner spinner = new LoadingSpinner();
+    
+    @FXML
+    private Label labelContraseña;
+
+    @FXML
+    private Label labelNuevaContraseña;
+
+    @FXML
+    private Label labelRespuesta;
+    
+    @FXML
+    private Label labelRepetirContraseña;
+    
+    @FXML
+    private TextField txtNuevaContraseña;
+
+    @FXML
+    private TextField txtRepetirNuevaContraseña;
+    
+    @FXML
+    private TextField txtContraseña;
+    
+    @FXML
+    private Button btnCambiarContraseña;
+    
+    @FXML 
+    private Button btnGuardarContraseña;
     
     public void cambiarVentana(Stage hola) {
         this.ventana = hola;
@@ -547,16 +575,18 @@ public class ControladorPrincipal implements Initializable{
         encolaModificarPerfil(callEditar);
     }
 
-    public void encolaModificarPerfil(Call<Boolean> callLogin) {
-        callLogin.enqueue(new Callback<Boolean>() {
+    public void encolaModificarPerfil(Call<Boolean> callPerfil) {
+        callPerfil.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 Platform.runLater(() -> {
                     if (response.isSuccessful() && response.body() != null) {
                         if (response.body()) {
                             System.out.println("Perfil actualizado correctamente.");
+                            labelRespuesta.setText("Perfil actualizado correctamente.");
                         } else {
                             System.out.println("Error al actualizar el perfil.");
+                            labelRespuesta.setText("Error al actualizar el perfil.");
                         }
                     } else {
                         System.out.println("Error en la actualización: " + response.message());
@@ -581,7 +611,55 @@ public class ControladorPrincipal implements Initializable{
         });
     }
 
+    public void encolaModificarContraseña(Call<Boolean> callContraseña) {
+        callContraseña.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Platform.runLater(() -> {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (response.body()) {
+                            System.out.println("Contraseña actualizado correctamente.");
+                            labelRespuesta.setText("Contraseña actualizado correctamente.");
+                        } else {
+                            System.out.println("Error al actualizar Contraseña.");
+                            labelRespuesta.setText("Error al actualizar Contraseña.");
+                        }
+                    } else {
+                        System.out.println("Error en la actualización: " + response.message());
+                    }
+                    labelContraseña.setVisible(false); 
+                    labelNuevaContraseña.setVisible(false);
+                    labelRepetirContraseña.setVisible(false);
+                    txtNuevaContraseña.setVisible(false);
+                    txtRepetirNuevaContraseña.setVisible(false);
+                    txtContraseña.setVisible(false);
+                    btnCambiarContraseña.setVisible(true);
+                    btnGuardarContraseña.setVisible(false);
+                    btnGuardarContraseña.setDisable(true);
+                    btnCambiarContraseña.setDisable(false);
+                    setEditable(false);
+                });
+            }
 
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Platform.runLater(() -> {
+                    System.out.println("Error de red: " + t.getMessage());
+                    labelContraseña.setVisible(false); 
+                    labelNuevaContraseña.setVisible(false);
+                    labelRepetirContraseña.setVisible(false);
+                    txtNuevaContraseña.setVisible(false);
+                    txtRepetirNuevaContraseña.setVisible(false);
+                    txtContraseña.setVisible(false);
+                    btnCambiarContraseña.setVisible(true);
+                    btnGuardarContraseña.setVisible(false);
+                    btnGuardarContraseña.setDisable(true);
+                    btnCambiarContraseña.setDisable(false);
+                    setEditable(false);
+                });
+            }
+        });
+    }
     
     private void setEditable(boolean estado) {
         txtNombreMiPerfil.setEditable(estado);
@@ -596,6 +674,47 @@ public class ControladorPrincipal implements Initializable{
         txtEdadMiPerfil.setStyle("-fx-background-color: " + color + ";");
     }
     
+    @FXML
+    void cambiarContraseña() {
+        labelContraseña.setVisible(true); 
+        labelNuevaContraseña.setVisible(true);
+        labelRepetirContraseña.setVisible(true);
+        txtNuevaContraseña.setVisible(true);
+        txtRepetirNuevaContraseña.setVisible(true);
+        txtContraseña.setVisible(true);
+        btnCambiarContraseña.setVisible(true);
+        btnGuardarContraseña.setVisible(true);
+        btnGuardarContraseña.setDisable(false);
+        btnCambiarContraseña.setDisable(true);
+
+ 
+    }
+    
+    @FXML 
+    void guardarContraseña() {
+        String baseURL = "http://192.168.1.41:8000/";
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        ApiEditarPerfil apiEditarPerfil = retrofit.create(ApiEditarPerfil.class);
+        
+        CambiarContraseña cambiarContraseñaData = new CambiarContraseña(txtContraseña.getText(),txtNuevaContraseña.getText());
+        
+        Call<Boolean> callContraseña = apiEditarPerfil.editarContraseña(usuario.getId(), cambiarContraseñaData);
+        cargando.set(true);
+        if (!txtNuevaContraseña.getText().equals(txtRepetirNuevaContraseña.getText())) {
+            System.out.println("Error: Las contraseñas no coinciden.");
+            return;
+        }
+
+        encolaModificarContraseña(callContraseña);
+        
+        
+    }
     
 }
 
