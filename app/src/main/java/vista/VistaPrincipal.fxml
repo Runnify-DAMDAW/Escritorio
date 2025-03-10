@@ -106,7 +106,7 @@
                         <ComboBox fx:id="comboBoxFiltroCategoria" prefHeight="26.0" prefWidth="100.0" promptText="Categoría" />
                         <ComboBox fx:id="comboBoxFiltroEstado" prefHeight="26.0" prefWidth="100.0" promptText="Estado" />
                         <ComboBox fx:id="comboBoxFiltroCuota" prefHeight="26.0" prefWidth="100.0" promptText="Cuota" />
-                        <Button mnemonicParsing="false" onAction="#recargarDatos" text="Recargar" />
+                        <Button mnemonicParsing="false" onAction="#recargarDatos" text="Recargar" visible="false" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -174,9 +174,11 @@
                                     <Image url="https://via.placeholder.com/120" /> <!-- Puedes poner la URL de la imagen aquí -->
                                 </image>
                             </ImageView>
-
-                            <Label fx:id="txtNombreMiPerfilTitulo" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 30px; -fx-text-fill: #333333;" text="Pablo">
-                            </Label>
+                        <Label fx:id="txtNombreMiPerfilTitulo" text="Label">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
                         </children>
                     </HBox>
 
@@ -184,29 +186,30 @@
                         <children>
                             <HBox alignment="CENTER_LEFT" spacing="20">
                                 <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Nombre:" />
-                                <Label fx:id="txtNombreMiPerfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Pablo" />
+                           <TextField fx:id="txtNombreMiPerfil" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
                                 <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Email:" />
-                                <Label fx:id="txtEmailMiperfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="pablo@ejemplo.com" />
+                           <TextField fx:id="txtEmailMiperfil" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
-                                <Label fx:id="txtEdadMiPerfil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Edad:" />
-                                <Label fx:id="txtEdadMiPerfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="28 años" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Edad:" />
+                           <TextField fx:id="txtEdadMiPerfil" />
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="20">
                                 <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Sexo:" />
-                                <Label fx:id="txtSexoMiPerfil" style="-fx-font-size: 16px; -fx-text-fill: #555555;" text="Masculino" />
+                           <TextField fx:id="txtSexoMiPerfil" />
                             </HBox>
                         </children>
                     </VBox>
 
-                    <HBox alignment="CENTER" style="-fx-padding: 20;">
-                        <Button style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Editar Perfil">
+                    <HBox alignment="CENTER" style="-fx-padding: 20; -fx-spacing: 20;">
+                        <Button fx:id="btnEditarPerfil" onAction="#editarPerfil" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Editar Perfil">
                         </Button>
+                     <Button fx:id="btnGuardarPerfil" disable="true" onAction="#guardarPerfil" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-padding: 10;" text="Guardar" />
                     </HBox>
                 </children>
             </VBox>

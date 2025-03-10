@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import componentevisual.CardCarreraComponente;
 import componentevisual.LoadingSpinner;
+import interfaces.ApiEditarPerfil;
 import interfaces.ApiInscribirse;
 import interfaces.ApiLeer;
 import interfaces.ApiLogin;
@@ -55,6 +56,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modelo.Carrera;
+import modelo.EditarPerfil;
 import modelo.Inscripcion;
 import modelo.Login;
 import modelo.RespuestaInscripcion;
@@ -159,23 +161,28 @@ public class ControladorPrincipal implements Initializable{
     private TextField txtFiltroNombre;
     
     @FXML
-    private Label txtEdadMiPerfil;
+    private TextField txtEdadMiPerfil;
 
     @FXML
-    private Label txtEmailMiperfil;
+    private TextField txtEmailMiperfil;
     
      @FXML
-    private Label txtNombreMiPerfil;
+    private TextField txtNombreMiPerfil;
 
     @FXML
     private Label txtNombreMiPerfilTitulo;
 
     @FXML
-    private Label txtSexoMiPerfil;
+    private TextField txtSexoMiPerfil;
     
     @FXML
     private ImageView imgMiPerfil;
 
+    @FXML
+    private Button btnEditarPerfil;
+
+    @FXML
+    private Button btnGuardarPerfil;
     
     private ObservableList<Carrera> carreras = FXCollections.observableArrayList();
     private ObservableList<Carrera> carrerasFiltradas = FXCollections.observableArrayList();
@@ -347,7 +354,8 @@ public class ControladorPrincipal implements Initializable{
                }
            }
        }));
-
+        setEditable(false);
+        btnGuardarPerfil.setDisable(true);
         
         try{
             configurarFiltros();
@@ -488,7 +496,7 @@ public class ControladorPrincipal implements Initializable{
             //Instant instant = user.getAge().toInstant();
             //LocalDate fechaNacimiento = instant.atZone(ZoneId.systemDefault()).toLocalDate();
             //long edad = ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now());
-            //txtEdadMiPerfil.setText(String.valueOf(edad));
+            txtEdadMiPerfil.setText(String.valueOf(user.getAge()));
             txtEmailMiperfil.setText(user.getEmail());
             txtNombreMiPerfil.setText(user.getName());
             txtNombreMiPerfilTitulo.setText(user.getName());
@@ -502,7 +510,92 @@ public class ControladorPrincipal implements Initializable{
         cargarMisCarreras();
 
     }
+    
+    @FXML
+    void editarPerfil() {
+        setEditable(true);
+        btnEditarPerfil.setDisable(true);
+        btnGuardarPerfil.setDisable(false);
+    }
+
+    @FXML
+    void guardarPerfil() {
+        String baseURL = "http://192.168.1.41:8000/";
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        ApiEditarPerfil apiEditarPerfil = retrofit.create(ApiEditarPerfil.class);
+
+        EditarPerfil editarPerfilData = new EditarPerfil(
+                txtNombreMiPerfil.getText(),
+                txtEmailMiperfil.getText(),
+                Integer.parseInt(txtEdadMiPerfil.getText()),
+                txtSexoMiPerfil.getText(),
+                false, 
+                null,
+                null
+        );
+
+        Call<Boolean> callEditar = apiEditarPerfil.editarPerfil(usuario.getId(), editarPerfilData);
+
+        cargando.set(true);
+
+        encolaModificarPerfil(callEditar);
+    }
+
+    public void encolaModificarPerfil(Call<Boolean> callLogin) {
+        callLogin.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Platform.runLater(() -> {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (response.body()) {
+                            System.out.println("Perfil actualizado correctamente.");
+                        } else {
+                            System.out.println("Error al actualizar el perfil.");
+                        }
+                    } else {
+                        System.out.println("Error en la actualización: " + response.message());
+                    }
+                    cargando.set(false);
+                    btnEditarPerfil.setDisable(false);
+                    btnGuardarPerfil.setDisable(true);
+                    setEditable(false);
+                });
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Platform.runLater(() -> {
+                    System.out.println("Error de red: " + t.getMessage());
+                    cargando.set(false);
+                    btnEditarPerfil.setDisable(false);
+                    btnGuardarPerfil.setDisable(true);
+                    setEditable(false);
+                });
+            }
+        });
+    }
 
 
+    
+    private void setEditable(boolean estado) {
+        txtNombreMiPerfil.setEditable(estado);
+        txtEmailMiperfil.setEditable(estado);
+        txtSexoMiPerfil.setEditable(estado);
+        txtEdadMiPerfil.setEditable(estado);
+
+        String color = estado ? "white" : "transparent";
+        txtNombreMiPerfil.setStyle("-fx-background-color: " + color + ";");
+        txtEmailMiperfil.setStyle("-fx-background-color: " + color + ";");
+        txtSexoMiPerfil.setStyle("-fx-background-color: " + color + ";");
+        txtEdadMiPerfil.setStyle("-fx-background-color: " + color + ";");
+    }
+    
+    
 }
 

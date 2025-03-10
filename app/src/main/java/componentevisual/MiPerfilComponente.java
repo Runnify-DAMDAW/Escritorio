@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import modelo.User;
 
 
 /**
@@ -22,7 +23,7 @@ import javafx.scene.layout.VBox;
  */
 public class MiPerfilComponente extends HBox {
 
-    //private final ImageView imgPerfil;
+    private final ImageView imgPerfil;
     private final TextField txtNombre;
     private final TextField txtEmail;
     private final TextField txtSexo;
@@ -45,11 +46,11 @@ public class MiPerfilComponente extends HBox {
         vBox.setSpacing(15);
         vBox.setAlignment(Pos.CENTER);
 
-        /*imgPerfil = new ImageView();
+        imgPerfil = new ImageView();
         imgPerfil.setFitWidth(120);
         imgPerfil.setFitHeight(120);
         imgPerfil.setPreserveRatio(true);
-        imgPerfil.setImage(new Image(""));*/
+        imgPerfil.setImage(new Image(""));
 
         txtNombre = crearTextField("Nombre");
         txtEmail = crearTextField("Email");
@@ -69,7 +70,7 @@ public class MiPerfilComponente extends HBox {
         btnAceptar.setOnAction(event -> aceptarCambios());
 
         vBox.getChildren().addAll(
-            //imgPerfil,
+            imgPerfil,
             txtNombre,
             txtEmail,
             txtSexo,
@@ -81,7 +82,7 @@ public class MiPerfilComponente extends HBox {
 
         getChildren().add(vBox);
     }
-
+    
     private TextField crearTextField(String promptText) {
         TextField textField = new TextField();
         textField.setPromptText(promptText);

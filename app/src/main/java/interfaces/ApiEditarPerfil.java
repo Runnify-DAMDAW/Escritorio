@@ -4,12 +4,15 @@
  */
 package interfaces;
 
+import modelo.EditarPerfil;
 import modelo.Inscripcion;
 import modelo.RespuestaInscripcion;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 /**
  *
@@ -20,6 +23,6 @@ public interface ApiEditarPerfil {
         "Content-Type: application/json",
         "Accept: application/json"
     })
-    @POST("/api/running_participant/new")
-    Call<RespuestaInscripcion> inscribirse(@Body Inscripcion inscripcion);
+    @PUT("/api/user/{id}/edit")
+    Call<Boolean> editarPerfil(@Path("id") int id, @Body EditarPerfil editarPerfil);
 }
