@@ -104,6 +104,7 @@
                         <TextField fx:id="txtFiltroLocalizacion" promptText="Localización" />
                         <DatePicker fx:id="txtFiltroFecha" prefHeight="26.0" prefWidth="100.0" promptText="Fecha" />
                         <ComboBox fx:id="comboBoxFiltroCategoria" prefHeight="26.0" prefWidth="100.0" promptText="Categoría" />
+                        <ComboBox fx:id="comboBoxGeneroFiltro" prefHeight="26.0" prefWidth="95.0" promptText="Género" />
                         <ComboBox fx:id="comboBoxFiltroEstado" prefHeight="26.0" prefWidth="100.0" promptText="Estado" />
                         <ComboBox fx:id="comboBoxFiltroCuota" prefHeight="26.0" prefWidth="100.0" promptText="Cuota" />
                         <Button mnemonicParsing="false" onAction="#recargarDatos" text="Recargar" visible="false" />

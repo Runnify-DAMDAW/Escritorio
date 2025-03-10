@@ -148,7 +148,10 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     private ComboBox<String> comboBoxFiltroCuota;
-
+    
+    @FXML
+    private ComboBox<String> comboBoxGeneroFiltro;
+ 
     @FXML
     private ComboBox<String> comboBoxFiltroEstado;
     
@@ -274,13 +277,15 @@ public class ControladorPrincipal implements Initializable{
         comboBoxFiltroCategoria.setItems(FXCollections.observableArrayList("Categoría", "Maratón", "Media maratón", "5K", "10K", "Obstáculos", "Relevos", "Sprint"));
         comboBoxFiltroCuota.setItems(FXCollections.observableArrayList("Cuota", "20", "25", "30", "50"));
         comboBoxFiltroEstado.setItems(FXCollections.observableArrayList("Estado", "Open", "Closed", "Completed"));
-
+        comboBoxGeneroFiltro.setItems(FXCollections.observableArrayList("Género", "H", "M"));
+                
         txtFiltroNombre.textProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         txtFiltroLocalizacion.textProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         txtFiltroFecha.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         comboBoxFiltroCategoria.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         comboBoxFiltroCuota.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         comboBoxFiltroEstado.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
+        comboBoxGeneroFiltro.valueProperty().addListener((obs, old, nuevo) -> aplicarFiltros());
         
     }
     
@@ -290,6 +295,7 @@ public class ControladorPrincipal implements Initializable{
             (txtFiltroNombre.getText().isEmpty() || carrera.getName().toLowerCase().contains(txtFiltroNombre.getText().toLowerCase())) &&
             (txtFiltroLocalizacion.getText().isEmpty() || carrera.getLocation().toLowerCase().contains(txtFiltroLocalizacion.getText().toLowerCase())) &&
             (comboBoxFiltroCategoria.getValue() == null || "Categoría".equals(comboBoxFiltroCategoria.getValue()) || carrera.getCategory().equalsIgnoreCase(comboBoxFiltroCategoria.getValue())) &&
+            (comboBoxGeneroFiltro.getValue()==null || "Género".equals(comboBoxGeneroFiltro.getValue()) || carrera.getGender().equalsIgnoreCase(comboBoxGeneroFiltro.getValue())) &&
             (comboBoxFiltroCuota.getValue() == null || "Cuota".equals(comboBoxFiltroCuota.getValue()) || carrera.getEntry_fee() <= Double.parseDouble(comboBoxFiltroCuota.getValue())) &&
             (comboBoxFiltroEstado.getValue() == null || "Estado".equals(comboBoxFiltroEstado.getValue()) || carrera.getStatus().equalsIgnoreCase(comboBoxFiltroEstado.getValue()))
         ));

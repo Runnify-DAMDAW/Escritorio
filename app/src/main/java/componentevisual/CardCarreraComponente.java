@@ -56,6 +56,7 @@ public class CardCarreraComponente extends VBox {
     private final Label labelStatus;
     private final Label labelCategory;
     private final Label labelNombre;
+    private final Label labelGender;
     private final Button btnMostrarMapa;
     private final Button btnInscribirse;
     private final Button btnDesapuntarse;
@@ -106,7 +107,7 @@ public class CardCarreraComponente extends VBox {
         labelAvaibleSlots = new Label();
         labelStatus = new Label();
         labelCategory = new Label();
-
+        labelGender = new Label();
 
         Font font = Font.font("Arial", FontWeight.BOLD, 12);
         Font fontNombre = Font.font("Arial", FontWeight.BOLD, 14);
@@ -119,7 +120,8 @@ public class CardCarreraComponente extends VBox {
         labelAvaibleSlots.setFont(font);
         labelStatus.setFont(font);
         labelCategory.setFont(font);
-
+        labelGender.setFont(font);
+                
         labelNombre.setTextFill(Color.RED);
         labelDesc.setTextFill(Color.DARKBLUE);
         labelDate.setTextFill(Color.DARKBLUE);
@@ -129,7 +131,7 @@ public class CardCarreraComponente extends VBox {
         labelAvaibleSlots.setTextFill(Color.DARKBLUE);
         labelStatus.setTextFill(Color.DARKBLUE);
         labelCategory.setTextFill(Color.DARKBLUE);
-
+        labelGender.setTextFill(Color.DARKBLUE);
 
         setSpacing(10);
         setPadding(new Insets(15));
@@ -151,6 +153,7 @@ public class CardCarreraComponente extends VBox {
             labelAvaibleSlots,
             labelStatus,
             labelCategory,
+            labelGender,
             btns,
             webViewMapa
         );
