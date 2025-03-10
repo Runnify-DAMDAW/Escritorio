@@ -13,6 +13,7 @@ import interfaces.ApiInscribirse;
 import interfaces.ApiLeer;
 import interfaces.ApiLogin;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -194,7 +196,9 @@ public class ControladorPrincipal implements Initializable{
 
     private User usuario;
     private Stage ventana;
+    private String ip;
     
+            
     
     @FXML
     private CardCarreraComponente cardCarrera;
@@ -362,6 +366,19 @@ public class ControladorPrincipal implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Properties properties = new Properties();
+
+        try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                throw new RuntimeException("No se encontró el archivo config.properties");
+            }
+            System.out.println("CARGADO IP");
+            properties.load(input);
+            ip = properties.getProperty("IP");
+            System.out.println(ip);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al cargar config.properties", e);
+        }
         
         spinner.isLoadingProperty.bind(cargando);
         
@@ -395,7 +412,7 @@ public class ControladorPrincipal implements Initializable{
             configurarFiltros();
             consultarApi();
             listViewCarreras.setOnMouseClicked(e ->{
-                cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem(), usuario);
+                cardCarrera.mostrarDetallesCarrera(listViewCarreras.getSelectionModel().getSelectedItem(), usuario, ip);
                 cardCarrera.setDesapuntarseHandler(() -> {
                     try {
                         recargarDatos();
@@ -411,7 +428,7 @@ public class ControladorPrincipal implements Initializable{
                 });
             });
             listViewMisCarreras.setOnMouseClicked(e -> {
-                cardCarreraMiCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem(), usuario);
+                cardCarreraMiCarrera.mostrarDetallesCarrera(listViewMisCarreras.getSelectionModel().getSelectedItem(), usuario, ip);
                 cardCarreraMiCarrera.setDesapuntarseHandler(() -> {
                     try {
                         recargarDatos();
@@ -447,7 +464,11 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
+<<<<<<< HEAD
         String urlEndpoint = "http://192.168.70.91:8000/"; //
+=======
+        String urlEndpoint = ip; //
+>>>>>>> e55b4d2826391e5d1e3fd7357d758a3f0493f775
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -498,7 +519,11 @@ public class ControladorPrincipal implements Initializable{
     
     public void consultarMiUsuario() throws IOException {
         
+<<<<<<< HEAD
         String urlEndpoint = "http://192.168.70.91:8000/"; //
+=======
+        String urlEndpoint = ip; 
+>>>>>>> e55b4d2826391e5d1e3fd7357d758a3f0493f775
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -554,7 +579,11 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     void guardarPerfil() {
+<<<<<<< HEAD
         String baseURL = "http://192.168.70.91:8000/";
+=======
+        String baseURL = ip;
+>>>>>>> e55b4d2826391e5d1e3fd7357d758a3f0493f775
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -698,7 +727,11 @@ public class ControladorPrincipal implements Initializable{
     
     @FXML 
     void guardarContraseña() {
+<<<<<<< HEAD
         String baseURL = "http://192.168.70.91:8000/";
+=======
+        String baseURL = ip;
+>>>>>>> e55b4d2826391e5d1e3fd7357d758a3f0493f775
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -721,6 +754,9 @@ public class ControladorPrincipal implements Initializable{
         
         
     }
+    
+    
+    
     
 }
 
