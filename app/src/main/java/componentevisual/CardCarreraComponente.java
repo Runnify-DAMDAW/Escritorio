@@ -70,6 +70,8 @@ public class CardCarreraComponente extends VBox {
     private Runnable inscribirseHandler;
     private Runnable desapuntarseHandler;
     
+    private String ip;
+    
     public CardCarreraComponente() {
         super();
 
@@ -191,8 +193,8 @@ public class CardCarreraComponente extends VBox {
         this.desapuntarseHandler = desapuntarseHandler;
     }    
     
-    public void inscribirse(Carrera carrera, User usuario) {
-        String baseURL = "http://192.168.1.41:8000/";
+    public void inscribirse(Carrera carrera, User usuario, String ip) {
+        String baseURL = ip;
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -237,8 +239,8 @@ public class CardCarreraComponente extends VBox {
     }
     
     
-    public void desapuntarse(Carrera carrera, User usuario) {
-        String baseURL = "http://192.168.1.41:8000/";
+    public void desapuntarse(Carrera carrera, User usuario, String ip) {
+        String baseURL = ip;
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -294,7 +296,8 @@ public class CardCarreraComponente extends VBox {
     }
 
 
-    public void mostrarDetallesCarrera(Carrera carrera, User usuario) {
+    public void mostrarDetallesCarrera(Carrera carrera, User usuario, String ip) {
+        this.ip = ip;
         imagenContainer.getChildren().clear();
         imagenContainer.getChildren().add(imgCarrera);
         btnMostrarMapa.setText("Ver Mapa");
@@ -339,11 +342,11 @@ public class CardCarreraComponente extends VBox {
             });
             
             btnInscribirse.setOnAction(e -> {
-                inscribirse(carrera, usuario);
+                inscribirse(carrera, usuario, ip);
             });
             
             btnDesapuntarse.setOnAction(e -> {
-                desapuntarse(carrera, usuario);
+                desapuntarse(carrera, usuario, ip);
             });
             
             System.out.println(carrera.toString());

@@ -9,7 +9,9 @@ import com.google.gson.GsonBuilder;
 import componentevisual.LoadingSpinner;
 import interfaces.ApiLogin;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,6 +64,8 @@ public class ControladorLogin implements Initializable {
     private final BooleanProperty cargando = new SimpleBooleanProperty(false);
     private final LoadingSpinner spinner = new LoadingSpinner();
     
+    private String ip;
+    
     @FXML
     void pulsar() throws IOException {
         String user = txtUser.getText();
@@ -84,7 +88,7 @@ public class ControladorLogin implements Initializable {
         
         
 
-        String baseURL = "http://192.168.1.41:8000/";
+        String baseURL = ip;
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -187,6 +191,21 @@ public class ControladorLogin implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Properties properties = new Properties();
+
+        try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                throw new RuntimeException("No se encontró el archivo config.properties");
+            }
+            System.out.println("CARGADO IP");
+            properties.load(input);
+            ip = properties.getProperty("IP");
+            System.out.println(ip);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al cargar config.properties", e);
+        }
+        
+        
         spinner.isLoadingProperty.bind(cargando);
         cargando.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
