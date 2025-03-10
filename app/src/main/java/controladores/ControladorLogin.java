@@ -86,14 +86,7 @@ public class ControladorLogin implements Initializable {
             return;
         }
         
-        
-
-<<<<<<< HEAD
-        String baseURL = "http://192.168.70.91:8000/";
-=======
         String baseURL = ip;
->>>>>>> e55b4d2826391e5d1e3fd7357d758a3f0493f775
-
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
