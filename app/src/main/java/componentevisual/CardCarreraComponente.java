@@ -315,6 +315,7 @@ public class CardCarreraComponente extends VBox {
             labelAvaibleSlots.setText("Slots Totales: " + carrera.getAvailable_slots());
             labelStatus.setText("Estado: " + carrera.getStatus());
             labelCategory.setText("Categoría: " + carrera.getCategory());
+            labelGender.setText("Género: " + carrera.getGender());
 
             btnMostrarMapa.setOnAction(event -> {
                 if (mostrandoMapa) {
@@ -366,6 +367,12 @@ public class CardCarreraComponente extends VBox {
                 btnDesapuntarse.setDisable(true);
                 labelStatus.setStyle("-fx-text-fill: red;");
 
+            }
+            
+            if(usuario.getGender() != carrera.getGender()){
+                System.out.println(usuario.getGender() + carrera.getGender());
+                btnInscribirse.setDisable(true);
+                btnDesapuntarse.setDisable(true);
             }
 
 
