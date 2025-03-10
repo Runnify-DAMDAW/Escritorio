@@ -447,7 +447,7 @@ public class ControladorPrincipal implements Initializable{
 
     public void consultarApi() throws IOException {
         
-        String urlEndpoint = "http://192.168.1.41:8000/"; //
+        String urlEndpoint = "http://192.168.70.91:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -498,7 +498,7 @@ public class ControladorPrincipal implements Initializable{
     
     public void consultarMiUsuario() throws IOException {
         
-        String urlEndpoint = "http://192.168.1.41:8000/"; //
+        String urlEndpoint = "http://192.168.70.91:8000/"; //
 
         Gson gson = new GsonBuilder().setLenient().create();
 
@@ -554,7 +554,7 @@ public class ControladorPrincipal implements Initializable{
 
     @FXML
     void guardarPerfil() {
-        String baseURL = "http://192.168.1.41:8000/";
+        String baseURL = "http://192.168.70.91:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -698,7 +698,7 @@ public class ControladorPrincipal implements Initializable{
     
     @FXML 
     void guardarContraseña() {
-        String baseURL = "http://192.168.1.41:8000/";
+        String baseURL = "http://192.168.70.91:8000/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
